@@ -1,0 +1,140 @@
+=============================================================================
+DIFF                                                                  *my-diff*
+
+Open all buffers you want to compare in separate |windows| (same |tabpage|)
+and execute the following command:
+>
+	:windo diffthis
+<
+Stop the diff view with:
+>
+	:windo diffoff
+<
+To "export" the diff you can use the builtin `2html` plugin by executing:
+>
+	:TOhtml
+<
+Note: This will save the diff in a `Diff.html` file in the current working
+directory. Open it in a browser to get a nice overview.
+
+=============================================================================
+CLOJURE                                                            *my-clojure*
+
+Using Neovim as Clojure editor.
+
+-----------------------------------------------------------------------------
+REPL                                                          *my-clojure-repl*
+
+When opening a Clojure file the `conjure` plugin automatically connects to an
+existing REPL. If none is found it tries to use `babashka` (if installed). To
+open an interactive REPL for the usage with Neovim use the following:
+>
+	TODO
+<
+To make this work check for the following dependencies in your `deps.edn`
+file:
+>
+	TODO
+<
+=============================================================================
+POSTMAN                                                    *my-curl* *my-postman*
+
+Using Neovim as a simple alternative to Postman.
+
+Inspired by the following blog post:
+https://mahmoudashraf.dev/blog/no-more-postman-just-curl-and-vim/
+
+Create a `filename.sh` file and write out your request with `curl`:
+>
+	curl -s -X POST \
+	    -u '<username>:<password>' \
+	    '<url>' \
+	    -H 'Content-Type: application/json' \
+	    -d '{ "key": "value" }'
+<
+Note: We're using the `.sh` extension only to get syntax highlighting
+
+Now you can execute it via |:!|, `sh` and |:%|:
+>
+	:!sh %
+<
+=============================================================================
+GRADLE                                                              *my-gradle*
+
+Everything about Gradle.
+
+-----------------------------------------------------------------------------
+DEBUGGING                                                 *my-gradle-debugging*
+
+Sometimes it is needed to debug a specific Gradle task either because the
+dependencies are not handled correctly otherwise or because there is no
+"MainClass" class which could be used instead.
+
+First start the Gradle task with the `--debug-jvm` flag:
+>
+	./gradlew bootRun --debug-jvm
+<
+Once that is running and waiting for a debugger to attach we can do so via
+|dap.txt| by calling |dap.run()|:
+>
+        require('dap').run {
+            type = 'java',
+            request = 'attach',
+            name = 'gradle attach',
+            hostName = '127.0.0.1',
+            port = 5005,
+        }
+<
+There is a dedicated keybinding for this task:
+>
+	<localleader>dG
+<
+=============================================================================
+MACROS HELP                                                         *my-macros*
+
+Everything about Neovim macros.
+
+-----------------------------------------------------------------------------
+WRAPSCAN                                                   *my-macros-wrapscan*
+
+Disable 'wrapscan' so that the macro fails at the end of the file (if using
+a search).
+>
+	set nowrapscan
+<
+-----------------------------------------------------------------------------
+SUB MACROS                                                *my-macros-submacros*
+
+For example to call a recursive sub macro.
+>
+	:exe "normal! @a"
+<
+In order to catch the errors of the sub macro (instead of aborting it) we can
+use |:try| and |execute|.
+>
+	:try | exe "normal! @a" | endtry
+<
+-----------------------------------------------------------------------------
+SPEEEEEEED                                                    *my-macros-speed*
+
+Neovim can be become quite "slow" when executing big macros with lot of
+actions or a lot of repetition. Lets take a simple macro just inserting "Hello
+World" and a new line:
+>
+	qq i"Hello World"<CR><ESC> q
+<
+If we execute this macro quite often we experience a significant delay (unless
+you're loading Neovim without plugins `nvim -u NONE`):
+>
+	:normal 1000@q
+<
+To mitigate these performance issues it most often makes sense to use
+|:noautocmd| for the execution:
+>
+	:noautocmd normal 1000@q
+<
+It could also make sense to set |'paste'| before executing the macro.
+https://www.reddit.com/r/neovim/comments/tsol2n/why_macros_are_so_slow_compared_to_emacs/
+
+=============================================================================
+vim:tw=78:ts=8:noet:ft=help:norl:

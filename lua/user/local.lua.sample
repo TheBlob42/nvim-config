@@ -1,0 +1,35 @@
+-- TODO rename this file to 'local.lua'
+-- TODO fill out the "predefined configuration" section
+-- TODO add custom lua code as you like (e.g. commands, global functions, etc.)
+
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- ~ predefined configuration ~
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+my.sys_local = {
+    -- base directories to scan automatically for `telescope.project`
+    project_base_dirs = {
+        -- e.g. '/home/user/projects'
+    },
+    -- java configuration for this computer
+    java = {
+        runtimes = {
+            {
+                name = "JavaSE-11",
+                path = "/usr/lib/jvm/java-11-openjdk-amd64"
+            },
+        },
+        debug = {
+            -- https://github.com/mfussenegger/nvim-jdtls#java-debug-installation
+            java_debug_path = '',
+            -- https://github.com/mfussenegger/nvim-jdtls#vscode-java-test-installation
+            vscode_java_test_path = '',
+        }
+    },
+}
+
+-- ~~~~~~~~~~~~~~~
+-- ~ custom code ~
+-- ~~~~~~~~~~~~~~~
+
+-- go wild in here...

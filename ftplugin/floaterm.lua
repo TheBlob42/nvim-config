@@ -1,0 +1,5 @@
+vim.keymap.set('n', 'q', '<CMD>q<CR>', { buffer = true })
+vim.keymap.set('n', 'gt', '<CMD>FloatermNext<CR>', { buffer = true })
+vim.keymap.set('n', 'gT', '<CMD>FloatermPrev<CR>', { buffer = true })
+vim.keymap.set('n', 'gn', '<CMD>FloatermNew<CR>',  { buffer = true })
+vim.keymap.set('n', 'gK', '<CMD>FloatermKill<CR>', { buffer = true })
