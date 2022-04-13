@@ -13,7 +13,7 @@ local status_ok, impatient = my.req('impatient')
 if status_ok then
     impatient.enable_profile()
 end
-require('packer_compiled')
+pcall(require, 'packer_compiled') -- not present on first launch
 
 require('user.settings')
 require('user.keymaps')
