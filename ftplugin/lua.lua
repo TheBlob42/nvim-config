@@ -3,7 +3,7 @@ vim.opt_local.comments:remove(':--')
 vim.opt_local.comments:append('f:--')
 
 -- easily reload the current lua file
-vim.api.nvim_buf_add_user_command(0, 'LuaReload', function(_)
+vim.api.nvim_buf_create_user_command(0, 'LuaReload', function(_)
     local file = vim.fn.expand('%')
     if not file then
         vim.api.nvim_echo({ 'Only works inside a file!', 'WarningMsg' }, false, {})
