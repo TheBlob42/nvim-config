@@ -1,5 +1,5 @@
 -- close ALL floating windows
-vim.api.nvim_add_user_command('CloseFloats', function()
+vim.api.nvim_create_user_command('CloseFloats', function()
     for _, winnr in pairs(vim.api.nvim_list_wins()) do
         local config = vim.api.nvim_win_get_config(winnr)
         if config.relative ~= "" then

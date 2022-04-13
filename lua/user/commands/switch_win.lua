@@ -268,7 +268,7 @@ local function switch_window()
     return target_window and true
 end
 
-vim.api.nvim_add_user_command('SwitchWindow', switch_window, {
+vim.api.nvim_create_user_command('SwitchWindow', switch_window, {
     nargs = 0,
     desc = 'jump to another window',
 })

@@ -10,7 +10,7 @@ local function gen_uuid()
     end)
 end
 
-vim.api.nvim_add_user_command('InsertUUID', function()
+vim.api.nvim_create_user_command('InsertUUID', function()
     local uuid = gen_uuid()
     vim.cmd('normal! a' .. uuid)
 end, { desc = 'insert a newly generated uuid' })

@@ -12,7 +12,7 @@ local languages = {
     'uk', 'ur', 'uz', 'vi', 'xh', 'yi', 'yo', 'zu',
 }
 
-vim.api.nvim_add_user_command('Translate', function(opts)
+vim.api.nvim_create_user_command('Translate', function(opts)
     if #opts.fargs < 3 then
         vim.api.nvim_echo({{ 'Too few arguments (' .. #opts.fargs .. "): 'translate <source language> <target language> <text>'", 'WarningMsg' }}, false, {})
         return

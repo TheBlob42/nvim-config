@@ -12,7 +12,7 @@
 -- curl -sS --user $USERNAME:$PASSWORD -X POST -F "jenkinsfile=<$JENKINS_FILE_NAME" $JENKINS_URL/pipeline-model-converter/validate
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-vim.api.nvim_add_user_command('ValidateJenkinsfile', function(opts)
+vim.api.nvim_create_user_command('ValidateJenkinsfile', function(opts)
     if vim.fn.executable('validate_jenkinsfile.sh') == 0 then
         vim.api.nvim_echo({{ "'validate_jenkinsfile.sh' was not found in PATH, but is necessary to run this command!", 'ErrorMsg' }}, false, {})
         return

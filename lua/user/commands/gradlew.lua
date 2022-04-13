@@ -139,15 +139,15 @@ end
 -- ~ user commands ~
 -- ~~~~~~~~~~~~~~~~~
 
-vim.api.nvim_add_user_command('GradlewClearCache', function(_)
+vim.api.nvim_create_user_command('GradlewClearCache', function(_)
     cached_task = {}
 end, { desc = 'clear the cached gradlew tasks' })
 
-vim.api.nvim_add_user_command('GradlewTask', function(opts)
+vim.api.nvim_create_user_command('GradlewTask', function(opts)
     local task = opts.args
     gradlew_exec(task)
 end, { nargs = 1, desc = 'execute gradlew task' })
 
-vim.api.nvim_add_user_command('GradlewList', function(_)
+vim.api.nvim_create_user_command('GradlewList', function(_)
     task_list()
 end, { desc = 'list available gradlew tasks' })

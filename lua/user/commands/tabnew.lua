@@ -1,6 +1,6 @@
 -- create a new tabpage with the current buffer and switch to it
 -- this also works if the current buffer does not visits a file
-vim.api.nvim_add_user_command('TabNew', function()
+vim.api.nvim_create_user_command('TabNew', function()
     if vim.fn.expand('%') ~= '' then
         vim.cmd("tabnew %")
     else

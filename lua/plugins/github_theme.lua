@@ -28,7 +28,7 @@ else
 end
 
 -- toggle colorscheme between light and dark
-vim.api.nvim_add_user_command('ToggleDarkMode', function()
+vim.api.nvim_create_user_command('ToggleDarkMode', function()
     if vim.g.colors_name == 'github_dark' then
         load_theme(light)
     else

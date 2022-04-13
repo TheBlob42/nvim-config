@@ -1,5 +1,5 @@
 -- try to format the current buffer as JSON
-vim.api.nvim_add_user_command('JsonFormat', function()
+vim.api.nvim_create_user_command('JsonFormat', function()
     if vim.fn.executable('jq') == 0 then
         vim.api.nvim_echo({{ "'jq' was not found in PATH, install it in order to use this command!" , 'ErrorMsg'}}, false, {})
         return

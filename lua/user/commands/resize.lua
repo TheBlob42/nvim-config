@@ -16,11 +16,11 @@ local function win_height_resize(delta)
     vim.api.nvim_win_set_height(0, vim.api.nvim_win_get_height(0) + delta)
 end
 
-vim.api.nvim_add_user_command('WinWidth', function(opts)
+vim.api.nvim_create_user_command('WinWidth', function(opts)
     win_width_resize(opts.args)
 end, { nargs = 1, desc = 'alter window width' })
 
-vim.api.nvim_add_user_command('WinHeight', function(opts)
+vim.api.nvim_create_user_command('WinHeight', function(opts)
     win_height_resize(opts.args)
 end, { nargs = 1, desc = 'alter window height' })
 
