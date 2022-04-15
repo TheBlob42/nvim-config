@@ -11,7 +11,6 @@ local function load_theme(style)
         theme_style = style,
         sidebars = { "drex", "qf", "terminal", 'floaterm' }
     }
-    vim.cmd('doautocmd ColorScheme')
 
     -- otherwise the prompt counter would be invisible
     vim.cmd [[ hi! link TelescopePromptCounter Normal ]]
