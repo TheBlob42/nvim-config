@@ -9,7 +9,7 @@ cmp.setup {
             luasnip.lsp_expand(args.body)
         end,
     },
-    mapping = {
+    mapping = cmp.mapping.preset.insert {
         ['<C-u>'] = cmp.mapping.scroll_docs(-4),
         ['<C-d>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
@@ -43,6 +43,7 @@ cmp.setup.filetype('clojure', {
 })
 
 cmp.setup.cmdline('/', {
+    mapping = cmp.mapping.preset.cmdline(),
     sources = {
         { name = 'buffer' }
     }
