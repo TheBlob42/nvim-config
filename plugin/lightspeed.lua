@@ -35,5 +35,13 @@ for _, mapping in ipairs(mappings) do
     vim.api.nvim_set_keymap(mode, lhs, rhs, { noremap = false })
 end
 
--- https://github.com/ggandor/lightspeed.nvim/issues/140
-vim.cmd('autocmd User LightspeedSxLeave normal a')
+vim.api.nvim_create_autocmd('User', {
+    desc = 'fix for https://github.com/ggandor/lightspeed.nvim/issues/140',
+    pattern = 'LightspeedSxLeave',
+    callback = function()
+        local ignore = vim.tbl_contains({ 'terminal', 'prompt' }, vim.opt.buftype:get())
+        if vim.opt.modifiable:get() and not ignore then
+            vim.cmd('normal! a')
+        end
+    end,
+})
