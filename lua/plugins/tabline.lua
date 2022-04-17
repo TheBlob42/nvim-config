@@ -1,4 +1,4 @@
-local status_ok, tabline, actions = my.req('tabline', 'tabline.actions')
+local status_ok, tabline, actions, highlights = my.req('tabline', 'tabline.actions', 'tabline.highlights')
 if not status_ok then
     return
 end
@@ -8,6 +8,10 @@ tabline.setup()
 vim.keymap.set('n', '<leader>tr', actions.set_tabname, { desc = 'rename tab' })
 
 local function reset_highlights()
+    -- reset background colors
+    highlights.c.active_bg = highlights.get_color('TabLineSel', 'bg')
+    highlights.c.inactive_bg = highlights.get_color('TabLine', 'bg')
+
     vim.api.nvim_set_hl(0, 'TabLineSel', { link = 'Special' })
     vim.api.nvim_set_hl(0, 'TabLineIconActive', { link = 'Special' })
     vim.api.nvim_set_hl(0, 'TabLineIconInactive', { link = 'Normal' })
