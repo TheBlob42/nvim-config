@@ -1,34 +1,31 @@
-local opt = vim.opt
-local g   = vim.g
-
 -- define leader keys as early as possible
-g.mapleader = ' '
-g.maplocalleader = ' m'
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' m'
 
-opt.mouse = 'a'
+vim.opt.mouse = 'a'
 
-opt.splitbelow = true
-opt.splitright = true
+vim.opt.splitbelow = true
+vim.opt.splitright = true
 
-opt.number = true
-opt.signcolumn = 'number'
+vim.opt.number = true
+vim.opt.signcolumn = 'number'
 
 -- sync with system clipboard
-opt.clipboard = { 'unnamed', 'unnamedplus' }
+vim.opt.clipboard = { 'unnamed', 'unnamedplus' }
 
 -- `vim-sleuth` might overwrite these
-opt.tabstop = 4
-opt.shiftwidth = 4
-opt.expandtab = true
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
 
-opt.confirm = true
+vim.opt.confirm = true
 
-opt.hlsearch = true
-opt.incsearch = true
-opt.ignorecase = true
-opt.smartcase = true
+vim.opt.hlsearch = true
+vim.opt.incsearch = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 
-opt.listchars = {
+vim.opt.listchars = {
     eol = '⮯',
     tab = '<.>',
     trail = '~',
@@ -37,20 +34,20 @@ opt.listchars = {
     space = '·',
 }
 
-opt.completeopt = { 'menuone', 'noselect' }
+vim.opt.completeopt = { 'menuone', 'noselect' }
 
-opt.timeoutlen = 500 -- for `which-key`
-opt.updatetime = 400 -- speed up 'cursorhold' events
+vim.opt.timeoutlen = 500 -- for `which-key`
+vim.opt.updatetime = 400 -- speed up 'cursorhold' events
 
-g.markdown_folding = 1 -- see 'ft-markdown-plugin'
+vim.g.markdown_folding = 1 -- see 'ft-markdown-plugin'
 
 -- opt in the new lua filetype detection
 -- https://github.com/neovim/neovim/pull/16600
-g.do_filetype_lua = 1
-g.did_load_filetypes = 0
+vim.g.do_filetype_lua = 1
+vim.g.did_load_filetypes = 0
 
 -- enable cursorline (except for terminal buffers)
-opt.cursorline = true
+vim.opt.cursorline = true
 vim.api.nvim_create_augroup('NoCursorline', {})
 vim.api.nvim_create_autocmd('TermOpen', {
     pattern = '*',
