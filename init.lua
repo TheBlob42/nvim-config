@@ -1,5 +1,8 @@
 -- place for personal utility & configuration options
-_G.my = {}
+_G.my = {
+    -- lisp filetypes (used for `conjure`, `cmp-conjure` & `parinfer`)
+    lisps = { "clojure", "fennel", "janet", "racket", "scheme", "hy", "lisp" },
+}
 
 require('user.utils')        -- configuration utility
 pcall(require, 'user.local') -- local user config (if present)

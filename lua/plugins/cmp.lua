@@ -34,13 +34,16 @@ cmp.setup {
     }
 }
 
-cmp.setup.filetype('clojure', {
-    sources = cmp.config.sources({
-        { name = 'conjure' }
-    }, {
-        { name = 'buffer' }
+-- setup `conjure` for all lisps file types
+for _, ft in ipairs(my.lisps) do
+    cmp.setup.filetype(ft, {
+        sources = cmp.config.sources({
+            { name = 'conjure' }
+        }, {
+            { name = 'buffer' }
+        })
     })
-})
+end
 
 cmp.setup.cmdline('/', {
     mapping = cmp.mapping.preset.cmdline(),

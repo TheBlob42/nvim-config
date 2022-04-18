@@ -26,8 +26,6 @@ require('packer').startup({function(use)
     use 'tpope/vim-abolish'        -- working with variant of words
     use 'stevearc/dressing.nvim'   -- improve default ui interface
     use 'ggandor/lightspeed.nvim'  -- sneak like motion plugin
-    use 'Olical/conjure'           -- interactive code evaluation
-    use 'gpanders/nvim-parinfer'   -- parinfer for Neovim
 
     use {
         -- "gc" to comment regions and lines
@@ -71,6 +69,26 @@ require('packer').startup({function(use)
         -- display possible key bindings in a popup
         'xiyaowong/which-key.nvim',
         config = load_config('plugins.whichkey'),
+    }
+
+    use {
+        -- interactive code evaluation
+        'Olical/conjure',
+        ft = my.lisps,
+        setup = function()
+            vim.g['conjure#filetypes'] = my.lisps
+            vim.g['conjure#filetype#fennel'] = 'conjure.client.fennel.stdio'
+        end,
+    }
+
+    use {
+        -- parinfer for Neovim
+        'gpanders/nvim-parinfer',
+        ft = my.lisps,
+        cmd = { 'ParinferOn', 'ParinferToggle' },
+        setup = function()
+            vim.g.parinfer_filetypes = my.lisps
+        end,
     }
 
     -- TREESITTER
@@ -158,7 +176,10 @@ require('packer').startup({function(use)
     use 'hrsh7th/cmp-path'
     use 'hrsh7th/cmp-cmdline'
     use 'saadparwaiz1/cmp_luasnip'
-    use 'PaterJason/cmp-conjure'
+    use {
+        'PaterJason/cmp-conjure',
+        after = 'conjure',
+    }
 
     use {
         'hrsh7th/nvim-cmp',
