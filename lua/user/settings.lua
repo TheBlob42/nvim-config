@@ -1,5 +1,5 @@
 local opt = vim.opt
-local cmd = vim.cmd
+local g   = vim.g
 
 opt.mouse = 'a'
 
@@ -38,54 +38,31 @@ opt.completeopt = { 'menuone', 'noselect' }
 opt.timeoutlen = 500 -- for `which-key`
 opt.updatetime = 400 -- speed up 'cursorhold' events
 
--- enable cursorline (except for terminal buffers)
-opt.cursorline = true
-cmd [[
-    augroup nocursorline
-        au!
-        au termopen * lua vim.opt_local.cursorline = false
-    augroup end
-]]
-
-vim.g.markdown_folding = 1 -- see 'ft-markdown-plugin'
+g.markdown_folding = 1 -- see 'ft-markdown-plugin'
 
 -- opt in the new lua filetype detection
 -- https://github.com/neovim/neovim/pull/16600
-vim.g.do_filetype_lua = 1
-vim.g.did_load_filetypes = 0
+g.do_filetype_lua = 1
+g.did_load_filetypes = 0
+
+-- enable cursorline (except for terminal buffers)
+opt.cursorline = true
+vim.api.nvim_create_augroup('NoCursorline', {})
+vim.api.nvim_create_autocmd('TermOpen', {
+    pattern = '*',
+    group = 'NoCursorline',
+    command = 'setlocal nocursorline',
+    desc = 'disable cursorline for terminal buffers',
+})
 
 -- highlight yanked text
-cmd [[
-    augroup luahighlight
-        au!
-        au textyankpost * silent! lua vim.highlight.on_yank()
-    augroup end
-]]
-
----allows backspacing through previously set text in a "prompt" buffer
----https://github.com/neovim/neovim/issues/14116#issuecomment-977555102
-function PromptBackspace()
-    local currentcursor = vim.api.nvim_win_get_cursor(0)
-    local currentlinenumber = currentcursor[1]
-    local currentcolumnnumber = currentcursor[2]
-    local promptlength = vim.str_utfindex(vim.fn['prompt_getprompt']('%'));
-
-    if (currentcolumnnumber) ~= promptlength then
-        vim.api.nvim_buf_set_text(0, currentlinenumber - 1, currentcolumnnumber - 1, currentlinenumber - 1, currentcolumnnumber, {""})
-        vim.api.nvim_win_set_cursor(0, { currentlinenumber, currentcolumnnumber - 1 })
-    end
-end
-
--- not using a lua function because of error when accessing :help
-cmd [[
-    fun! PromptBackspaceSetup()
-        if v:option_new == 'prompt'
-            inoremap <buffer> <bs> <cmd>:lua PromptBackspace()<cr>
-        endif
-    endfun
-
-    autocmd optionset * call PromptBackspaceSetup()
-]]
+vim.api.nvim_create_augroup('LuaHighlight', {})
+vim.api.nvim_create_autocmd('TextYankPost', {
+    pattern = '*',
+    group = 'LuaHighlight',
+    command = 'silent! lua vim.highlight.on_yank()',
+    desc = 'highlight yanked text',
+})
 
 -- disable builit in plugins
 local builtin_plugins = {
