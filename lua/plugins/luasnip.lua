@@ -29,6 +29,6 @@ luasnip.add_snippets('markdown', require('plugins.snippets.markdown'))
 luasnip.add_snippets('java', require('plugins.snippets.java'))
 luasnip.add_snippets('lua', require('plugins.snippets.lua'))
 
-require("luasnip/loaders/from_vscode").load {
-    exclude = { 'markdown', 'lua' }
-}
+-- avoid duplicate snippets for certain file types by deleting
+-- the corresponding snippet files from the friendly snippets plugin
+require("luasnip/loaders/from_vscode").lazy_load()
