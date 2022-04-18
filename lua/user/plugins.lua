@@ -240,8 +240,6 @@ require('packer').startup({function(use)
         config = load_config('plugins.drex'),
     }
 
-    use '~/dev/lighthouse.nvim'
-
     if first_install then
         require('packer').sync()
         vim.api.nvim_create_autocmd('User', {
