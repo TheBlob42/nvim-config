@@ -1,10 +1,6 @@
 -- place for personal utility & configuration options
 _G.my = {}
 
--- define leader keys as early as possible
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' m'
-
 require('user.utils')        -- configuration utility
 pcall(require, 'user.local') -- local user config (if present)
 

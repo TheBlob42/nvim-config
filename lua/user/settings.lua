@@ -1,6 +1,10 @@
 local opt = vim.opt
 local g   = vim.g
 
+-- define leader keys as early as possible
+g.mapleader = ' '
+g.maplocalleader = ' m'
+
 opt.mouse = 'a'
 
 opt.splitbelow = true
