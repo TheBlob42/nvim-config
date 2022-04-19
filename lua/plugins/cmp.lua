@@ -3,6 +3,10 @@ if not status_ok then
     return
 end
 
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- ~ "regular" autocompletion ~
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 cmp.setup {
     snippet = {
         expand = function(args)
@@ -45,6 +49,10 @@ for _, ft in ipairs(my.lisps) do
     })
 end
 
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- ~ command line autocompletion ~
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 cmp.setup.cmdline('/', {
     mapping = cmp.mapping.preset.cmdline(),
     sources = {
@@ -53,6 +61,7 @@ cmp.setup.cmdline('/', {
 })
 
 cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
     sources = {
         { name = 'cmdline' }
     }
