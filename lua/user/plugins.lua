@@ -24,8 +24,13 @@ require('packer').startup({function(use)
     use 'tpope/vim-repeat'         -- repeat plug mappings with '.'
     use 'tpope/vim-sleuth'         -- auto configure `shiftwidth`
     use 'tpope/vim-abolish'        -- working with variant of words
-    use 'stevearc/dressing.nvim'   -- improve default ui interface
     use 'ggandor/lightspeed.nvim'  -- sneak like motion plugin
+
+    use {
+        -- improve default ui interface
+        'stevearc/dressing.nvim',
+        config = load_config('plugins.dressing'),
+    }
 
     use {
         -- "gc" to comment regions and lines
