@@ -1,6 +1,6 @@
----Simple Wrapper around `print(vim.inspect(x))`
-function P(x)
-    print(vim.inspect(x))
+---Simple Wrapper around `print` and `vim.inspect`
+function P(...)
+    print(unpack(vim.tbl_map(vim.inspect, { ... })))
 end
 
 ---Try to require all given LUA modules
