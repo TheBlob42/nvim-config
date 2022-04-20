@@ -33,6 +33,7 @@ local function jdtls_on_attach(client, bufnr)
 
     -- add JDTLS specific keybindings
     vim.keymap.set('n', '<localleader>i', jdtls.organize_imports, { buffer = bufnr, desc = 'organize imports' })
+    vim.keymap.set('n', '<localleader>R', '<CMD>JdtWipeDataAndRestart<CR>', { buffer = bufnr, desc = 'reload project'})
 end
 
 local function start()
