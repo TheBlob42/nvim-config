@@ -10,7 +10,7 @@ git clone git@github.com:TheBlob42/nvim-config.git ~/.config/nvim
 
 ## Dependencies
 
-Only works with Neovim version `0.7` (currently prelease)
+Only works with Neovim version `0.7`
 
 > Some functionality is tailored towards the usage of a Linux operating system
 
