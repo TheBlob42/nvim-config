@@ -34,6 +34,20 @@ For local system specific configuration check `lua/user/local.lua.sample`
 
 There is some preconfigured configuration which is expected by other parts of the configuration (for example the path to your project directory). But you can also add any custom Lua code in their which you consider system specific. The `local.lua` file is on `.gitignore` so the system specific settings will not be checked into version control
 
+## Other Configuration
+
+To make `lazygit` work nicely with the light theme add the following to your `config.yml`:
+
+```yaml
+gui:
+  theme:
+    lightTheme: true
+    selectedLineBgColor:
+      - reverse
+    selectedRangeBgColor:
+      - reverse
+```
+
 ## LSP
 
 Install LSP servers simply via the `:LspInstall` command
