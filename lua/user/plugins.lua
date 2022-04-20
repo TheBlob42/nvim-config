@@ -1,4 +1,3 @@
-local function load_config(mod) require(mod) end
 -- automatically install packer
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 local first_install = vim.fn.isdirectory(install_path) ~= 1
@@ -8,13 +7,22 @@ if first_install then
 end
 
 -- automatically re-source and compile when plugins.lua is updated
-vim.cmd [[
-    augroup Packer
-        autocmd!
-        autocmd BufWritePost plugins.lua luafile %
-        autocmd BufWritePost plugins.lua PackerCompile
-    augroup end
-]]
+local packer_group = vim.api.nvim_create_augroup('Packer', {})
+vim.api.nvim_create_autocmd('BufWritePost', {
+    pattern = 'plugins.lua',
+    command = 'luafile %',
+    group = packer_group,
+})
+vim.api.nvim_create_autocmd('BufWritePost', {
+    pattern = 'plugins.lua',
+    command = 'PackerCompile',
+    group = packer_group,
+})
+
+-- simple helper to load configuration
+local function load_config(mod)
+    require(mod)
+end
 
 require('packer').startup({function(use)
     use 'wbthomason/packer.nvim'
@@ -265,28 +273,28 @@ require('packer').startup({function(use)
         requires = { 'kyazdani42/nvim-web-devicons' },
         config = load_config('plugins.drex'),
     }
-
-    if first_install then
-        require('packer').sync()
-        vim.api.nvim_create_autocmd('User', {
-            once = true,
-            pattern = 'PackerComplete',
-            callback = function()
-                vim.ui.select(
-                    { 'Yes, restart now', 'No, restart later' },
-                    {
-                        prompt = 'Install complete, please restart Neovim'
-                    },
-                    function(choice)
-                        if choice == 'Yes, restart now' then
-                            vim.cmd('quitall')
-                        end
-                    end
-                )
-            end,
-        })
-    end
 end,
 config = {
     compile_path = vim.fn.stdpath('config') .. '/lua/packer_compiled.lua'
 }})
+
+if first_install then
+    require('packer').sync()
+    vim.api.nvim_create_autocmd('User', {
+        once = true,
+        pattern = 'PackerComplete',
+        callback = function()
+            local yes, no = 'Yes, quit now', 'No, not now'
+            vim.ui.select({ yes, no },
+                {
+                    prompt = 'Install complete, please restart Neovim'
+                },
+                function(choice)
+                    if choice == yes then
+                        vim.cmd('quitall')
+                    end
+                end
+            )
+        end,
+    })
+end
