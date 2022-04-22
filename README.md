@@ -48,6 +48,19 @@ gui:
       - reverse
 ```
 
+## Plugins
+
+In order to install plugins [packer.nvim](https://github.com/wbthomason/packer.nvim) is being used, check `lua/user/plugins.lua`
+
+To ensure that the same plugin version/commits are installed on every system and to avoid breaking the configuration the snapshot feature is used (see [here](https://github.com/wbthomason/packer.nvim/pull/370)). The default snapshot name is `stable`
+
+To update the installed plugins follow these steps:
+
+- run `PackerSync`
+- fix any problems that might occur
+- run `PackerSnapshot stable`
+- run `PackerSnapshotFormat` (to make sure the git diff is as small as possible)
+
 ## LSP
 
 Install LSP servers simply via the `:LspInstall` command
