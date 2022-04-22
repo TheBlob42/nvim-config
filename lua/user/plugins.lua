@@ -264,12 +264,9 @@ require('packer').startup({function(use)
         cmd = 'StartupTime',
     }
 
-    -- ########################################################################
-    -- ### Plugins To Test And Evaluate
-    -- ########################################################################
-
     use {
-        '~/dev/drex.nvim',
+        -- file/directory explorer
+        'TheBlob42/drex.nvim',
         requires = { 'kyazdani42/nvim-web-devicons' },
         config = load_config('plugins.drex'),
     }
