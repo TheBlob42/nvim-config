@@ -30,7 +30,7 @@
     "commit": "cad08fa"
   },
   "drex.nvim": {
-    "commit": "8725fc1"
+    "commit": "301c88e"
   },
   "fidget.nvim": {
     "commit": "9566831"
@@ -45,7 +45,7 @@
     "commit": "9c641bd"
   },
   "gitsigns.nvim": {
-    "commit": "f83a2e1"
+    "commit": "ead0d48"
   },
   "houdini.nvim": {
     "commit": "72bb572"
@@ -132,7 +132,7 @@
     "commit": "d317c3c"
   },
   "telescope.nvim": {
-    "commit": "92019d5"
+    "commit": "d743d70"
   },
   "undotree": {
     "commit": "08e259b"
