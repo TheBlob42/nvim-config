@@ -9,7 +9,9 @@ local d = luasnip.dynamic_node
 
 local function java_package()
     local path = vim.fn.expand('%:h')
-    local pkg_path = path:match("^.*src/main/java/(.*)"):gsub("/", ".")
+    -- TODO windows (should already work)
+    -- local pkg_path = path:match("^.*src/main/java/(.*)"):gsub("/", ".")
+    local pkg_path = path:match('^.*' .. my.join_paths('src', 'main', 'java', '') .. '(.*)'):gsub("/", ".")
     return("package " .. pkg_path .. ";")
 end
 

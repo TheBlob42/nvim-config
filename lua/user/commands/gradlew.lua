@@ -46,6 +46,7 @@ local function gradlew_exec(task, gradlew_path)
     end
 
     local job_id = vim.api.nvim_buf_get_var(buf, 'terminal_job_id')
+    -- TODO for windows
     vim.fn.jobsend(job_id, './gradlew ' .. task .. '\n')
 
     vim.api.nvim_set_current_win(win)
@@ -78,6 +79,7 @@ local function task_list(gradlew_path)
         local status = 'progress'
         local result = ''
         local stdout = vim.loop.new_pipe()
+        -- TODO windows
         vim.loop.spawn('./gradlew', {
             cwd = gradlew_path,
             args = { 'tasks', '--all' },

@@ -1,5 +1,5 @@
 -- automatically install packer
-local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+local install_path = my.join_paths(vim.fn.stdpath('data'), 'site', 'pack', 'packer', 'start', 'packer.nvim')
 local first_install = vim.fn.isdirectory(install_path) ~= 1
 if first_install then
     vim.api.nvim_command('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
@@ -276,7 +276,7 @@ packer.startup({function(use)
     }
 end,
 config = {
-    compile_path = vim.fn.stdpath('config') .. '/lua/packer_compiled.lua',
+    compile_path = my.join_paths(vim.fn.stdpath('config'), 'lua', 'packer_compiled.lua'),
     snapshot = default_snapshot_name,
     snapshot_path = snapshot_path,
 }})
@@ -310,8 +310,8 @@ vim.api.nvim_create_user_command('PackerSnapshotFormat', function(args)
     end
 
     local snapshot = args.args ~= '' and args.args or default_snapshot_name
-    local path = snapshot_path .. '/' .. snapshot
-    local tmp = snapshot_path .. '/tmp_' .. snapshot
+    local path = my.join_paths(snapshot_path, snapshot)
+    local tmp = my.join_paths(snapshot_path, 'tmp_' .. snapshot)
 
     if not vim.loop.fs_stat(path) then
         vim.api.nvim_echo({{ "No snapshot named '"..snapshot.."' exists in "..snapshot_path..'!', 'WarningMsg'}}, false, {})

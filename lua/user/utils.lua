@@ -3,6 +3,19 @@ function P(...)
     print(unpack(vim.tbl_map(vim.inspect, { ... })))
 end
 
+---Path separator corresponding to the operating system
+my.path_separator = package.config:sub(1, 1)
+
+---Check if we're on a windows operating system or not
+my.is_windows = my.path_separator == '\\'
+
+---Join all path elements using the corresponding system path separator
+---@param ... string The individual path elements
+---@return string path The joined path
+function my.join_paths(...)
+    return table.concat({ ... }, my.path_separator)
+end
+
 ---Try to require all given LUA modules
 ---If at least one "require" fails log an appropriate error and return `false`
 ---If everything works out fine, return `true` and all required modules

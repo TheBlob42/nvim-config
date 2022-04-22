@@ -44,11 +44,15 @@ local function start()
         -- workaround for the gradle buildship issue:
         -- https://github.com/mfussenegger/nvim-jdtls/issues/38
         if root_dir ~= nil then
-            local build_gradle_file = io.open(root_dir .. "/build.gradle", "r")
-            if build_gradle_file ~= nil then
-                io.close(build_gradle_file)
+            -- TODO windows
+            -- local build_gradle_file = io.open(root_dir .. "/build.gradle", "r")
+            -- if build_gradle_file ~= nil then
+            if vim.loop.fs_stat(my.join_paths(root_dir, 'build.gradle')) then
+                -- io.close(build_gradle_file)
                 vim.api.nvim_exec([[ let test#java#runner = 'gradletest' ]], true)
-                os.execute('rm -rf ' .. root_dir .. '/.settings')
+                -- TODO windows
+                -- os.execute('rm -rf ' .. root_dir .. '/.settings')
+                vim.loop.fs_unlink(my.join_paths(root_dir, '.settings'))
             end
         end
 
@@ -69,7 +73,7 @@ local function start()
         if debug_path then
             config.init_options = {
                 bundles = {
-                    vim.fn.glob(debug_path .. '/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar')
+                    vim.fn.glob(my.join_paths(debug_path, 'com.microsoft.java.debug.plugin', 'target', 'com.microsoft.java.debug.plugin-*.jar'))
                 }
             }
         end
