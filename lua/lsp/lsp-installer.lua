@@ -3,13 +3,11 @@ if not status_ok then
     return
 end
 
-local defaults = {
-    on_attach = require('lsp.handlers').on_attach,
-    capabilities = require('lsp.handlers').make_capabilities(),
-}
-
 lsp_installer.on_server_ready(function(server)
-    local config = defaults
+    local config = {
+        on_attach = require('lsp.handlers').on_attach,
+        capabilities = require('lsp.handlers').make_capabilities(),
+    }
 
     if server.name == 'jdtls' then
         -- special handling for java (see 'ftplugin/java.lua')
