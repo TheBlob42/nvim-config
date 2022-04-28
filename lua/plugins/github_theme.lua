@@ -9,7 +9,7 @@ local light = 'light'
 local function load_theme(style)
     github.setup {
         theme_style = style,
-        sidebars = { "drex", "qf", "terminal", 'floaterm' }
+        dark_sidebar = false,
     }
     vim.cmd('doautocmd Colorscheme') -- autocmd 'Colorscheme' is not triggered via 'setup'
 
