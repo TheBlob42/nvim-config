@@ -1,4 +1,15 @@
 =============================================================================
+COPY MATCHING LINES                                             *my-copy-lines*
+
+First "clear" your target register (here register `a`) using |q|:
+>
+	qaq
+<
+Then you can copy all matching lines via |:g| (here using register `a`):
+>
+	:g/<pattern>/y A
+<
+=============================================================================
 DIFF                                                                  *my-diff*
 
 Open all buffers you want to compare in separate |windows| (same |tabpage|)
