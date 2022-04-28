@@ -36,16 +36,14 @@ map('x', 'p', [['pgv"' . v:register . 'y']], { noremap = true, expr = true })
 -- ~~~~~~~~~~~~~~~~~~~~~~
 
 -- create repeatable diagnostics mappings (with `vim-repeat`)
-my.repeat_map(
-    '<Plug>NextError',
+my.repeat_map('<Plug>NextError', table.concat({
     '<CMD>lua vim.diagnostic.goto_next { float = false }<CR>',
     '<CMD>lua vim.diagnostic.open_float { border = "rounded" }<CR>'
-)
-my.repeat_map(
-    '<Plug>PrevError',
+}, ''))
+my.repeat_map('<Plug>PrevError', table.concat({
     '<CMD>lua vim.diagnostic.goto_prev { float = false }<CR>',
     '<CMD>lua vim.diagnostic.open_float { border = "rounded" }<CR>'
-)
+}, ''))
 
 local mappings = {
     { 'gx', '<CMD>XOpen<CR>', 'open the link under the cursor via xdg-open' },
