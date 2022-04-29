@@ -3,28 +3,39 @@ if not status_ok then
     return
 end
 
-lsp_installer.on_server_ready(function(server)
-    local config = {
-        on_attach = require('lsp.handlers').on_attach,
-        capabilities = require('lsp.handlers').make_capabilities(),
-    }
+lsp_installer.setup()
+local lspconfig = require('lspconfig')
 
-    if server.name == 'jdtls' then
-        -- special handling for java (see 'ftplugin/java.lua')
-        return
-    end
+lspconfig.sumneko_lua.setup(require('lsp.servers.sumneko_lua').config)
 
-    if server.name == 'sumneko_lua' then
-        config = require('lsp.servers.sumneko_lua').config
-    end
+lspconfig.jsonls.setup(require('lsp.servers.jsonls').config)
 
-    if server.name == 'jsonls' then
-        config = require('lsp.servers.jsonls').config
-    end
+lspconfig.tsserver.setup(require('lsp.servers.tsserver').config)
 
-    if server.name == 'tsserver' then
-        config = require('lsp.servers.tsserver').config
-    end
+-- special handling for java (see `ftplugin/java.lua`)
 
-    server:setup(config)
-end)
+-- lsp_installer.on_server_ready(function(server)
+--     local config = {
+--         on_attach = require('lsp.handlers').on_attach,
+--         capabilities = require('lsp.handlers').make_capabilities(),
+--     }
+
+--     if server.name == 'jdtls' then
+--         -- special handling for java (see 'ftplugin/java.lua')
+--         return
+--     end
+
+--     if server.name == 'sumneko_lua' then
+--         config = require('lsp.servers.sumneko_lua').config
+--     end
+
+--     if server.name == 'jsonls' then
+--         config = require('lsp.servers.jsonls').config
+--     end
+
+--     if server.name == 'tsserver' then
+--         config = require('lsp.servers.tsserver').config
+--     end
+
+--     server:setup(config)
+-- end)
