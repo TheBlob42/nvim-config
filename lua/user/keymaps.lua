@@ -45,7 +45,18 @@ my.repeat_map('<Plug>PrevError', table.concat({
     '<CMD>lua vim.diagnostic.open_float { border = "rounded" }<CR>'
 }, ''))
 
+---Remove all trailing whitespaces within the current buffer
+---Retain cursor position & last search content
+local function remove_trailing_whitespaces()
+    local pos = vim.api.nvim_win_get_cursor(0)
+    local last_search = vim.fn.getreg('/')
+    vim.cmd(':%s/\\s\\+$//e')
+    vim.fn.setreg('/', last_search)     -- restore last search
+    vim.api.nvim_win_set_cursor(0, pos) -- restore cursor position
+end
+
 local mappings = {
+    { '<F5>', remove_trailing_whitespaces, 'remove trailing whitespaces' },
     { 'gx', '<CMD>XOpen<CR>', 'open the link under the cursor via xdg-open' },
     -- leader mappings
     { '<leader><leader>', '<CMD>SwitchWindow<CR>', 'jump to another window' },
