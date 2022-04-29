@@ -24,21 +24,17 @@ function custom_actions.paste(_)
     vim.api.nvim_put({text}, vim.fn.getregtype('+'), true, true)
 end
 
--- FIX to make folds work with telescope
--- https://github.com/nvim-telescope/telescope.nvim/issues/559
-function custom_actions.do_edit(prompt_bufnr)
-    actions.select_default(prompt_bufnr)
-    vim.cmd(':normal! zx') -- update all folds manually
-end
-
 ---Open a DREX buffer at the cwd of the selected entry (if possible)
 ---@param prompt_bufnr number
 function custom_actions.open_drex_buffer(prompt_bufnr)
-    actions.close(prompt_bufnr)
     local selection = action_state.get_selected_entry()
     if selection and selection.cwd then
+        actions.close(prompt_bufnr)
         require('drex').open_directory_buffer(selection.cwd)
+        return
     end
+
+    vim.notify('Open DREX buffer not possible in this Telescope picker', vim.log.levels.WARN, {})
 end
 
 custom_actions = transform_mod(custom_actions)
@@ -46,6 +42,19 @@ custom_actions = transform_mod(custom_actions)
 -- ~~~~~~~~~~~~~~~~~~~
 -- ~ telescope setup ~
 -- ~~~~~~~~~~~~~~~~~~~
+
+-- fix to make folds work with telescope
+-- see: https://github.com/nvim-telescope/telescope.nvim/issues/1277
+-- see: https://github.com/tmhedberg/SimpylFold/issues/130#issuecomment-1074049490
+vim.api.nvim_create_autocmd('BufRead', {
+    callback = function(opts)
+        vim.api.nvim_create_autocmd('BufWinEnter', {
+            buffer = opts.buf,
+            once = true,
+            command = 'normal! zx'
+        })
+    end
+})
 
 telescope.setup {
     defaults = {
@@ -56,7 +65,6 @@ telescope.setup {
         mappings = {
             i = {
                 ["<C-c>"] = actions.close,
-                ["<CR>"]  = custom_actions.do_edit,
                 ["<A-d>"] = custom_actions.open_drex_buffer,
             },
             n = {
@@ -225,7 +233,11 @@ local mappings = {
     { '<leader>pb', function() builtin.buffers { prompt_title = 'Project Buffers', only_cwd = true } end, 'project buffers' },
     { '<leader>sd', function()
         builtin.live_grep(require('telescope.themes').get_ivy {
-            prompt_title = 'Search in CWD'
+            prompt_title = 'Search in CWD',
+            on_input_filter_cb = function(prompt)
+                -- spaces are replaced with wildcards (like emacs "swiper")
+                return { prompt = prompt:gsub('%s', '.*') }
+            end
         })
     end, 'search in cwd' },
     { '<leader>sD', live_grep_in_dir, 'search in directory' },
