@@ -5,7 +5,10 @@ end
 
 treesitter.setup {
     ensure_installed = "all",
-    ignore_install = { 'help' },
+    ignore_install = {
+        'help',
+        'markdown'
+    },
     highlight = {
         enable = true,
     },
