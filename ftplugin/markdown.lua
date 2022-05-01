@@ -46,3 +46,18 @@ end
 
 my.repeat_map('<Plug>MarkdownTodoCycle', cycle_todo_state)
 vim.keymap.set('n', '<localleader>t', '<Plug>MarkdownTodoCycle', { buffer = true, desc = 'cycle todo state' })
+
+---Create a markdown link element from the currently selected text
+---@param pre_select_cmd string Selection command to execute beforehand if called from normal mode (e.g. 'viW', 'V' etc.)
+---@return function rhs Function which can be used as key mapping
+local function create_link(pre_select_cmd)
+    pre_select_cmd = pre_select_cmd or ''
+    return function()
+        local zreg = vim.fn.getreg('z')
+        vim.cmd(vim.api.nvim_replace_termcodes(':normal! ' .. pre_select_cmd .. '"zc[<C-r>z]()<Left>', true, false, true))
+        vim.fn.setreg('z', zreg)
+    end
+end
+
+vim.keymap.set('x', '<localleader>l', create_link(), { buffer = true, desc = 'create link from selection' })
+vim.keymap.set('n', '<localleader>l', create_link('viW'), { buffer = true, desc = 'create link from WORD' })
