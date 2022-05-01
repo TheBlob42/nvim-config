@@ -92,10 +92,6 @@ packer.startup({function(use)
         -- interactive code evaluation
         'Olical/conjure',
         ft = my.lisps,
-        setup = function()
-            vim.g['conjure#filetypes'] = my.lisps
-            vim.g['conjure#filetype#fennel'] = 'conjure.client.fennel.stdio'
-        end,
     }
 
     use {
@@ -103,9 +99,6 @@ packer.startup({function(use)
         'gpanders/nvim-parinfer',
         ft = my.lisps,
         cmd = { 'ParinferOn', 'ParinferToggle' },
-        setup = function()
-            vim.g.parinfer_filetypes = my.lisps
-        end,
     }
 
     -- TREESITTER
