@@ -12,8 +12,8 @@ gitsigns.setup {
     keymaps = {}, -- NO default keybindings
 }
 
-vim.keymap.set('n', '<leader>gp', require("gitsigns").preview_hunk, { desc = 'preview hunk' })
-vim.keymap.set('n', '<leader>gn', '<Plug>GitSignsNextHunk', { desc = 'next hunk' })
-vim.keymap.set('n', '<leader>gN', '<Plug>GitSignsPrevHunk', { desc = 'previous hunk' })
-vim.keymap.set('n', '<leader>gs', require("gitsigns").stage_hunk, { desc = 'stage hunk' })
-vim.keymap.set('n', '<leader>gr', require("gitsigns").reset_hunk, { desc = 'reset hunk' })
+vim.keymap.set('n', '<leader>gp', require("gitsigns").preview_hunk, { desc = 'preview git hunk' })
+vim.keymap.set('n', '<leader>gn', '<Plug>GitSignsNextHunk', { desc = 'next git hunk' })
+vim.keymap.set('n', '<leader>gN', '<Plug>GitSignsPrevHunk', { desc = 'previous git hunk' })
+vim.keymap.set('n', '<leader>gs', require("gitsigns").stage_hunk, { desc = 'stage git hunk' })
+vim.keymap.set('n', '<leader>gr', require("gitsigns").reset_hunk, { desc = 'reset git hunk' })
