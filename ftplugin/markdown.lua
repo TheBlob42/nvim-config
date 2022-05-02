@@ -23,7 +23,7 @@ vim.keymap.set('n', '<S-TAB>', toggle_all_folds, { expr = true, buffer = true })
 local function cycle_todo_state()
     local row = unpack(vim.api.nvim_win_get_cursor(0))
     local line = vim.api.nvim_get_current_line()
-    local prefix, rest = line:match('^(%s*%-) (.*)$')
+    local prefix, rest = line:match('^(%s*[-*]) (.*)$')
 
     if prefix and rest then
         local state, text = rest:match('^(%[.]) (.*)$')
