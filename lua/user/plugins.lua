@@ -267,6 +267,12 @@ packer.startup({function(use)
         requires = { 'kyazdani42/nvim-web-devicons' },
         config = load_config('plugins.drex'),
     }
+
+    use {
+        -- handle groovy indent correctly
+        'modille/groovy.vim',
+        ft = 'groovy',
+    }
 end,
 config = {
     compile_path = vim.fn.stdpath('config') .. '/lua/packer_compiled.lua',

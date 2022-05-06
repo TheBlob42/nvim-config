@@ -47,6 +47,9 @@
   "gitsigns.nvim": {
     "commit": "b800663"
   },
+  "groovy.vim": {
+    "commit": "392419d"
+  },
   "houdini.nvim": {
     "commit": "3fabe9a"
   },
