@@ -21,4 +21,4 @@ vim.api.nvim_buf_create_user_command(0, 'LuaReload', function(_)
     vim.cmd('luafile ' .. file)
 end, { desc = 'reload/resource the current Lua file' })
 
-vim.keymap.set('n', '<leader>R', '<CMD>LuaReload<CR>', { desc = 'reload lua' })
+vim.keymap.set('n', '<localleader>R', '<CMD>LuaReload<CR>', { buffer = true, desc = 'reload lua' })
