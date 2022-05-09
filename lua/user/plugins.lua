@@ -53,6 +53,7 @@ packer.startup({function(use)
     use {
         -- pretty tabs and easy renaming
         'seblj/nvim-tabline',
+        commit = '49a5651',
         config = load_config('plugins.tabline'),
     }
 
@@ -80,11 +81,9 @@ packer.startup({function(use)
         config = load_config('plugins.autopairs'),
     }
 
-    -- use 'folke/which-key.nvim'
-    -- use till https://github.com/folke/which-key.nvim/pull/253 is merged
     use {
         -- display possible key bindings in a popup
-        'xiyaowong/which-key.nvim',
+        'folke/which-key.nvim',
         config = load_config('plugins.whichkey'),
     }
 
