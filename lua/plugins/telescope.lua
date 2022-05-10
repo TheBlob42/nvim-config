@@ -75,6 +75,14 @@ telescope.setup {
             }
         },
     },
+    pickers = {
+        live_grep = {
+            on_input_filter_cb = function(prompt)
+                -- spaces are replaced with wildcards (like emacs "swiper")
+                return { prompt = prompt:gsub('%s', '.*') }
+            end
+        },
+    },
     extensions = {
         fzf = {
             override_generic_sorter = true,
@@ -232,13 +240,7 @@ local mappings = {
     { '<leader>ss', '<CMD>Telescope current_buffer_fuzzy_find<CR>', 'search in current file' },
     { '<leader>pb', function() builtin.buffers { prompt_title = 'Project Buffers', only_cwd = true } end, 'project buffers' },
     { '<leader>sd', function()
-        builtin.live_grep(require('telescope.themes').get_ivy {
-            prompt_title = 'Search in CWD',
-            on_input_filter_cb = function(prompt)
-                -- spaces are replaced with wildcards (like emacs "swiper")
-                return { prompt = prompt:gsub('%s', '.*') }
-            end
-        })
+        builtin.live_grep(require('telescope.themes').get_ivy { prompt_title = 'Search in CWD' })
     end, 'search in cwd' },
     { '<leader>sD', live_grep_in_dir, 'search in directory' },
 }
