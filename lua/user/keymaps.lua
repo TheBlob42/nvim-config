@@ -105,10 +105,10 @@ local mappings = {
     { '<leader>wD', '<C-W>o', 'delete other windows' },
     { '<leader>ws', '<CMD>split<CR>', 'split window' },
     { '<leader>wv', '<CMD>vsplit<CR>', 'vertical split window' },
-    { '<leader>wL', '<Plug>IncWidth', 'inc widthʳ' },
-    { '<leader>wH', '<Plug>DecWidth', 'dec widthʳ' },
-    { '<leader>wK', '<Plug>IncHeight', 'inc heightʳ' },
-    { '<leader>wJ', '<Plug>DecHeight', 'dec heightʳ' },
+    { '<leader>wL', '<Plug>WinResizeRight', 'win resize rightʳ' },
+    { '<leader>wH', '<Plug>WinResizeLeft', 'win resize leftʳ' },
+    { '<leader>wK', '<Plug>WinResizeUp', 'win resize upʳ' },
+    { '<leader>wJ', '<Plug>WinResizeDown', 'win resize downʳ' },
 }
 
 for _, mapping in ipairs(mappings) do
