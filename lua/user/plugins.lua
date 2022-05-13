@@ -26,7 +26,6 @@ end
 
 local packer = require('packer')
 local snapshot_path = vim.fn.stdpath('config')
-local default_snapshot_name = 'stable'
 
 packer.startup({function(use)
     use 'wbthomason/packer.nvim'
@@ -275,7 +274,6 @@ packer.startup({function(use)
 end,
 config = {
     compile_path = vim.fn.stdpath('config') .. '/lua/packer_compiled.lua',
-    snapshot = default_snapshot_name,
     snapshot_path = snapshot_path,
 }})
 
@@ -300,14 +298,14 @@ if first_install then
     })
 end
 
--- format the given snapshot using 'jq', defaults to 'default_snapshot_name' if no arg is given
+-- format the given snapshot using 'jq'
 vim.api.nvim_create_user_command('PackerSnapshotFormat', function(args)
     if vim.fn.executable('jq') == 0 then
         vim.api.nvim_echo({{ "'jq' was not found in PATH, install it in order to use this command!" , 'ErrorMsg'}}, false, {})
         return
     end
 
-    local snapshot = args.args ~= '' and args.args or default_snapshot_name
+    local snapshot = args.args
     local path = snapshot_path .. '/' .. snapshot
     local tmp = snapshot_path .. '/tmp_' .. snapshot
 
@@ -319,4 +317,4 @@ vim.api.nvim_create_user_command('PackerSnapshotFormat', function(args)
     os.execute('jq --sort-keys . ' .. path .. ' > ' .. tmp)
     os.rename(tmp, path)
     vim.api.nvim_echo({{ "Snapshot '"..snapshot.."' formatted successfully", 'InfoMsg'}}, false, {})
-end, { nargs = '?', desc = "format the given snapshot using 'jq'" })
+end, { nargs = 1, desc = "format the given snapshot using 'jq'" })
