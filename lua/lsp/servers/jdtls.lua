@@ -3,13 +3,14 @@ if not status_ok then
     return
 end
 
--- check if the java debug path is configured
+-- check if (and how) java debugging is configured
 local debug_path = my.lookup(my, { 'sys_local', 'java', 'debug', 'java_debug_path' })
+local test_path = my.lookup(my, { 'sys_local', 'java', 'debug', 'vscode_java_test_path' })
 
 local function jdtls_on_attach(client, bufnr)
     require('lsp.handlers').on_attach(client, bufnr)
 
-    -- initialize dap for jdtls
+    -- initialize dap for jdtls (only if 'java-debug' is configured)
     if debug_path then
         jdtls.setup_dap { hotcodereplace = 'auto' }
         require("jdtls.dap").setup_dap_main_class_configs()
@@ -26,6 +27,12 @@ local function jdtls_on_attach(client, bufnr)
                 port = 5005,
             }
         end, { buffer = bufnr, desc = 'attach to gradle' })
+
+        -- jdtls specific keybindings for running tests (only if 'vscode-java-test' is configured)
+        if test_path then
+            vim.keymap.set('n', '<localleader>dtt', require('jdtls').test_nearest_method, { buffer = bufnr, desc = 'test method'})
+            vim.keymap.set('n', '<localleader>dtc', require('jdtls').test_class, { buffer = bufnr, desc = 'test class'})
+        end
     end
 
     -- add JDTLS specific commands
@@ -67,11 +74,15 @@ local function start()
 
         -- setup bundles for debug adapter protocol
         if debug_path then
-            config.init_options = {
-                bundles = {
-                    vim.fn.glob(debug_path .. '/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar')
-                }
+            local debug_bundles = {
+                vim.fn.glob(debug_path .. '/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar')
             }
+
+            if test_path then
+                vim.list_extend(debug_bundles, vim.split(vim.fn.glob(test_path .. '/server/*.jar'), '\n'))
+            end
+
+            config.init_options = { bundles = debug_bundles }
         end
 
         jdtls.start_or_attach(config)
