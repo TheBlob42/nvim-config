@@ -110,7 +110,13 @@ local function live_grep_in_dir()
         return
     end
 
-    local path = vim.fn.getcwd()
+    local path = vim.fn.expand('%')
+    if path == '' or vim.opt.buftype:get('buftype') == 'nofile' then
+        path = vim.fn.getcwd()
+    else
+        path = vim.fn.fnamemodify(path, ':p:h')
+    end
+
     local entry_maker = function(entry)
         local dir_name = '.' .. entry:sub(#path+1)
         return {
