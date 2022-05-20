@@ -1,7 +1,4 @@
----Simple Wrapper around `print` and `vim.inspect`
-function P(...)
-    print(unpack(vim.tbl_map(vim.inspect, { ... })))
-end
+P = vim.pretty_print -- shortening for easier debugging
 
 ---Try to require all given LUA modules
 ---If at least one "require" fails log an appropriate error and return `false`
