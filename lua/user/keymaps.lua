@@ -3,8 +3,6 @@ local map = function(mode, lhs, rhs, opts)
     vim.keymap.set(mode, lhs, rhs, opts)
 end
 
--- TODO checkout: http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript
-
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- ~ some general keybindings ~
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -30,6 +28,41 @@ map('v', '<', '<gv')
 
 -- paste in visual mode without replacing register content
 map('x', 'p', [['pgv"' . v:register . 'y']], { noremap = true, expr = true })
+
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- ~ multiple cursors (sort of) ~
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- see: http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript
+
+local mc_select = [[y/\V\C<C-r>=escape(@", '/')<CR><CR>]]
+local function mc_macro(selection)
+    selection = selection or ''
+
+    return function()
+        if vim.fn.reg_recording() == 'z' then
+            return 'q'
+        end
+
+        if vim.fn.getreg('z') ~= '' then
+            return 'n@z'
+        end
+
+        return selection .. '*Nqz'
+    end
+end
+
+map('n', 'cn', '*``cgn', { desc = 'mc change word (forward)' })
+map('n', 'cN', '*``cgN', { desc = 'mc change word (backward)' })
+map('x', 'cn', mc_select .. '``cgn', { desc = 'mc change selection (forward)' })
+map('x', 'cN', mc_select .. '``cgN', { desc = 'mc change selection (backward)' })
+
+map('n', 'cq', '*Nqz', { desc = 'mc start macro (foward)' })
+map('n', 'cQ', '#Nqz', { desc = 'mc start macro (backward)' })
+map('n', '<F2>', mc_macro(), { expr = true, desc = 'mc end or replay macro' })
+
+map('x', 'cq', mc_select .. '``qz', { desc = 'mc start macro (foward)' })
+map('x', 'cQ', mc_select:gsub('/', '?') .. '``qz', { desc = 'mc start macro (backward)' })
+map('x', '<F2>', mc_macro(mc_select), { expr = true, desc = 'mc end or replay macro' })
 
 -- ~~~~~~~~~~~~~~~~~~~~~~
 -- ~ leader keybindings ~
