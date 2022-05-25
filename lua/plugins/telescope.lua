@@ -16,6 +16,17 @@ local make_entry = require('telescope.make_entry')
 -- ~ custom actions ~
 -- ~~~~~~~~~~~~~~~~~~
 
+---Get the cwd from the current file picker
+---Return `nil` if the current picker is NOT a file picker
+local function get_cwd()
+    local selection = action_state.get_selected_entry()
+
+    -- check `selection.text` to not open a search from a "search/live_grep" picker
+    if selection and selection.cwd and not selection.text then
+        return selection.cwd
+    end
+end
+
 local custom_actions = {}
 
 -- get some basic "paste" functionality in the prompt buffer
@@ -27,14 +38,34 @@ end
 ---Open a DREX buffer at the cwd of the selected entry (if possible)
 ---@param prompt_bufnr number
 function custom_actions.open_drex_buffer(prompt_bufnr)
-    local selection = action_state.get_selected_entry()
-    if selection and selection.cwd then
+    local cwd = get_cwd()
+    if cwd then
         actions.close(prompt_bufnr)
-        require('drex').open_directory_buffer(selection.cwd)
+        require('drex').open_directory_buffer(cwd)
         return
     end
 
     vim.notify('Open DREX buffer not possible in this Telescope picker', vim.log.levels.WARN, {})
+end
+
+---Start a `live_grep` search from the cwd of the current picker
+---Only works for file pickers (entries have a `cwd` property)
+---@param prompt_bufnr number
+function custom_actions.start_search(prompt_bufnr)
+    local cwd = get_cwd()
+    if cwd then
+        actions.close(prompt_bufnr)
+        local title = vim.fn.fnamemodify(cwd, ':~')
+        vim.schedule(function()
+            require('telescope.builtin').live_grep {
+                prompt_title = "Search in '" .. title .. "'",
+                search_dirs = { cwd },
+            }
+        end)
+        return
+    end
+
+    vim.notify('Starting a Live Grep search is not possible from this Telescope picker!', vim.log.levels.WARN, {})
 end
 
 custom_actions = transform_mod(custom_actions)
@@ -66,12 +97,15 @@ telescope.setup {
             i = {
                 ["<C-c>"] = actions.close,
                 ["<A-d>"] = custom_actions.open_drex_buffer,
+                ["<A-s>"] = custom_actions.start_search,
             },
             n = {
                 ["p"]     = custom_actions.paste,
                 ["q"]     = actions.close,
                 ["fd"]    = actions.close,
                 ["<C-c>"] = actions.close,
+                ["<A-d>"] = custom_actions.open_drex_buffer,
+                ["<A-s>"] = custom_actions.start_search,
             }
         },
     },
