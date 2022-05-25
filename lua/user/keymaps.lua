@@ -64,6 +64,23 @@ map('x', 'cq', mc_select .. '``qz', { desc = 'mc start macro (foward)' })
 map('x', 'cQ', mc_select:gsub('/', '?') .. '``qz', { desc = 'mc start macro (backward)' })
 map('x', '<F2>', mc_macro(mc_select), { expr = true, desc = 'mc end or replay macro' })
 
+-- check if file belongs to a Gradle project and add the appropriate key bindings
+vim.api.nvim_create_autocmd('BufEnter', {
+    callback = function(opts)
+        vim.api.nvim_create_autocmd('BufWinEnter', {
+            buffer = opts.buf,
+            once = true,
+            callback = function()
+                if require('user.commands.gradlew').get_gradlew_script_path() then
+                    vim.keymap.set('n', '<localleader>gg', '<CMD>GradlewList<CR>', { buffer = true })
+                    vim.keymap.set('n', '<localleader>gc', '<CMD>GradlewClearCache<CR>', { buffer = true })
+                    vim.keymap.set('n', '<localleader>gt', ':GradlewTask ', { buffer = true })
+                end
+            end
+        })
+    end
+})
+
 -- ~~~~~~~~~~~~~~~~~~~~~~
 -- ~ leader keybindings ~
 -- ~~~~~~~~~~~~~~~~~~~~~~

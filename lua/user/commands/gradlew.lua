@@ -1,5 +1,5 @@
 ---Search upwards from the current path for the 'gradlew' script
----@return string Absolute path of the corresponding 'gradlew' script
+---@return string Absolute path of the corresponding 'gradlew' script or `nil` if not found
 local function get_gradlew_script_path()
     local path
     local buf_name = vim.api.nvim_buf_get_name(0)
@@ -13,7 +13,7 @@ local function get_gradlew_script_path()
     local gradlew_file = vim.fn.findfile('gradlew', path .. ';')
 
     if gradlew_file == '' then
-        error("There is no 'gradlew' script! Are you within a Gradle project?")
+        return
     end
 
     return vim.fn.fnameescape(vim.fn.fnamemodify(gradlew_file, ':p:h'))
@@ -25,6 +25,10 @@ end
 ---@param gradlew_path string? Path to the 'gradlew' script. Will search from the current buffer if not provided
 local function gradlew_exec(task, gradlew_path)
     gradlew_path = gradlew_path or get_gradlew_script_path()
+    if not gradlew_path then
+        vim.api.nvim_echo({{ "No 'gradlew' script was found! Are your within a Gradle project?", 'WarningMsg' }}, false, {})
+        return
+    end
 
     -- terminal buffer names use the short (~) version for the home folder
     local escaped_path = vim.fn.fnamemodify(gradlew_path, ":~")
@@ -73,6 +77,10 @@ local cached_task = {}
 ---@param gradlew_path string? Path to the 'gradlew' script. Will search from the current buffer if not provided
 local function task_list(gradlew_path)
     gradlew_path = gradlew_path or get_gradlew_script_path()
+    if not gradlew_path then
+        vim.api.nvim_echo({{ "No 'gradlew' script was found! Are your within a Gradle project?", 'WarningMsg' }}, false, {})
+        return
+    end
 
     if not cached_task[gradlew_path] then
         local status = 'progress'
@@ -151,3 +159,7 @@ end, { nargs = 1, desc = 'execute gradlew task' })
 vim.api.nvim_create_user_command('GradlewList', function(_)
     task_list()
 end, { desc = 'list available gradlew tasks' })
+
+return {
+    get_gradlew_script_path = get_gradlew_script_path
+}
