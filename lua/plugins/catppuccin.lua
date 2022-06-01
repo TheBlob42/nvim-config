@@ -11,7 +11,7 @@ local function highlight_adaptions()
     vim.cmd [[ hi! link debugPC TSNote ]]
 end
 
--- startup NVIM in dark mode after 7PM
+-- startup NVIM in dark mode in the evening hours
 local hour = os.date('*t').hour
 if hour > 18 or hour < 8 then
     vim.g.catppuccin_flavour = dark
