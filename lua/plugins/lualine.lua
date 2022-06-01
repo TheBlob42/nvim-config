@@ -24,7 +24,7 @@ local drex_extension = {
 
 lualine.setup {
     options = {
-        theme = 'auto',
+        theme = 'catppuccin',
     },
     extensions = { drex_extension },
     sections = {

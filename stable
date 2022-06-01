@@ -5,6 +5,9 @@
   "bufdelete.nvim": {
     "commit": "93e71aa"
   },
+  "catppuccin": {
+    "commit": "773d339"
+  },
   "cmp-buffer": {
     "commit": "12463cf"
   },
@@ -40,9 +43,6 @@
   },
   "git-blame.nvim": {
     "commit": "8ab29dd"
-  },
-  "github-nvim-theme": {
-    "commit": "eeac2e7"
   },
   "gitsigns.nvim": {
     "commit": "aca84fd"

@@ -110,8 +110,9 @@ packer.startup({function(use)
 
     -- COLORSCHEME & STATUSLINE
     use {
-        'projekt0n/github-nvim-theme',
-        config = load_config('plugins.github_theme'),
+        "catppuccin/nvim",
+        as = "catppuccin",
+        config = load_config('plugins.catppuccin'),
     }
 
     use {
