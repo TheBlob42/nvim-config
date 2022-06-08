@@ -95,6 +95,10 @@ my.repeat_map('<Plug>PrevError', table.concat({
     '<CMD>lua vim.diagnostic.open_float { border = "rounded" }<CR>'
 }, ''))
 
+-- make moving tabs repeatable (with `vim-repeat`)
+my.repeat_map('<Plug>MoveTabLeft',  '<CMD>-tabmove<CR>')
+my.repeat_map('<Plug>MoveTabRight', '<CMD>+tabmove<CR>')
+
 ---Remove all trailing whitespaces within the current buffer
 ---Retain cursor position & last search content
 local function remove_trailing_whitespaces()
@@ -141,8 +145,8 @@ local mappings = {
     -- tabs
     { '<leader>tn', '<CMD>TabNew<CR>', 'new tab' },
     { '<leader>td', '<CMD>tabclose<CR>', 'delete tab' },
-    { '<leader>tH', '<CMD>-tabmove<CR>', 'move tab left' },
-    { '<leader>tL', '<CMD>+tabmove<CR>', 'move tab right' },
+    { '<leader>tH', '<Plug>MoveTabLeft', 'move tab left' },
+    { '<leader>tL', '<Plug>MoveTabRight', 'move tab right' },
     { '<leader>th', '<CMD>tabprevious<CR>', 'goto tab left' },
     { '<leader>tl', '<CMD>tabnext<CR>', 'goto tab right' },
     --windows
