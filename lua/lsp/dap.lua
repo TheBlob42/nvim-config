@@ -49,7 +49,10 @@ return {
                 dap.set_breakpoint(condition)
             end)
         end, { buffer = bufnr, desc = 'set breakpoint with condition' })
-        vim.keymap.set('n', '<localleader>dbl', dap.list_breakpoints, { buffer = bufnr, desc = 'list breakpoints' })
+        vim.keymap.set('n', '<localleader>dbl', function()
+            dap.list_breakpoints()
+            vim.cmd('copen')
+        end, { buffer = bufnr, desc = 'list breakpoints' })
         vim.keymap.set('n', '<localleader>dbC', dap.clear_breakpoints, { buffer = bufnr, desc = 'clear all breakpoints' })
     end
 }
