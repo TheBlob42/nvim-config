@@ -59,7 +59,7 @@ To update the installed plugins follow these steps:
 - run `PackerSync`
 - fix any problems that might occur
 - run `PackerSnapshot stable`
-- run `PackerSnapshotFormat` (to make sure the git diff is as small as possible)
+- run `PackerSnapshotFormat stable` (to make sure the git diff is as small as possible)
 
 ## LSP
 
