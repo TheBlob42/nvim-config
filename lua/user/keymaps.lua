@@ -144,6 +144,7 @@ local mappings = {
     { '<leader>sc', '<CMD>nohl<CR>', 'clear search highlights' },
     -- tabs
     { '<leader>tn', '<CMD>TabNew<CR>', 'new tab' },
+    { '<leader>tt', '<CMD>SwitchTab<CR>', 'switch tab' },
     { '<leader>td', '<CMD>tabclose<CR>', 'delete tab' },
     { '<leader>tH', '<Plug>MoveTabLeft', 'move tab left' },
     { '<leader>tL', '<Plug>MoveTabRight', 'move tab right' },
