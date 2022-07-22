@@ -36,3 +36,50 @@ for _, ft in ipairs({ 'lua', 'markdown' }) do
 end
 
 require("luasnip/loaders/from_vscode").lazy_load()
+
+-- ~~~~~~~~~~~~~~~~~~~~~
+-- ~ snippet selection ~
+-- ~~~~~~~~~~~~~~~~~~~~~
+
+vim.api.nvim_create_user_command('ExpandSnippet', function()
+    local snippet_collection = require('luasnip.session.snippet_collection')
+    local snippets = snippet_collection.get_snippets('all', 'snippets')
+
+    local ft = vim.api.nvim_buf_get_option(0, 'filetype')
+    if ft ~= '' then
+        snippets = vim.tbl_extend('force', snippets, snippet_collection.get_snippets(ft, 'snippets'))
+    end
+
+    local max_trigger = 0
+    local max_name = 0
+
+    for _, s in ipairs(snippets) do
+        if #s.trigger > max_trigger then
+            max_trigger = #s.trigger
+        end
+
+        if #s.name > max_name then
+            max_name = #s.name
+        end
+    end
+
+    vim.ui.select(snippets, {
+        prompt = 'Available snippets for "'..ft..'"',
+        format_item = function(s)
+            local trigger = s.trigger .. string.rep(' ', max_trigger - #s.trigger)
+            local name = s.name .. string.rep(' ', max_name - #s.name)
+            local desc = s.trigger == s.dscr[1] and '' or s.dscr[1]
+
+            return trigger .. ' | ' .. name .. ' | ' .. desc
+        end,
+    }, function(s)
+        if s then
+            vim.cmd('normal a') -- make sure were in insert mode
+            require('luasnip').snip_expand(s)
+        end
+    end)
+end, {
+    desc = 'Select and expand one of all available snippets',
+})
+
+vim.keymap.set('n', '<leader>is', '<CMD>ExpandSnippet<CR>', { desc = 'insert snippet' })
