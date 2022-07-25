@@ -44,6 +44,9 @@
   "git-blame.nvim": {
     "commit": "1bb7328"
   },
+  "gitlinker.nvim": {
+    "commit": "782e98d"
+  },
   "gitsigns.nvim": {
     "commit": "bb6c3bf"
   },

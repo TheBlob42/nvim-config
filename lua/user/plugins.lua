@@ -143,6 +143,14 @@ packer.startup({function(use)
         module = 'lazygit',
     }
 
+    use {
+        -- create shareable file permalinks
+        'ruifm/gitlinker.nvim',
+        requires = 'nvim-lua/plenary.nvim',
+        module = 'gitlinker',
+        config = load_config('plugins.gitlinker'),
+    }
+
     -- TELESCOPE
     use {
         'nvim-telescope/telescope.nvim',

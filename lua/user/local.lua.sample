@@ -11,6 +11,15 @@ my.sys_local = {
     project_base_dirs = {
         -- e.g. '/home/user/projects'
     },
+    git = {
+        -- custom callback funtions for `gitlinker.nvim`
+        -- see https://github.com/ruifm/gitlinker.nvim#callbacks
+        gitlinker_callbacks = {
+            -- ['git.seriouscompany.com'] = function(url_data)
+            --     return ''
+            -- end
+        }
+    },
     -- java configuration for this computer
     java = {
         runtimes = {
