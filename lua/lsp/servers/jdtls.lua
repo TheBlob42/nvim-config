@@ -66,6 +66,9 @@ local function start()
             flags = {
                 allow_incremental_sync = true,
             },
+            -- lombok support is disabled by default
+            -- https://github.com/williamboman/nvim-lsp-installer/pull/783
+            use_lombok_agent = true,
         }
 
         -- configure the server cmd (via `nvim-lsp-installer`)
