@@ -5,6 +5,8 @@ end
 
 local M = {}
 
+local highlight_group = vim.api.nvim_create_augroup('LspDocumentHighlight', {})
+
 function M.on_attach(client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -62,7 +64,7 @@ function M.on_attach(client, bufnr)
 
     -- set autocommands conditional on server capabilities
     if client.resolved_capabilities.document_highlight then
-        local highlight_group = vim.api.nvim_create_augroup('LspDocumentHighlight', {})
+        vim.api.nvim_clear_autocmds { buffer = bufnr }
         vim.api.nvim_create_autocmd('CursorHold', {
             group = highlight_group,
             buffer = bufnr,
