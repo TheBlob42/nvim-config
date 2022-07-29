@@ -280,6 +280,12 @@ packer.startup({function(use)
         'modille/groovy.vim',
         ft = 'groovy',
     }
+
+    use {
+        -- perform diffs only on parts of a buffer
+        'AndrewRadev/linediff.vim',
+        cmd = 'Linediff',
+    }
 end,
 config = {
     compile_path = vim.fn.stdpath('config') .. '/lua/packer_compiled.lua',

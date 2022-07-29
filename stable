@@ -68,6 +68,9 @@
   "lightspeed.nvim": {
     "commit": "a4b4277"
   },
+  "linediff.vim": {
+    "commit": "c7710db"
+  },
   "lspkind-nvim": {
     "commit": "57e5b5d"
   },
