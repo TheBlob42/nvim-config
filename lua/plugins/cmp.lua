@@ -8,6 +8,13 @@ end
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 cmp.setup {
+    enabled = function()
+        -- disable cmp for prompt buffers e.g. TelescopePrompt
+        if vim.bo.buftype == 'prompt' then
+            return false
+        end
+        return true
+    end,
     snippet = {
         expand = function(args)
             luasnip.lsp_expand(args.body)
