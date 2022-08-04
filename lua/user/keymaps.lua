@@ -86,14 +86,13 @@ vim.api.nvim_create_autocmd('BufEnter', {
 -- ~~~~~~~~~~~~~~~~~~~~~~
 
 -- create repeatable diagnostics mappings (with `vim-repeat`)
-my.repeat_map('<Plug>NextError', table.concat({
-    '<CMD>lua vim.diagnostic.goto_next { float = false }<CR>',
-    '<CMD>lua vim.diagnostic.open_float { border = "rounded" }<CR>'
-}, ''))
-my.repeat_map('<Plug>PrevError', table.concat({
-    '<CMD>lua vim.diagnostic.goto_prev { float = false }<CR>',
-    '<CMD>lua vim.diagnostic.open_float { border = "rounded" }<CR>'
-}, ''))
+-- unfortunately repeating with the floating diagnostics window does not work correctly
+my.repeat_map('<Plug>NextError', function()
+    vim.diagnostic.goto_next { float = false }
+end)
+my.repeat_map('<Plug>PrevError', function()
+    vim.diagnostic.goto_prev { float = false }
+end)
 
 -- make moving tabs repeatable (with `vim-repeat`)
 my.repeat_map('<Plug>MoveTabLeft',  '<CMD>-tabmove<CR>')
