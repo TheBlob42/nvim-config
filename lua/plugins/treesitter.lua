@@ -11,6 +11,10 @@ treesitter.setup {
     },
     highlight = {
         enable = true,
+        -- disable highlighting for large buffers
+        disable = function(_, buf)
+            return vim.api.nvim_buf_line_count(buf) > 30000
+        end,
     },
     incremental_selection = {
         enable = true,
