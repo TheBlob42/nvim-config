@@ -65,8 +65,8 @@
   "lazygit.nvim": {
     "commit": "9c73fd6"
   },
-  "lightspeed.nvim": {
-    "commit": "a4b4277"
+  "leap.nvim": {
+    "commit": "c7d8bd4"
   },
   "linediff.vim": {
     "commit": "c7710db"

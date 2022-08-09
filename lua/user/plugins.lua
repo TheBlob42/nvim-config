@@ -35,7 +35,12 @@ packer.startup({function(use)
     use 'tpope/vim-repeat'         -- repeat plug mappings with '.'
     use 'tpope/vim-sleuth'         -- auto configure `shiftwidth`
     use 'tpope/vim-abolish'        -- working with variant of words
-    use 'ggandor/lightspeed.nvim'  -- sneak like motion plugin
+
+    use {
+        -- sneak like motion plugin
+        'ggandor/leap.nvim',
+        config = load_config('plugins.leap'),
+    }
 
     use {
         -- improve default ui interface
