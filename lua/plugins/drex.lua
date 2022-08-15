@@ -4,7 +4,7 @@ if not status_ok then
 end
 
 vim.keymap.set('n', '<leader>N', '<CMD>DrexDrawerToggle<CR>', { desc = 'toggle drawer' })
-vim.keymap.set('n', '<leader>fF', '<CMD>DrexDrawerFindFileAndFocus<CR>', { desc = 'find file in drawer' })
+vim.keymap.set('n', '<leader>fn', '<CMD>DrexDrawerFindFileAndFocus<CR>', { desc = 'find file in drawer' })
 
 -- add some vinegar flavor
 vim.keymap.set('n', '~', '<CMD>Drex ~<CR>', { desc = 'open home dir' })
