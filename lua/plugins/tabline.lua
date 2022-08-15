@@ -29,7 +29,7 @@ vim.api.nvim_create_user_command('SwitchTab', function()
         -- check for custom tabpage title (fall back to active buffer name)
         local status, title = pcall(vim.api.nvim_tabpage_get_var, tabpage, 'TablineTitle')
         if not status then
-            local win = vim.fn.tabpagewinnr(tabpage)
+            local win = vim.api.nvim_tabpage_get_win(tabpage)
             local buf = vim.fn.winbufnr(win)
             title = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ':t')
 
