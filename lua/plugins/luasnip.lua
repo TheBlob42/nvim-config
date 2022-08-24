@@ -35,7 +35,7 @@ for _, ft in ipairs({ 'lua', 'markdown' }) do
     os.remove(repo_path .. ft .. '.json')
 end
 
-require("luasnip/loaders/from_vscode").lazy_load()
+require("luasnip.loaders.from_vscode").lazy_load()
 
 -- ~~~~~~~~~~~~~~~~~~~~~
 -- ~ snippet selection ~
