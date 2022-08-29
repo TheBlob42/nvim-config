@@ -137,87 +137,6 @@ require('telescope').load_extension('fzf')
 -- ~ custom functions ~
 -- ~~~~~~~~~~~~~~~~~~~~
 
-local function live_grep_in_dir()
-    if vim.fn.executable('find') < 1 then
-        vim.api.nvim_echo({ "'find' was not found in PATH, install it in order to use this command!", 'ErrorMsg' }, true, {})
-        return
-    end
-
-    local path = vim.fn.expand('%')
-    if path == '' or vim.opt.buftype:get('buftype') == 'nofile' then
-        path = vim.fn.getcwd()
-    else
-        path = vim.fn.fnamemodify(path, ':p:h')
-    end
-
-    local entry_maker = function(entry)
-        local dir_name = '.' .. entry:sub(#path+1)
-        return {
-            value = entry,
-            display = dir_name,
-            ordinal = dir_name,
-        }
-    end
-
-    pickers.new({}, {
-        prompt_title = 'Select Directory',
-        results_title = path,
-        finder = finders.new_oneshot_job({ "find", path, '-maxdepth', '1', '-type', 'd' }, { entry_maker = entry_maker }),
-        sorter = conf.generic_sorter({}),
-        attach_mappings = function(prompt_bufnr, map)
-            -- navigate into the parent directory of the current path
-            local goto_parent_dir = function()
-                path = vim.fn.fnamemodify(path, ':h')
-
-                local current_picker = action_state.get_current_picker(prompt_bufnr)
-                current_picker.results_border:change_title(path)
-
-                local finder = finders.new_oneshot_job({ "find", path, '-maxdepth', '1', '-type', 'd' }, { entry_maker = entry_maker })
-                current_picker:refresh(finder, { reset_prompt = true })
-            end
-
-            -- navigate into the selected directory and continue
-            local goto_selected_dir = function()
-                local selection = action_state.get_selected_entry()
-                path = selection.value
-
-                local current_picker = action_state.get_current_picker(prompt_bufnr)
-                current_picker.results_border:change_title(path)
-
-                local finder = finders.new_oneshot_job({ "find", path, '-maxdepth', '1', '-type', 'd' }, { entry_maker = entry_maker })
-                current_picker:refresh(finder, { reset_prompt = true })
-            end
-
-            -- start the search with the current selected entry as search directory
-            local start_search = function()
-                actions.close(prompt_bufnr)
-                local selection = action_state.get_selected_entry()
-
-                if selection then
-                    local target_dir = selection.value
-                    local title = vim.fn.fnamemodify(target_dir, ':~')
-
-                    vim.schedule(function()
-                        require('telescope.builtin').live_grep {
-                            prompt_title = "Search in '" .. title .. "'",
-                            search_dirs = { target_dir },
-                        }
-                    end)
-                end
-            end
-
-            map('i', '<C-SPACE>', start_search)
-            map('i', '<C-h>', goto_parent_dir)
-            map('i', '<CR>', goto_selected_dir)
-            map('n', '<C-SPACE>', start_search)
-            map('n', '<C-h>', goto_parent_dir)
-            map('n', '<CR>', goto_selected_dir)
-
-            return true
-        end,
-    }):find()
-end
-
 local function my_keymaps()
     local keymaps_encountered = {}
     local keymaps_table = {}
@@ -282,7 +201,6 @@ local mappings = {
     { '<leader>sd', function()
         builtin.live_grep(require('telescope.themes').get_ivy { prompt_title = 'Search in CWD' })
     end, 'search in cwd' },
-    { '<leader>sD', live_grep_in_dir, 'search in directory' },
 }
 
 for _, mapping in ipairs(mappings) do
