@@ -3,7 +3,7 @@ if not status_ok then
     return
 end
 
-local custom_callbacks = my.lookup(my.sys_local, { 'git', 'gitlinker_callbacks' }, {})
+local custom_callbacks = vim.tbl_get(my.sys_local, 'git', 'gitlinker_callbacks') or {}
 
 gitlinker.setup {
     mappings = '<leader>gy',

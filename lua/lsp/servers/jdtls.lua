@@ -4,8 +4,8 @@ if not status_ok then
 end
 
 -- check if (and how) java debugging is configured
-local debug_path = my.lookup(my, { 'sys_local', 'java', 'debug', 'java_debug_path' })
-local test_path = my.lookup(my, { 'sys_local', 'java', 'debug', 'vscode_java_test_path' })
+local debug_path = vim.tbl_get(my, 'sys_local', 'java', 'debug', 'java_debug_path')
+local test_path = vim.tbl_get(my, 'sys_local', 'java', 'debug', 'vscode_java_test_path')
 
 local function jdtls_on_attach(client, bufnr)
     require('lsp.handlers').on_attach(client, bufnr)

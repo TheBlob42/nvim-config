@@ -32,7 +32,7 @@ end
 ---@param plug string Name for the <Plug> mapping. Needs to start with "<Plug>"
 ---@param rhs string|function Either a mapping string or a function that should be executed
 function my.repeat_map(plug, rhs)
-    if not my.lookup(packer_plugins, { 'vim-repeat' }) then
+    if not vim.tbl_get(packer_plugins, 'vim-repeat') then
         print(debug.getinfo(2).source .. ' --> `vim-repeat` is not loaded!')
         return
     end
@@ -56,26 +56,4 @@ function my.repeat_map(plug, rhs)
     end
 
     vim.keymap.set('n', plug, command, { silent = true })
-end
-
----Extract a value from a nested table structure
----If there is a `nil` somewhere in the table structure return `nil` (or optional `default` value)
----If `tbl` is nil or not a table return `nil`
----@param tbl table The table to search in
----@param keys list List of keys to look up
----@param default any? Default value which should be returned if nothing is found
----@return any
-function my.lookup(tbl, keys, default)
-    if not tbl or type(tbl) ~= 'table' then
-        return nil
-    end
-
-    for _, key in ipairs(keys) do
-        tbl = tbl[key]
-        if not tbl then
-            return default
-        end
-    end
-
-    return tbl
 end

@@ -123,8 +123,7 @@ telescope.setup {
             override_file_sorter = true,
         },
         project = {
-            -- base_dirs = my.sys_local.project_base_dirs
-            base_dirs = my.lookup(my, { 'sys_local', 'project_base_dirs' })
+            base_dirs = vim.tbl_get(my, 'sys_local', 'project_base_dirs')
         },
     },
 }
