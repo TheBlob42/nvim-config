@@ -64,7 +64,10 @@ function M.on_attach(client, bufnr)
 
     -- set autocommands conditional on server capabilities
     if client.resolved_capabilities.document_highlight then
-        vim.api.nvim_clear_autocmds { buffer = bufnr }
+        vim.api.nvim_clear_autocmds {
+            group = highlight_group,
+            buffer = bufnr,
+        }
         vim.api.nvim_create_autocmd('CursorHold', {
             group = highlight_group,
             buffer = bufnr,
