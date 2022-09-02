@@ -64,6 +64,22 @@ function custom_actions.start_search(prompt_bufnr)
     vim.notify('Starting a Live Grep search is not possible from this Telescope picker!', vim.log.levels.WARN, {})
 end
 
+---Open a new terminal buffer in the cwd of the current picker
+---Only works for file pickers (entries have a `cwd` property)
+---@param prompt_bufnr number
+function custom_actions.open_terminal(prompt_bufnr)
+    local cwd = get_cwd()
+    if cwd then
+        actions.close(prompt_bufnr)
+        local buf = vim.api.nvim_create_buf(true, false)
+        vim.api.nvim_set_current_buf(buf)
+        vim.fn.termopen(vim.o.shell, { cwd = cwd })
+        return
+    end
+
+    vim.notify('Opening a terminal is not possible from this Telescope picker!', vim.log.levels.WARN, {})
+end
+
 custom_actions = transform_mod(custom_actions)
 
 -- ~~~~~~~~~~~~~~~~~~~
@@ -94,6 +110,7 @@ telescope.setup {
                 ["<C-c>"] = actions.close,
                 ["<A-d>"] = custom_actions.open_drex_buffer,
                 ["<A-s>"] = custom_actions.start_search,
+                ["<A-t>"] = custom_actions.open_terminal,
             },
             n = {
                 ["p"]     = custom_actions.paste,
@@ -102,6 +119,7 @@ telescope.setup {
                 ["<C-c>"] = actions.close,
                 ["<A-d>"] = custom_actions.open_drex_buffer,
                 ["<A-s>"] = custom_actions.start_search,
+                ["<A-t>"] = custom_actions.open_terminal,
             }
         },
     },
