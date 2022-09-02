@@ -8,7 +8,6 @@ blankline.setup {
     filetype_exclude = {
         'help',
         'packer',
-        'drex',
     },
     viewport_buffer = 30,
     use_treesitter = true,

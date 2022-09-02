@@ -1,4 +1,4 @@
-local status_ok, drex, config, utils = my.req('drex', 'drex.config', 'drex.utils')
+local status_ok, drex, config, utils, elements = my.req('drex', 'drex.config', 'drex.utils', 'drex.elements')
 if not status_ok then
     return
 end
@@ -14,7 +14,7 @@ vim.keymap.set('n', '-', function()
         drex.open_directory_buffer() -- open at cwd
     else
         drex.open_directory_buffer(vim.fn.fnamemodify(path, ':h'))
-        drex.focus_element(0, path)
+        elements.focus_element(0, path)
     end
 end, { desc = 'open parent dir' })
 
@@ -23,7 +23,7 @@ config.configure {
     keybindings = {
         ['n'] = {
             ['~'] = '<CMD>Drex ~<CR>',
-            ['-'] = '<CMD>lua require("drex").open_parent_directory()<CR>',
+            ['-'] = '<CMD>lua require("drex.elements").open_parent_directory()<CR>',
             -- open with system default application
             ['X'] = function()
                 local path = utils.get_element(vim.api.nvim_get_current_line())
@@ -35,7 +35,7 @@ config.configure {
                 while true do
                     local line = vim.api.nvim_buf_get_lines(0, row - 1, row, false)[1]
                     if utils.is_closed_directory(line) then
-                        drex.expand_element(0, row)
+                        elements.expand_element(0, row)
                     end
                     row = row + 1
 
@@ -50,7 +50,7 @@ config.configure {
                 while true do
                     local line = vim.api.nvim_buf_get_lines(0, row - 1, row, false)[1]
                     if utils.is_open_directory(line) then
-                        drex.collapse_directory(0, row)
+                        elements.collapse_directory(0, row)
                     end
                     row = row + 1
 
