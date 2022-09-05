@@ -106,6 +106,33 @@ There is a dedicated keybinding for this task:
 	<localleader>dG
 <
 =============================================================================
+JAVA                                                                  *my-java*
+
+Everything about Java and JDTLS.
+
+-----------------------------------------------------------------------------
+CLASSPATH                                                   *my-java-classpath*
+
+Make sure that all source sets and folders of your project are correctly
+referenced in the `.classpath` file. Should you encounter a situation in which
+a class can not be found during autocompletion or a resource file (e.g.
+`log4j2.xml`) is not taken into consideration when running a unit test or
+something similar, take a peek and check if everything is set up correctly.
+
+You can easily add the missing `<classpathentry>` yourself to fix these kind
+of issues. Take the already existing entries for some inspiration:
+>
+	<classpathentry kind="src"
+			output="bin/test"
+			path="src/test/resources">
+		<attributes>
+			<attribute name="gradle_scope" value="test"/>
+			<attribute name="gradle_used_by_scope" value="test"/>
+			<attribute name="test" value="true"/>
+		</attributes>
+	</classpathentry>
+<
+=============================================================================
 MACROS HELP                                                         *my-macros*
 
 Everything about Neovim macros.
