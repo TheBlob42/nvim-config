@@ -83,6 +83,9 @@
   "markdown-preview.nvim": {
     "commit": "02cc387"
   },
+  "modes.nvim": {
+    "commit": "4eefe78"
+  },
   "nvim-autopairs": {
     "commit": "0a18e10"
   },
