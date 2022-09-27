@@ -24,6 +24,36 @@ config.configure {
         ['n'] = {
             ['~'] = '<CMD>Drex ~<CR>',
             ['-'] = '<CMD>lua require("drex.elements").open_parent_directory()<CR>',
+            ['l'] = function()
+                local start = vim.api.nvim_win_get_cursor(0)
+
+                while true do
+                    elements.expand_element()
+
+                    local row = vim.api.nvim_win_get_cursor(0)[1]
+                    local lines = vim.api.nvim_buf_get_lines(0, row - 1, row + 2, false)
+
+                    -- special case for files
+                    if lines[1] and not utils.is_directory(lines[1]) then
+                        return
+                    end
+
+                    -- check if a given line is a child element of the expanded element
+                    local is_child = function(l)
+                        if not l then
+                            return false
+                        end
+                        return vim.startswith(utils.get_element(l), utils.get_element(lines[1]) .. utils.path_separator)
+                    end
+
+                    if is_child(lines[2]) and utils.is_directory(lines[2]) and not is_child(lines[3]) then
+                        vim.api.nvim_win_set_cursor(0, { row + 1, 0 })
+                    else
+                        vim.api.nvim_win_set_cursor(0, start)
+                        return
+                    end
+                end
+            end,
             -- open with system default application
             ['X'] = function()
                 local path = utils.get_element(vim.api.nvim_get_current_line())
