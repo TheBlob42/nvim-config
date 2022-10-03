@@ -37,11 +37,6 @@ vim.opt.updatetime = 400 -- speed up 'cursorhold' events
 
 vim.g.markdown_folding = 1 -- see 'ft-markdown-plugin'
 
--- opt in the new lua filetype detection
--- https://github.com/neovim/neovim/pull/16600
-vim.g.do_filetype_lua = 1
-vim.g.did_load_filetypes = 0
-
 -- enable cursorline (except for terminal buffers)
 vim.opt.cursorline = true
 vim.api.nvim_create_augroup('NoCursorline', {})
