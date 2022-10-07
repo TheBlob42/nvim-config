@@ -19,9 +19,21 @@ vim.api.nvim_create_autocmd('BufWritePost', {
     group = packer_group,
 })
 
--- simple helper to load configuration
-local function load_config(mod)
-    require(mod)
+---Helper to load config
+---Does nothing on bootstrap to prevent loading errors
+---@param arg string|function
+local function config(arg)
+    if not first_install then
+        local t = type(arg)
+
+        if t == 'string' then
+            require('plugins.' .. arg)
+        end
+
+        if t == 'function' then
+            arg()
+        end
+    end
 end
 
 local packer = require('packer')
@@ -39,64 +51,64 @@ packer.startup({function(use)
     use {
         -- sneak like motion plugin
         'ggandor/leap.nvim',
-        config = load_config('plugins.leap'),
+        config = config('leap'),
     }
 
     use {
         -- eye candy on mode switch
         'mvllow/modes.nvim',
-        config = function()
+        config = config(function()
             require('modes').setup()
-        end
+        end)
     }
 
     use {
         -- improve default ui interface
         'stevearc/dressing.nvim',
-        config = load_config('plugins.dressing'),
+        config = config('dressing'),
     }
 
     use {
         -- "gc" to comment regions and lines
         'tpope/vim-commentary',
-        config = load_config('plugins.commentary'),
+        config = config('commentary'),
     }
 
     use {
         -- pretty tabs and easy renaming
         'seblj/nvim-tabline',
         commit = '49a5651',
-        config = load_config('plugins.tabline'),
+        config = config('tabline'),
     }
 
     use {
         -- two char escape sequence
         'TheBlob42/houdini.nvim',
-        config = load_config('plugins.houdini'),
+        config = config('houdini'),
     }
 
     use {
         -- indent guides for all lines
         'lukas-reineke/indent-blankline.nvim',
-        config = load_config('plugins.blankline'),
+        config = config('blankline'),
     }
 
     use {
         -- fancy notifications
         'rcarriga/nvim-notify',
-        config = load_config('plugins.notify'),
+        config = config('notify'),
     }
 
     use {
         -- insert parentheses, brackets & quotes in pairs
         'windwp/nvim-autopairs',
-        config = load_config('plugins.autopairs'),
+        config = config('autopairs'),
     }
 
     use {
         -- display possible key bindings in a popup
         'folke/which-key.nvim',
-        config = load_config('plugins.whichkey'),
+        config = config('whichkey'),
     }
 
     use {
@@ -116,7 +128,7 @@ packer.startup({function(use)
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate',
-        config = load_config('plugins.treesitter'),
+        config = config('treesitter'),
     }
     -- use 'JoosepAlviste/nvim-ts-context-commentstring'
     -- use 'windwp/nvim-ts-autotag'
@@ -125,13 +137,13 @@ packer.startup({function(use)
     use {
         "catppuccin/nvim",
         as = "catppuccin",
-        config = load_config('plugins.catppuccin'),
+        config = config('catppuccin'),
     }
 
     use {
         'nvim-lualine/lualine.nvim',
         requires = { 'kyazdani42/nvim-web-devicons' },
-        config = load_config('plugins.lualine'),
+        config = config('lualine'),
     }
 
     -- GIT
@@ -139,7 +151,7 @@ packer.startup({function(use)
         -- git information integration
         'lewis6991/gitsigns.nvim',
         requires = 'nvim-lua/plenary.nvim',
-        config = load_config('plugins.gitsigns'),
+        config = config('gitsigns'),
     }
 
     use {
@@ -161,14 +173,14 @@ packer.startup({function(use)
         'ruifm/gitlinker.nvim',
         requires = 'nvim-lua/plenary.nvim',
         module = 'gitlinker',
-        config = load_config('plugins.gitlinker'),
+        config = config('gitlinker'),
     }
 
     -- TELESCOPE
     use {
         'nvim-telescope/telescope.nvim',
         requires = 'nvim-lua/plenary.nvim',
-        config = load_config('plugins.telescope'),
+        config = config('telescope'),
     }
 
     use 'nvim-telescope/telescope-project.nvim'
@@ -197,7 +209,7 @@ packer.startup({function(use)
 
     use {
         'L3MON4D3/LuaSnip',
-        config = load_config('plugins.luasnip'),
+        config = config('luasnip'),
     }
 
     -- AUTO COMPLETION
@@ -213,7 +225,7 @@ packer.startup({function(use)
 
     use {
         'hrsh7th/nvim-cmp',
-        config = load_config('plugins.cmp'),
+        config = config('cmp'),
     }
 
     -- UTILITIES
@@ -221,19 +233,19 @@ packer.startup({function(use)
         -- 'svermeulen/vim-cutlass',
         -- separate "cut" from "delete"
         'TheBlob42/vim-cutlass',
-        config = function()
+        config = config(function()
             vim.g.CutlassRecursiveSelectBindings = 1 -- make it work with "autopairs"
             vim.keymap.set('x', 'x', 'd')            -- "cut operation" for visual mode
-        end,
+        end),
     }
 
     use {
         -- change VIM working dir to project root
         'airblade/vim-rooter',
-        config = function()
+        config = config(function()
             vim.g.rooter_patterns =  { '.git', '_darcs', '.hg', '.bzr', '.svn', 'Makefile' }
             vim.g.rooter_change_directory_for_non_project_files = 'current'
-        end,
+        end),
     }
 
     use {
@@ -285,7 +297,7 @@ packer.startup({function(use)
         -- file/directory explorer
         'TheBlob42/drex.nvim',
         requires = { 'kyazdani42/nvim-web-devicons' },
-        config = load_config('plugins.drex'),
+        config = config('drex'),
     }
 
     use {
