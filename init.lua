@@ -16,8 +16,8 @@ end
 
 -- automatically install packer
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-local first_install = vim.fn.isdirectory(install_path) ~= 1
-if first_install then
+local bootstrapping = vim.fn.isdirectory(install_path) ~= 1
+if bootstrapping then
     vim.api.nvim_command('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
     vim.cmd('packadd packer.nvim')
 end
@@ -26,7 +26,7 @@ end
 ---Does nothing on bootstrap to prevent loading errors
 ---@param arg string|function
 local function config(arg)
-    if not first_install then
+    if not bootstrapping then
         local t = type(arg)
 
         if t == 'string' then
@@ -319,25 +319,14 @@ config = {
     snapshot_path = snapshot_path,
 }})
 
-if first_install then
+-- when bootstrapping the configuration we can stop here to avoid errors because of non-present plugins
+if bootstrapping then
     packer.sync()
-    vim.api.nvim_create_autocmd('User', {
-        once = true,
-        pattern = 'PackerComplete',
-        callback = function()
-            local yes, no = 'Yes, quit now', 'No, not now'
-            vim.ui.select({ yes, no },
-                {
-                    prompt = 'Install complete, please restart Neovim'
-                },
-                function(choice)
-                    if choice == yes then
-                        vim.cmd('quitall')
-                    end
-                end
-            )
-        end,
-    })
+    print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
+    print '        Plugins are being installed...'
+    print '   Wait until completion then restart nvim'
+    print '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
+    return
 end
 
 -- automatically re-source and compile when plugins.lua is updated
