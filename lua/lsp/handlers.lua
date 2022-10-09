@@ -8,11 +8,15 @@ local M = {}
 local highlight_group = vim.api.nvim_create_augroup('LspDocumentHighlight', {})
 
 function M.on_attach(client, bufnr)
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    -- some basics are set automatically since 0.8
+    -- > jump to definition with `gd` (tagfunc)
+    -- > (range) formatting with `gq` (formatexpr)
+    -- > basic auto completion (omnifunc)
 
     local map = function(mode, lhs, rhs, desc)
         vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
     end
+
     -- key bindings without prefix
     map('n', 'K', vim.lsp.buf.hover, 'keyword')
     map('n', '<C-s>', vim.lsp.buf.signature_help, 'signature help')
@@ -21,49 +25,32 @@ function M.on_attach(client, bufnr)
     map('n', '<2-LeftMouse>', vim.lsp.buf.definition, 'goto definition')
 
     -- general LSP leader keybindings
-    if client.resolved_capabilities.rename then
+    if client.server_capabilities.renameProvider then
         map('n', '<localleader>r', vim.lsp.buf.rename, 'rename')
     end
-    if client.resolved_capabilities.code_action then
+    if client.server_capabilities.codeActionProvider then
         map('n', '<localleader>a', vim.lsp.buf.code_action, 'code action')
     end
-    if client.resolved_capabilities.document_symbol then
+    if client.server_capabilities.documentSymbolProvider then
         map('n', '<localleader>s', '<CMD>Telescope lsp_document_symbols<CR>', 'document symbols')
     end
-    if client.resolved_capabilities.workspace_symbol then
+    if client.server_capabilities.workspaceSymbolProvider then
         map('n', '<localleader>S', '<CMD>Telescope lsp_dynamic_workspace_symbols<CR>', 'workspace symbols')
-    end
-    if client.resolved_capabilities.document_formatting then
-        map('n', '<localleader>f', vim.lsp.buf.formatting, 'format buffer')
-        vim.api.nvim_buf_set_option(bufnr, 'formatexpr', 'v:lua.vim.lsp.formatexpr()')
     end
 
     -- navigation 'g' bindings
-    if client.resolved_capabilities.goto_definition then
-        map('n', 'gd', vim.lsp.buf.definition, 'goto definition')
-        vim.api.nvim_buf_set_option(bufnr, 'tagfunc', 'v:lua.vim.lsp.tagfunc')
-    end
-    if client.resolved_capabilities.find_references then
+    if client.server_capabilities.referencesProvider then
         map('n', 'gr', "<CMD>Telescope lsp_references<CR>", 'goto references')
     end
-    if client.resolved_capabilities.implementation then
+    if client.server_capabilities.implementationProvider then
         map('n', 'gI', vim.lsp.buf.implementation, 'goto implementation')
     end
-
-    if client.resolved_capabilities.declaration then
+    if client.server_capabilities.declarationProvider then
         map('n', 'gD', vim.lsp.buf.declaration, 'goto declaration')
     end
 
-    -- visual-mode bindings
-    if client.resolved_capabilities.range_formatting then
-        map('v', '<localleader>a', vim.lsp.buf.range_code_action, 'code action')
-    end
-    if client.resolved_capabilities.document_range_formatting then
-        map('v', '<localleader>f', vim.lsp.buf.range_formatting, 'format selection')
-    end
-
     -- set autocommands conditional on server capabilities
-    if client.resolved_capabilities.document_highlight then
+    if client.server_capabilities.documentHighlightProvider then
         vim.api.nvim_clear_autocmds {
             group = highlight_group,
             buffer = bufnr,
