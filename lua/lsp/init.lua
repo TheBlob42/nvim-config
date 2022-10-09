@@ -1,6 +1,5 @@
 require('lsp.settings')
 require('lsp.lsp-installer')
-require('lsp.servers.jdtls')
 require('lsp.dap')
 
 local status_ok, fidget = my.req('fidget')

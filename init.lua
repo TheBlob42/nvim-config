@@ -195,8 +195,10 @@ packer.startup({function(use)
     }
 
     -- LSP
+    use 'williamboman/mason.nvim'              -- install external dependencies (LSP servers, DAP servers, etc.)
+    use 'williamboman/mason-lspconfig.nvim'    -- make integration of mason.nvim and lspconfig easier
+
     use 'j-hui/fidget.nvim'                    -- show lsp progress
-    use 'williamboman/nvim-lsp-installer'      -- install LSP servers easily
     use 'folke/lua-dev.nvim'                   -- special configuration for Lua (NVIM development)
     use 'onsails/lspkind-nvim'                 -- add icons to completion candidates
     use 'mfussenegger/nvim-jdtls'              -- special configuration for Java

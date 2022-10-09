@@ -83,6 +83,12 @@
   "markdown-preview.nvim": {
     "commit": "02cc387"
   },
+  "mason-lspconfig.nvim": {
+    "commit": "ef41cd4"
+  },
+  "mason.nvim": {
+    "commit": "aa6a8f8"
+  },
   "modes.nvim": {
     "commit": "4eefe78"
   },
@@ -100,9 +106,6 @@
   },
   "nvim-jdtls": {
     "commit": "7828673"
-  },
-  "nvim-lsp-installer": {
-    "commit": "ae913cb"
   },
   "nvim-lsp-ts-utils": {
     "commit": "0a6a16e"

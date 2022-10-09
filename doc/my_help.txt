@@ -111,6 +111,36 @@ JAVA                                                                  *my-java*
 Everything about Java and JDTLS.
 
 -----------------------------------------------------------------------------
+VERSIONS                                                     *my-java-versions*
+
+Make sure that the Java version to start the JDTLS (probably your system
+default) matches the version it was compiled with. If you additionally use the
+`java-debug` and `java-test` test extensions also make sure that these have
+been compiled with the same JDK as the server. Otherwise you might see weird
+errors and debugging will not work correctly.
+
+JDTLS			required JDK version~
+
+till `0.58.0`		8
+till `1.12.0`		11
+from `1.13.0`		17
+
+JAVA-DEBUG		required JDK version~
+
+till `0.34.0`		8
+till `0.37.0`		11
+from `0.38.0`		17
+
+JAVA-TEST		required JDK version~
+
+till `0.35.0`		11
+from `0.35.1`		17
+
+Note: You can install specific versions of any tool with `mason.nvim` by using
+`:MasonInstall jdtls@v1.12.0` (pass the version directly to the install
+command).
+
+-----------------------------------------------------------------------------
 CLASSPATH                                                   *my-java-classpath*
 
 Make sure that all source sets and folders of your project are correctly
