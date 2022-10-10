@@ -26,7 +26,7 @@ local function get_lombok_bootclasspath()
 end
 
 local function jdtls_on_attach(client, bufnr)
-    require('lsp.handlers').on_attach(client, bufnr)
+    require('lsp.utils').on_attach(client, bufnr)
 
     -- initialize dap for jdtls (only if 'java-debug' is installed)
     if mason_registry.is_installed('java-debug-adapter') then
@@ -80,7 +80,7 @@ local function start()
 
         local config = {
             root_dir = root_dir,
-            capabilities = require('lsp.handlers').capabilities,
+            capabilities = require('lsp.utils').capabilities,
             on_attach = jdtls_on_attach,
             flags = {
                 allow_incremental_sync = true,

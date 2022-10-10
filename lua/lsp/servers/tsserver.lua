@@ -14,7 +14,7 @@ return {
             vim.keymap.set('n', '<localleader>o', '<CMD>TSLspOrganize<CR>',   { buffer = bufnr, desc = 'organize imports' })
             vim.keymap.set('n', '<localleader>R', '<CMD>TSLspRenameFile<CR>', { buffer = bufnr, desc = 'rename file' })
 
-            require('lsp.handlers').on_attach(client, bufnr)
+            require('lsp.utils').on_attach(client, bufnr)
         end,
     }
 }
