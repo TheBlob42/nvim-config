@@ -43,19 +43,17 @@ vim.g.markdown_folding = 1 -- see 'ft-markdown-plugin'
 
 -- enable cursorline (except for terminal buffers)
 vim.opt.cursorline = true
-vim.api.nvim_create_augroup('NoCursorline', {})
 vim.api.nvim_create_autocmd('TermOpen', {
+    group = vim.api.nvim_create_augroup('NoCursorline', {}),
     pattern = '*',
-    group = 'NoCursorline',
     command = 'setlocal nocursorline',
     desc = 'disable cursorline for terminal buffers',
 })
 
 -- highlight yanked text
-vim.api.nvim_create_augroup('LuaHighlight', {})
 vim.api.nvim_create_autocmd('TextYankPost', {
+    group = vim.api.nvim_create_augroup('LuaHighlight', {}),
     pattern = '*',
-    group = 'LuaHighlight',
     command = 'silent! lua vim.highlight.on_yank()',
     desc = 'highlight yanked text',
 })
