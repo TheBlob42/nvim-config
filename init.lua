@@ -57,6 +57,13 @@ packer.startup({function(use)
         config = config('leap'),
     }
 
+    use {
+        -- clever-f built on leap.nvim
+        'ggandor/flit.nvim',
+        config = config(function()
+            require('flit').setup()
+        end),
+    }
 
     use {
         -- eye candy on mode switch

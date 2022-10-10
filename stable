@@ -38,6 +38,9 @@
   "fidget.nvim": {
     "commit": "1097a86"
   },
+  "flit.nvim": {
+    "commit": "dd43846"
+  },
   "friendly-snippets": {
     "commit": "9f4ffd1"
   },
