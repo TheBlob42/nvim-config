@@ -8,6 +8,12 @@ My ever changing Neovim configuration
 git clone git@github.com:TheBlob42/nvim-config.git ~/.config/nvim
 ```
 
+To ensure a stable plugin environment use the snapshot feature of [packer.nvim](wbthomason/packer.nvim):
+
+```
+:PackerSnapshotRollback stable
+```
+
 ## Dependencies
 
 Only works with Neovim version >= `0.7`
