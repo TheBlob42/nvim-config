@@ -20,7 +20,7 @@ require('mason-lspconfig').setup_handlers {
     function(server_name)
         local config = {
             on_attach = require('lsp.handlers').on_attach,
-            capabilities = require('lsp.handlers').make_capabilities(),
+            capabilities = require('lsp.handlers').capabilities,
         }
         lspconfig[server_name].setup(config)
     end,

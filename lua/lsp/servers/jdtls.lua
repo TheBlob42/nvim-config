@@ -80,7 +80,7 @@ local function start()
 
         local config = {
             root_dir = root_dir,
-            capabilities = require('lsp.handlers').make_capabilities(),
+            capabilities = require('lsp.handlers').capabilities,
             on_attach = jdtls_on_attach,
             flags = {
                 allow_incremental_sync = true,
