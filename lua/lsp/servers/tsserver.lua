@@ -1,7 +1,4 @@
-local status_ok, ts_utils = my.req('nvim-lsp-ts-utils')
-if not status_ok then
-    return
-end
+local ts_utils = require('nvim-lsp-ts-utils')
 
 return {
     config = {
