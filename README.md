@@ -16,7 +16,7 @@ To ensure a stable plugin environment use the snapshot feature of [packer.nvim](
 
 ## Dependencies
 
-Only works with Neovim version >= `0.7`
+Only works with Neovim version >= `0.8`
 
 > Some functionality is tailored towards the usage of a Linux operating system
 
