@@ -60,6 +60,28 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     desc = 'highlight yanked text',
 })
 
+-- define diagnostic icons and colors
+vim.fn.sign_define("DiagnosticSignError", {
+    text = "",
+    texthl = "DiagnosticError",
+    numhl = "DiagnosticError",
+})
+vim.fn.sign_define("DiagnosticSignWarn", {
+    text = "",
+    texthl = "DiagnosticWarn",
+    numhl = "DiagnosticWarn",
+})
+vim.fn.sign_define("DiagnosticSignHint", {
+    text = "",
+    texthl = "DiagnosticHint",
+    numhl = "DiagnosticHint",
+})
+vim.fn.sign_define("DiagnosticSignInfo", {
+    text = "",
+    texthl = "DiagnosticInformation",
+    numhl = "DiagnosticInformation",
+})
+
 -- disable builit in plugins
 local builtin_plugins = {
     -- we're actually using these:
