@@ -30,12 +30,6 @@ my.sys_local = {
                 path = "/usr/lib/jvm/java-11-openjdk-amd64"
             },
         },
-        debug = {
-            -- https://github.com/mfussenegger/nvim-jdtls#java-debug-installation
-            java_debug_path = '',
-            -- https://github.com/mfussenegger/nvim-jdtls#vscode-java-test-installation
-            vscode_java_test_path = '',
-        }
     },
 }
 
