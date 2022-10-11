@@ -89,12 +89,6 @@ config.configure {
                     end
                 end
             end,
-            -- make regular search work only on element names (instead of whole paths)
-            ['/'] = function()
-                local look_ahead = '\\(.*\\/\\)\\@!'
-                local left = vim.api.nvim_replace_termcodes('<LEFT>', true, false, true)
-                vim.api.nvim_feedkeys('/.*'..look_ahead..string.rep(left, #look_ahead), 'n', true)
-            end,
         },
     },
     on_enter = function()

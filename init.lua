@@ -322,6 +322,7 @@ packer.startup({function(use)
     use {
         -- file/directory explorer
         'TheBlob42/drex.nvim',
+        branch = 'develop', -- always testing the bleeding edge
         requires = { 'kyazdani42/nvim-web-devicons' },
         config = load_config_file(),
     }
