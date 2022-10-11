@@ -63,9 +63,6 @@ local function start()
             root_dir = root_dir,
             capabilities = require('lsp.utils').capabilities,
             on_attach = jdtls_on_attach,
-            flags = {
-                allow_incremental_sync = true,
-            },
             -- requires python version 3.9 for the 'jdtls' script
             cmd = {
                 'jdtls',
