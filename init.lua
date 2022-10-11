@@ -210,12 +210,21 @@ packer.startup({function(use)
     use 'williamboman/mason.nvim'              -- install external dependencies (LSP servers, DAP servers, etc.)
     use 'williamboman/mason-lspconfig.nvim'    -- make integration of mason.nvim and lspconfig easier
 
-    use 'j-hui/fidget.nvim'                    -- show lsp progress
     use 'folke/lua-dev.nvim'                   -- special configuration for Lua (NVIM development)
     use 'onsails/lspkind-nvim'                 -- add icons to completion candidates
     use 'mfussenegger/nvim-jdtls'              -- special configuration for Java
     use 'jose-elias-alvarez/nvim-lsp-ts-utils' -- special configuration for Type/Javascript
     use 'neovim/nvim-lspconfig'                -- "general" LSP configuration
+
+    use {
+        -- show lsp progress
+        'j-hui/fidget.nvim',
+        config = wrap(function()
+            require('fidget').setup {
+                text = { spinner = 'dots' }
+            }
+        end),
+    }
 
     -- DAP
     use 'mfussenegger/nvim-dap' -- debug configuration (DAP)
