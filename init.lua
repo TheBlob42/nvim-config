@@ -120,6 +120,7 @@ packer.startup({function(use)
         -- display possible key bindings in a popup
         'folke/which-key.nvim',
         config = config('whichkey'),
+    }
 
     use {
         -- interactive code evaluation
