@@ -8,6 +8,7 @@ blankline.setup {
     filetype_exclude = {
         'help',
         'packer',
+        'mason',
     },
     viewport_buffer = 30,
     use_treesitter = true,
