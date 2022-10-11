@@ -22,6 +22,8 @@ my.sys_local = {
     },
     -- java configuration for this computer
     java = {
+        -- workspace data directory for JDTLS
+        workspace_dir = '/home/user/java_workspace',
         runtimes = {
             {
                 name = "JavaSE-11",

@@ -92,7 +92,7 @@ local function start()
                 '-configuration', vim.fn.stdpath('data') .. '/mason/packages/jdtls/config_' .. vim.loop.os_uname().sysname:lower(),
                 get_lombok_javaagent(),
                 get_lombok_bootclasspath(),
-                '-data', '/home/tobi/workspace/' .. vim.fn.fnamemodify(root_dir, ':p:h:t'),
+                '-data', my.sys_local.java.workspace_dir .. vim.fn.fnamemodify(root_dir, ':p:h:t'),
             },
 
             -- "oldschool" style of starting jdtls
@@ -111,7 +111,7 @@ local function start()
             --     '-Xbootclasspath/a', '<path to lombok.jar>',
             --     '-jar', vim.fn.glob(vim.fn.stdpath('data') .. '/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar'),
             --     '-configuration', vim.fn.stdpath('data') .. '/mason/packages/jdtls/config_' .. vim.loop.os_uname().sysname:lower(),
-            --     '-data', '/home/tobi/workspace/' .. vim.fn.fnamemodify(root_dir, ':p:h:t'),
+            --     '-data', my.sys_local.java.workspace_dir .. vim.fn.fnamemodify(root_dir, ':p:h:t'),
             -- },
         }
 
