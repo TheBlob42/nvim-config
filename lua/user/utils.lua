@@ -32,7 +32,7 @@ end
 ---@param plug string Name for the <Plug> mapping. Needs to start with "<Plug>"
 ---@param rhs string|function Either a mapping string or a function that should be executed
 function my.repeat_map(plug, rhs)
-    if not vim.tbl_get(packer_plugins or {}, 'vim-repeat') then
+    if packer_plugins and not vim.tbl_get(packer_plugins, 'vim-repeat') then
         print(debug.getinfo(2).source .. ' --> `vim-repeat` is not loaded!')
         return
     end
