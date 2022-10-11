@@ -91,6 +91,18 @@ local function start()
             -- },
         }
 
+        -- if the java runtimes are configured merge them into the config
+        local runtimes = vim.tbl_get(my.sys_local, 'java', 'runtimes')
+        if runtimes and not vim.tbl_isempty(runtimes) then
+            config = vim.tbl_deep_extend('force', config, {
+                settings = {
+                    java = {
+                        configuration = { runtimes = runtimes }
+                    }
+                }
+            })
+        end
+
         -- setup bundles for debug adapter protocol
         if mason_registry.is_installed('java-debug-adapter') then
             local debug_bundles = {
