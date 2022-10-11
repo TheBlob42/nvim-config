@@ -106,12 +106,12 @@ There is a dedicated keybinding for this task:
 	<localleader>dG
 <
 =============================================================================
-JAVA                                                                  *my-java*
+JAVA                                                         *my-jdtls* *my-java*
 
 Everything about Java and JDTLS.
 
 -----------------------------------------------------------------------------
-VERSIONS                                                     *my-java-versions*
+VERSIONS                                   *my-jdtls-versions* *my-java-versions*
 
 Make sure that the Java version to start the JDTLS (probably your system
 default) matches the version it was compiled with. If you additionally use the
@@ -125,7 +125,7 @@ till `0.58.0`		8
 till `1.12.0`		11
 from `1.13.0`		17
 
-JAVA-DEBUG		required JDK version~
+JAVA-DEBUG-ADAPTER	required JDK version~
 
 till `0.34.0`		8
 till `0.37.0`		11
@@ -141,7 +141,7 @@ Note: You can install specific versions of any tool with `mason.nvim` by using
 command).
 
 -----------------------------------------------------------------------------
-CLASSPATH                                                   *my-java-classpath*
+CLASSPATH                                *my-jdtls-classpath* *my-java-classpath*
 
 Make sure that all source sets and folders of your project are correctly
 referenced in the `.classpath` file. Should you encounter a situation in which
