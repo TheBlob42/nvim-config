@@ -22,19 +22,23 @@ if bootstrapping then
     vim.cmd('packadd packer.nvim')
 end
 
----Helper to load config
----Does nothing on bootstrap to prevent loading errors
----@param arg string|function
-local function config(arg)
+---Simple wrapper to ensure the config function is only called AFTER bootstrapping
+local function wrap(fn)
     if not bootstrapping then
-        local t = type(arg)
+        return fn
+    end
+end
 
-        if t == 'string' then
-            require('plugins.' .. arg)
-        end
+---Load the default configuration file from the "plugins" directory
+local function load_config_file()
+    if not bootstrapping then
+        return function(plugin_name)
+            local name = plugin_name
+                :lower()              -- looking at you LuaSnip ;-)
+                :gsub('^n?vim%-', '') -- remove "vim-" or "nvim-" prefix
+                :gsub('%.n?vim$', '') -- remove ".vim" or ".nvim" postfix
 
-        if t == 'function' then
-            arg()
+            require('plugins.' .. name)
         end
     end
 end
@@ -54,13 +58,13 @@ packer.startup({function(use)
     use {
         -- sneak like motion plugin
         'ggandor/leap.nvim',
-        config = config('leap'),
+        config = load_config_file(),
     }
 
     use {
         -- clever-f built on leap.nvim
         'ggandor/flit.nvim',
-        config = config(function()
+        config = wrap(function()
             require('flit').setup()
         end),
     }
@@ -68,7 +72,7 @@ packer.startup({function(use)
     use {
         -- eye candy on mode switch
         'mvllow/modes.nvim',
-        config = config(function()
+        config = wrap(function()
             require('modes').setup()
         end)
     }
@@ -76,50 +80,50 @@ packer.startup({function(use)
     use {
         -- improve default ui interface
         'stevearc/dressing.nvim',
-        config = config('dressing'),
+        config = load_config_file(),
     }
 
     use {
         -- "gc" to comment regions and lines
         'tpope/vim-commentary',
-        config = config('commentary'),
+        config = load_config_file(),
     }
 
     use {
         -- pretty tabs and easy renaming
         'seblj/nvim-tabline',
         commit = '49a5651',
-        config = config('tabline'),
+        config = load_config_file(),
     }
 
     use {
         -- two char escape sequence
         'TheBlob42/houdini.nvim',
-        config = config('houdini'),
+        config = load_config_file(),
     }
 
     use {
         -- indent guides for all lines
         'lukas-reineke/indent-blankline.nvim',
-        config = config('blankline'),
+        config = load_config_file(),
     }
 
     use {
         -- fancy notifications
         'rcarriga/nvim-notify',
-        config = config('notify'),
+        config = load_config_file(),
     }
 
     use {
         -- insert parentheses, brackets & quotes in pairs
         'windwp/nvim-autopairs',
-        config = config('autopairs'),
+        config = load_config_file(),
     }
 
     use {
         -- display possible key bindings in a popup
         'folke/which-key.nvim',
-        config = config('whichkey'),
+        config = load_config_file(),
     }
 
     use {
@@ -141,20 +145,20 @@ packer.startup({function(use)
         run = function()
             require('nvim-treesitter.install').update({ with_sync = true })
         end,
-        config = config('treesitter'),
+        config = load_config_file(),
     }
 
     -- COLORSCHEME & STATUSLINE
     use {
         "catppuccin/nvim",
         as = "catppuccin",
-        config = config('catppuccin'),
+        config = load_config_file(),
     }
 
     use {
         'nvim-lualine/lualine.nvim',
         requires = { 'kyazdani42/nvim-web-devicons' },
-        config = config('lualine'),
+        config = load_config_file(),
     }
 
     -- GIT
@@ -162,7 +166,7 @@ packer.startup({function(use)
         -- git information integration
         'lewis6991/gitsigns.nvim',
         requires = 'nvim-lua/plenary.nvim',
-        config = config('gitsigns'),
+        config = load_config_file(),
     }
 
     use {
@@ -184,14 +188,14 @@ packer.startup({function(use)
         'ruifm/gitlinker.nvim',
         requires = 'nvim-lua/plenary.nvim',
         module = 'gitlinker',
-        config = config('gitlinker'),
+        config = load_config_file(),
     }
 
     -- TELESCOPE
     use {
         'nvim-telescope/telescope.nvim',
         requires = 'nvim-lua/plenary.nvim',
-        config = config('telescope'),
+        config = load_config_file(),
     }
 
     use 'nvim-telescope/telescope-project.nvim'
@@ -222,7 +226,7 @@ packer.startup({function(use)
 
     use {
         'L3MON4D3/LuaSnip',
-        config = config('luasnip'),
+        config = load_config_file(),
     }
 
     -- AUTO COMPLETION
@@ -238,7 +242,7 @@ packer.startup({function(use)
 
     use {
         'hrsh7th/nvim-cmp',
-        config = config('cmp'),
+        config = load_config_file(),
     }
 
     -- UTILITIES
@@ -246,7 +250,7 @@ packer.startup({function(use)
         -- 'svermeulen/vim-cutlass',
         -- separate "cut" from "delete"
         'TheBlob42/vim-cutlass',
-        config = config(function()
+        config = wrap(function()
             vim.g.CutlassRecursiveSelectBindings = 1 -- make it work with "autopairs"
             vim.keymap.set('x', 'x', 'd')            -- "cut operation" for visual mode
         end),
@@ -255,7 +259,7 @@ packer.startup({function(use)
     use {
         -- change VIM working dir to project root
         'airblade/vim-rooter',
-        config = config(function()
+        config = wrap(function()
             vim.g.rooter_patterns =  { '.git', '_darcs', '.hg', '.bzr', '.svn', 'Makefile' }
             vim.g.rooter_change_directory_for_non_project_files = 'current'
         end),
@@ -310,7 +314,7 @@ packer.startup({function(use)
         -- file/directory explorer
         'TheBlob42/drex.nvim',
         requires = { 'kyazdani42/nvim-web-devicons' },
-        config = config('drex'),
+        config = load_config_file(),
     }
 
     use {
