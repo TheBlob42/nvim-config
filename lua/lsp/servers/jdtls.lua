@@ -4,26 +4,7 @@ local dap = require('dap')
 -- use to check if jdtls, java-debug-adapter & java-test are installed
 local mason_registry = require('mason-registry')
 local mason_pkg_path = require('mason.settings').current.install_root_dir .. '/packages'
-
 local lombok_jar = mason_pkg_path .. '/jdtls/lombok.jar'
-
----Return lombok "javaagent" parameter for the usage with the "jdtls" python script
----@return string
-local function get_lombok_javaagent()
-    if vim.loop.fs_stat(lombok_jar) then
-        return '--jvm-arg=-javaagent:' .. lombok_jar
-    end
-    return ''
-end
-
----Return lombok "bootclasspath" parameter for the usage with the "jdtls" python script
----@return string
-local function get_lombok_bootclasspath()
-    if vim.loop.fs_stat(lombok_jar) then
-        return '--jvm-arg=-Xbootclasspath/a:' .. lombok_jar
-    end
-    return ''
-end
 
 local function jdtls_on_attach(client, bufnr)
     require('lsp.utils').on_attach(client, bufnr)
@@ -90,8 +71,8 @@ local function start()
             cmd = {
                 'jdtls',
                 '-configuration', vim.fn.stdpath('data') .. '/mason/packages/jdtls/config_' .. vim.loop.os_uname().sysname:lower(),
-                get_lombok_javaagent(),
-                get_lombok_bootclasspath(),
+                '--jvm-arg=-javaagent:' .. lombok_jar,
+                '--jvm-arg=-Xbootclasspath/a:' .. lombok_jar,
                 '-data', my.sys_local.java.workspace_dir .. vim.fn.fnamemodify(root_dir, ':p:h:t'),
             },
 
@@ -107,8 +88,8 @@ local function start()
             --     '--add-modules=ALL-SYSTEM',
             --     '--add-opens', 'java.base/java.util=ALL-UNNAMED',
             --     '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-            --     '-javaagent', '<path to lombok.jar>',
-            --     '-Xbootclasspath/a', '<path to lombok.jar>',
+            --     '-javaagent:' .. lombok_jar,
+            --     '-Xbootclasspath/a:' .. lombok_jar,
             --     '-jar', vim.fn.glob(vim.fn.stdpath('data') .. '/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar'),
             --     '-configuration', vim.fn.stdpath('data') .. '/mason/packages/jdtls/config_' .. vim.loop.os_uname().sysname:lower(),
             --     '-data', my.sys_local.java.workspace_dir .. vim.fn.fnamemodify(root_dir, ':p:h:t'),
