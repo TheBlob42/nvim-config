@@ -64,13 +64,13 @@ local function start()
             capabilities = require('lsp.utils').capabilities,
             on_attach = jdtls_on_attach,
             -- requires python version 3.9 for the 'jdtls' script
-            cmd = {
-                'jdtls',
-                '-configuration', mason_pkg_path .. '/jdtls/config_' .. vim.loop.os_uname().sysname:lower(),
-                '--jvm-arg=-javaagent:' .. lombok_jar,
-                '--jvm-arg=-Xbootclasspath/a:' .. lombok_jar,
-                '-data', my.sys_local.java.workspace_dir .. vim.fn.fnamemodify(root_dir, ':p:h:t'),
-            },
+            -- cmd = {
+            --     'jdtls',
+            --     '-configuration', mason_pkg_path .. '/jdtls/config_' .. vim.loop.os_uname().sysname:lower(),
+            --     '--jvm-arg=-javaagent:' .. lombok_jar,
+            --     '--jvm-arg=-Xbootclasspath/a:' .. lombok_jar,
+            --     '-data', my.sys_local.java.workspace_dir .. vim.fn.fnamemodify(root_dir, ':p:h:t'),
+            -- },
             -- "oldschool" style of starting jdtls
             -- cmd = {
             --     'java',
@@ -90,6 +90,37 @@ local function start()
             --     '-data', my.sys_local.java.workspace_dir .. vim.fn.fnamemodify(root_dir, ':p:h:t'),
             -- },
         }
+
+        local python_version = tonumber(vim.fn.system('python3 --version'):match('%d.%d'))
+        if python_version and python_version > 3.8 then
+            -- requires python version 3.9 for the 'jdtls' script
+            config.cmd = {
+                'jdtls',
+                '-configuration', mason_pkg_path .. '/jdtls/config_' .. vim.loop.os_uname().sysname:lower(),
+                '--jvm-arg=-javaagent:' .. lombok_jar,
+                '--jvm-arg=-Xbootclasspath/a:' .. lombok_jar,
+                '-data', my.sys_local.java.workspace_dir .. vim.fn.fnamemodify(root_dir, ':p:h:t'),
+            }
+        else
+            -- "oldschool" style of starting jdtls
+            config.cmd = {
+                'java',
+                '-Declipse.application=org.eclipse.jdt.ls.core.id1',
+                '-Dosgi.bundles.defaultStartLevel=4',
+                '-Declipse.product=org.eclipse.jdt.ls.core.product',
+                '-Dlog.protocol=true',
+                '-Dlog.level=ALL',
+                '-Xms1g',
+                '--add-modules=ALL-SYSTEM',
+                '--add-opens', 'java.base/java.util=ALL-UNNAMED',
+                '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+                '-javaagent:' .. lombok_jar,
+                '-Xbootclasspath/a:' .. lombok_jar,
+                '-jar', vim.fn.glob(mason_pkg_path .. '/jdtls/plugins/org.eclipse.equinox.launcher_*.jar'),
+                '-configuration', mason_pkg_path .. '/jdtls/config_' .. vim.loop.os_uname().sysname:lower(),
+                '-data', my.sys_local.java.workspace_dir .. vim.fn.fnamemodify(root_dir, ':p:h:t'),
+            }
+        end
 
         -- if the java runtimes are configured merge them into the config
         local runtimes = vim.tbl_get(my.sys_local, 'java', 'runtimes')
