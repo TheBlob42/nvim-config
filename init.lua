@@ -72,6 +72,7 @@ packer.startup({function(use)
     use {
         -- eye candy on mode switch
         'mvllow/modes.nvim',
+        after = 'catppuccin',
         config = wrap(function()
             require('modes').setup()
         end)
