@@ -10,7 +10,7 @@ M.capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.ma
 ---@param bufnr number
 function M.on_attach(client, bufnr)
     -- some basics are set automatically since 0.8
-    -- > jump to definition with `gd` (tagfunc)
+    -- > jump to definition with `<C-]>` (tagfunc)
     -- > (range) formatting with `gq` (formatexpr)
     -- > basic auto completion (omnifunc)
 
@@ -40,6 +40,7 @@ function M.on_attach(client, bufnr)
     end
 
     -- navigation 'g' bindings
+    map('n', 'gd', '<C-]>', 'goto definition') -- map to 'gd' for convenience
     if client.server_capabilities.referencesProvider then
         map('n', 'gr', "<CMD>Telescope lsp_references<CR>", 'goto references')
     end
