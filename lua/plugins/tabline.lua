@@ -1,11 +1,6 @@
-local status_ok, tabline, actions = my.req('tabline', 'tabline.actions')
-if not status_ok then
-    return
-end
+require('tabline').setup()
 
-tabline.setup()
-
-vim.keymap.set('n', '<leader>tr', actions.set_tabname, { desc = 'rename tab' })
+vim.keymap.set('n', '<leader>tr', require('tabline.actions').set_tabname, { desc = 'rename tab' })
 
 local function adapt_highlights()
     -- updating highlight groups is not possible with lua

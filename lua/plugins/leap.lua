@@ -1,7 +1,4 @@
-local status_ok, leap = my.req('leap')
-if not status_ok then
-    return
-end
+local leap = require('leap')
 
 local function leap_in_current_win()
     leap.leap {

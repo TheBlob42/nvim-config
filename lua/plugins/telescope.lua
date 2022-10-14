@@ -1,8 +1,4 @@
-local status_ok, telescope = my.req('telescope')
-if not status_ok then
-    return
-end
-
+local telescope = require('telescope')
 local actions = require('telescope.actions')
 local action_state = require('telescope.actions.state')
 local transform_mod = require('telescope.actions.mt').transform_mod

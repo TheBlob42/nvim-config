@@ -1,7 +1,4 @@
-local status_ok, drex, config, utils, elements = my.req('drex', 'drex.config', 'drex.utils', 'drex.elements')
-if not status_ok then
-    return
-end
+local utils = require('drex.utils')
 
 vim.keymap.set('n', '<leader>N', '<CMD>DrexDrawerToggle<CR>', { desc = 'toggle drawer' })
 vim.keymap.set('n', '<leader>fn', '<CMD>DrexDrawerFindFileAndFocus<CR>', { desc = 'find file in drawer' })
@@ -11,14 +8,14 @@ vim.keymap.set('n', '~', '<CMD>Drex ~<CR>', { desc = 'open home dir' })
 vim.keymap.set('n', '-', function()
     local path = vim.fn.expand('%:p')
     if path == '' then
-        drex.open_directory_buffer() -- open at cwd
+        require('drex').open_directory_buffer() -- open at cwd
     else
-        drex.open_directory_buffer(vim.fn.fnamemodify(path, ':h'))
-        elements.focus_element(0, path)
+        require('drex').open_directory_buffer(vim.fn.fnamemodify(path, ':h'))
+        require('drex.elements').focus_element(0, path)
     end
 end, { desc = 'open parent dir' })
 
-config.configure {
+require('drex.config').configure {
     hijack_netrw = true,
     keybindings = {
         ['n'] = {
@@ -28,7 +25,7 @@ config.configure {
                 local start = vim.api.nvim_win_get_cursor(0)
 
                 while true do
-                    elements.expand_element()
+                    require('drex.elements').expand_element()
 
                     local row = vim.api.nvim_win_get_cursor(0)[1]
                     local lines = vim.api.nvim_buf_get_lines(0, row - 1, row + 2, false)
@@ -65,7 +62,7 @@ config.configure {
                 while true do
                     local line = vim.api.nvim_buf_get_lines(0, row - 1, row, false)[1]
                     if utils.is_closed_directory(line) then
-                        elements.expand_element(0, row)
+                        require('drex.elements').expand_element(0, row)
                     end
                     row = row + 1
 
@@ -80,7 +77,7 @@ config.configure {
                 while true do
                     local line = vim.api.nvim_buf_get_lines(0, row - 1, row, false)[1]
                     if utils.is_open_directory(line) then
-                        elements.collapse_directory(0, row)
+                        require('drex.elements').collapse_directory(0, row)
                     end
                     row = row + 1
 

@@ -1,7 +1,7 @@
-local status_ok, cmp, luasnip, lspkind = my.req('cmp', 'luasnip', 'lspkind')
-if not status_ok then
-    return
-end
+local cmp = require('cmp')
+-- additional requirements for cmp setup
+local luasnip = require('luasnip')
+local lspkind = require('lspkind')
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- ~ "regular" autocompletion ~
@@ -23,7 +23,7 @@ cmp.setup {
     mapping = cmp.mapping.preset.insert {
         ['<C-u>'] = cmp.mapping.scroll_docs(-4),
         ['<C-d>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-Space>'] = cmp.mapping.complete({}),
         ['<C-e>'] = cmp.mapping.close(),
         ['<CR>'] = cmp.mapping.confirm {
             behavior = cmp.ConfirmBehavior.Replace,

@@ -1,7 +1,4 @@
-local status_ok, _ = my.req('catppuccin')
-if not status_ok then
-    return
-end
+require('catppuccin')
 
 local dark = 'mocha'
 local light = 'latte'

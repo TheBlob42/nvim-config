@@ -1,9 +1,4 @@
-local status_ok, houdini = my.req('houdini')
-if not status_ok then
-    return
-end
-
-houdini.setup {
+require('houdini').setup {
     mappings = { 'fd', 'AA', 'II' },
     escape_sequences = {
         i = function(first, second)

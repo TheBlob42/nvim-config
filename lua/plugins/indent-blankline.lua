@@ -1,9 +1,4 @@
-local status_ok, blankline = my.req('indent_blankline')
-if not status_ok then
-    return
-end
-
-blankline.setup {
+require('indent_blankline').setup {
     buftype_exclude = { 'terminal' },
     filetype_exclude = {
         'help',

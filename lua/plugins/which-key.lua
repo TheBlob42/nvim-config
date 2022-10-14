@@ -1,7 +1,4 @@
-local status_ok, wk = my.req('which-key')
-if not status_ok then
-    return
-end
+local wk = require('which-key')
 
 -- hinder `which-key` to mess with `telescope` when pasting in insert mode
 vim.cmd('autocmd FileType TelescopePrompt inoremap <buffer> <silent> <C-r> <C-r>')

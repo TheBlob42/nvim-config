@@ -1,9 +1,4 @@
-local status_ok, treesitter = my.req('nvim-treesitter.configs')
-if not status_ok then
-    return
-end
-
-treesitter.setup {
+require('nvim-treesitter.configs').setup {
     ensure_installed = "all",
     ignore_install = {
         'help',

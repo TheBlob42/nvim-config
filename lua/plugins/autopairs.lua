@@ -1,12 +1,4 @@
-local status_ok, autopairs, cmp, cmp_autopairs, rule = my.req(
-    'nvim-autopairs',
-    'cmp',
-    'nvim-autopairs.completion.cmp',
-    'nvim-autopairs.rule'
-)
-if not status_ok then
-    return
-end
+local autopairs = require('nvim-autopairs')
 
 autopairs.setup {
     -- don't add a pair if theres already a closing bracket in the same line
@@ -14,7 +6,9 @@ autopairs.setup {
 }
 
 -- setup for `nvim-cmp`
-cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
+require('cmp').event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done {
+    map_char = { tex = '' }
+})
 
 -- add spaces between parentheses
 --
@@ -22,6 +16,7 @@ cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = 
 -- |--------|-------|-------|
 -- | (|)    | space | ( | ) |
 -- | ( | )  | )     | (  )| |
+local rule = require('nvim-autopairs.rule')
 autopairs.add_rules {
     rule(' ', ' ')
         :with_pair(function (opts)

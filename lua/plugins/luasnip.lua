@@ -1,7 +1,4 @@
-local status_ok, luasnip = my.req('luasnip')
-if not status_ok then
-    return
-end
+local luasnip = require('luasnip')
 
 local map = vim.api.nvim_set_keymap
 local expr_opts = { expr = true, silent = true }

@@ -1,13 +1,7 @@
-local status_ok, gitlinker = my.req('gitlinker')
-if not status_ok then
-    return
-end
-
-local custom_callbacks = vim.tbl_get(my.sys_local, 'git', 'gitlinker_callbacks') or {}
-
-gitlinker.setup {
+require('gitlinker').setup {
     mappings = '<leader>gy',
-    callbacks = custom_callbacks,
+    -- check for locally configured custom callback
+    callbacks = vim.tbl_get(my.sys_local, 'git', 'gitlinker_callbacks') or {},
 }
 
 -- override keybindings to get descriptions

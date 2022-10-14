@@ -1,9 +1,4 @@
-local status_ok, lualine = my.req('lualine')
-if not status_ok then
-    return
-end
-
-lualine.setup {
+require('lualine').setup {
     options = {
         theme = 'catppuccin',
     },
