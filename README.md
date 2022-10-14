@@ -56,9 +56,9 @@ gui:
 
 ## Plugins
 
-In order to install plugins [packer.nvim](https://github.com/wbthomason/packer.nvim) is being used, check `lua/user/plugins.lua`
+In order to install plugins [packer.nvim](https://github.com/wbthomason/packer.nvim) is being used, check the `lua/init.lua` file
 
-To ensure that the same plugin version/commits are installed on every system and to avoid breaking the configuration the snapshot feature is used (see [here](https://github.com/wbthomason/packer.nvim/pull/370)). The default snapshot name is `stable`
+To ensure that the same plugin version/commits are installed on every system and to avoid breaking the configuration the snapshot feature is used (see [here](https://github.com/wbthomason/packer.nvim/pull/370)). The default snapshot name is `stable` located at `lua/stable`
 
 To update the installed plugins follow these steps:
 
@@ -69,9 +69,9 @@ To update the installed plugins follow these steps:
 
 ## LSP
 
-Install LSP servers simply via the `:LspInstall` command
+Install LSP servers simply via the `:Mason` command
 
-> See the [nvim-lsp-installer](https://github.com/williamboman/nvim-lsp-installer) plugin for more information
+> See the [mason.nvim](https://github.com/williamboman/mason.nvim) plugin for more information about available options
 
 Depending on the LSP servers you might also need to fulfill additionally dependencies (e.g. java, node)
 
