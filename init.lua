@@ -1,6 +1,10 @@
 require('user.settings')     -- general non plugin related settings
 require('user.config')       -- general configuration stuff
-pcall(require, 'user.local') -- local user config (if present)
+
+-- local user configuration (if present)
+if not pcall(require, 'user.local') then
+    vim.api.nvim_err_writeln('No system local configuration found! Check "lua/user/local.lua.sample" for more information...')
+end
 
 -- must be loaded before any other lua plugin
 local impatient_ok, impatient = pcall(require, 'impatient')
