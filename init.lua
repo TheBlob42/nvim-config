@@ -1,11 +1,5 @@
--- place for personal utility & configuration options
-_G.my = {
-    -- lisp filetypes (used for `conjure`, `cmp-conjure` & `parinfer`)
-    lisps = { "clojure", "fennel", "janet", "racket", "scheme", "hy", "lisp" },
-}
-
 require('user.settings')     -- general non plugin related settings
-require('user.utils')        -- configuration utility
+require('user.config')       -- general configuration stuff
 pcall(require, 'user.local') -- local user config (if present)
 
 -- must be loaded before any other lua plugin

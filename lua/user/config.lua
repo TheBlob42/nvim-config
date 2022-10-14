@@ -1,4 +1,27 @@
-P = vim.pretty_print -- shortening for easier debugging
+-- global table used for general configuration stuff
+-- > static configuration values
+-- > utility configuration functions
+-- > system local configuration (check "local.lua.sample")
+_G.my = {}
+
+-- ~~~~~~~~~~~~~~~~~~~~
+-- static configuration
+-- ~~~~~~~~~~~~~~~~~~~~
+
+-- supported lisp filetypes used for `conjure`, `cmp-conjure` & `parinfer`
+my.lisps = {
+    "clojure",
+    "fennel",
+    "janet",
+    "racket",
+    "scheme",
+    "hy",
+    "lisp" ,
+}
+
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- utility configuration functions
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ---Create a repeatable <Plug> mapping via `vim-repeat`
 ---@param plug string Name for the <Plug> mapping. Needs to start with "<Plug>"
@@ -30,3 +53,9 @@ function my.repeat_map(plug, rhs)
 
     vim.keymap.set('n', plug, command, { silent = true })
 end
+
+-- ~~~~~~~~~~~~~
+-- miscellaneous
+-- ~~~~~~~~~~~~~
+
+P = vim.pretty_print -- shortening for easier debugging
