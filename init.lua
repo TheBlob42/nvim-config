@@ -12,6 +12,10 @@ if impatient_ok then
     impatient.enable_profile()
 end
 
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~
+-- packer config & utilities
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~
+
 -- automatically install packer
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 local bootstrapping = vim.fn.isdirectory(install_path) ~= 1
@@ -19,6 +23,9 @@ if bootstrapping then
     vim.api.nvim_command('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
     vim.cmd('packadd packer.nvim')
 end
+
+local packer = require('packer')
+local snapshot_path = vim.fn.stdpath('config')
 
 ---Simple wrapper to ensure the config function is only called AFTER bootstrapping
 local function wrap(fn)
@@ -41,8 +48,34 @@ local function load_config_file()
     end
 end
 
-local packer = require('packer')
-local snapshot_path = vim.fn.stdpath('config')
+-- automatically re-source and compile when plugins.lua is updated
+local packer_group = vim.api.nvim_create_augroup('Packer', {})
+vim.api.nvim_create_autocmd('BufWritePost', {
+    group = packer_group,
+    command = 'source <afile> | PackerCompile',
+    pattern = vim.env.MYVIMRC,
+})
+
+-- format the given snapshot using 'jq'
+vim.api.nvim_create_user_command('PackerSnapshotFormat', function(args)
+    if vim.fn.executable('jq') == 0 then
+        vim.api.nvim_echo({{ "'jq' was not found in PATH, install it in order to use this command!" , 'ErrorMsg'}}, false, {})
+        return
+    end
+
+    local snapshot = args.args
+    local path = snapshot_path .. '/' .. snapshot
+    local tmp = snapshot_path .. '/tmp_' .. snapshot
+
+    if not vim.loop.fs_stat(path) then
+        vim.api.nvim_echo({{ "No snapshot named '"..snapshot.."' exists in "..snapshot_path..'!', 'WarningMsg'}}, false, {})
+        return
+    end
+
+    os.execute('jq --sort-keys . ' .. path .. ' > ' .. tmp)
+    os.rename(tmp, path)
+    vim.api.nvim_echo({{ "Snapshot '"..snapshot.."' formatted successfully", 'InfoMsg'}}, false, {})
+end, { nargs = 1, desc = "format the given snapshot using 'jq'" })
 
 packer.startup({function(use)
     use 'wbthomason/packer.nvim'
@@ -352,35 +385,13 @@ if bootstrapping then
     return
 end
 
--- automatically re-source and compile when plugins.lua is updated
-local packer_group = vim.api.nvim_create_augroup('Packer', {})
-vim.api.nvim_create_autocmd('BufWritePost', {
-    group = packer_group,
-    command = 'source <afile> | PackerCompile',
-    pattern = vim.env.MYVIMRC,
-})
-
--- format the given snapshot using 'jq'
-vim.api.nvim_create_user_command('PackerSnapshotFormat', function(args)
-    if vim.fn.executable('jq') == 0 then
-        vim.api.nvim_echo({{ "'jq' was not found in PATH, install it in order to use this command!" , 'ErrorMsg'}}, false, {})
-        return
+-- load all custom user commands from "lua/user/commands"
+for name, _ in vim.fs.dir(vim.fn.fnamemodify(vim.env.MYVIMRC, ':h') .. '/lua/user/commands') do
+    local cmd = string.match(name, '(.*)%.lua')
+    if cmd ~= 'init' then
+        require('user.commands.'..cmd)
     end
+end
 
-    local snapshot = args.args
-    local path = snapshot_path .. '/' .. snapshot
-    local tmp = snapshot_path .. '/tmp_' .. snapshot
-
-    if not vim.loop.fs_stat(path) then
-        vim.api.nvim_echo({{ "No snapshot named '"..snapshot.."' exists in "..snapshot_path..'!', 'WarningMsg'}}, false, {})
-        return
-    end
-
-    os.execute('jq --sort-keys . ' .. path .. ' > ' .. tmp)
-    os.rename(tmp, path)
-    vim.api.nvim_echo({{ "Snapshot '"..snapshot.."' formatted successfully", 'InfoMsg'}}, false, {})
-end, { nargs = 1, desc = "format the given snapshot using 'jq'" })
-
-require('user.commands')
 require('user.keymaps')
 require('lsp')
