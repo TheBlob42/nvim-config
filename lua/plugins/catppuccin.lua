@@ -5,7 +5,9 @@ local light = 'latte'
 
 local function highlight_adaptions()
     -- make debug line better visible
-    vim.cmd [[ hi! link debugPC TSNote ]]
+    vim.cmd [[ hi! link debugPC CurSearch ]]
+    -- make cursorline more visible
+    vim.cmd [[ hi! link CursorLine ColorColumn ]]
 end
 
 -- startup NVIM in dark mode in the evening hours
