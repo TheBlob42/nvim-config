@@ -80,6 +80,13 @@ vim.fn.sign_define("DiagnosticSignInfo", {
     numhl = "DiagnosticInformation",
 })
 
+-- custom filetype detection
+vim.filetype.add {
+    filename = {
+        ['Jenkinsfile'] = 'groovy'
+    }
+}
+
 -- disable builit in plugins
 local builtin_plugins = {
     -- we're actually using these:
