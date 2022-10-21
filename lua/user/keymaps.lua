@@ -103,9 +103,15 @@ my.repeat_map('<Plug>MoveTabRight', '<CMD>+tabmove<CR>')
 local function remove_trailing_whitespaces()
     local pos = vim.api.nvim_win_get_cursor(0)
     local last_search = vim.fn.getreg('/')
+    local hl_state = vim.v.hlsearch
+
     vim.cmd(':%s/\\s\\+$//e')
+
     vim.fn.setreg('/', last_search)     -- restore last search
     vim.api.nvim_win_set_cursor(0, pos) -- restore cursor position
+    if hl_state == 0 then
+        vim.cmd('nohl') -- disable search highlighting again if it was disabled before
+    end
 end
 
 local mappings = {
