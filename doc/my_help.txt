@@ -10,6 +10,13 @@ Then you can copy all matching lines via |:g| (here using register `a`):
 	:g/<pattern>/y A
 <
 =============================================================================
+REMOVE DUPLICATES                                        *my-remove-duplicates*
+
+You can remove dupliate lines from a buffer using:
+>
+	:sort u
+<
+=============================================================================
 DIFF                                                                  *my-diff*
 
 Open all buffers you want to compare in separate |windows| (same |tabpage|)
@@ -104,6 +111,15 @@ Once that is running and waiting for a debugger to attach we can do so via
 There is a dedicated keybinding for this task:
 >
 	<localleader>dG
+<
+-----------------------------------------------------------------------------
+MISC                                                         *my-gradle-misc*
+
+Pass command line arguments~
+
+Use `--args` to pass command line arguments to a Gradle task
+>
+	./gradlew customTask --args="Some argument"
 <
 =============================================================================
 JAVA                                                         *my-jdtls* *my-java*

@@ -5,6 +5,7 @@ my-curl	my_help.txt	/*my-curl*
 my-diff	my_help.txt	/*my-diff*
 my-gradle	my_help.txt	/*my-gradle*
 my-gradle-debugging	my_help.txt	/*my-gradle-debugging*
+my-gradle-misc	my_help.txt	/*my-gradle-misc*
 my-java	my_help.txt	/*my-java*
 my-java-classpath	my_help.txt	/*my-java-classpath*
 my-java-versions	my_help.txt	/*my-java-versions*
@@ -17,3 +18,4 @@ my-macros-submacros	my_help.txt	/*my-macros-submacros*
 my-macros-wrapscan	my_help.txt	/*my-macros-wrapscan*
 my-packer-snapshot	my_help.txt	/*my-packer-snapshot*
 my-postman	my_help.txt	/*my-postman*
+my-remove-duplicates	my_help.txt	/*my-remove-duplicates*
