@@ -47,6 +47,7 @@ end
 local function start()
     if mason_registry.is_installed('jdtls') then
         local root_dir = require('jdtls.setup').find_root({ 'gradlew', '.git', 'pom.xml', 'mvnw' })
+        local workspace_dir = vim.fn.fnamemodify(my.sys_local.java.workspace_dir, ':p') .. vim.fn.fnamemodify(root_dir, ':p:h:t')
 
         -- workaround for the gradle buildship issue:
         -- https://github.com/mfussenegger/nvim-jdtls/issues/38
@@ -74,7 +75,7 @@ local function start()
                 '-configuration', mason_pkg_path .. '/jdtls/config_' .. vim.loop.os_uname().sysname:lower(),
                 '--jvm-arg=-javaagent:' .. lombok_jar,
                 '--jvm-arg=-Xbootclasspath/a:' .. lombok_jar,
-                '-data', my.sys_local.java.workspace_dir .. vim.fn.fnamemodify(root_dir, ':p:h:t'),
+                '-data', workspace_dir,
             }
         else
             config.cmd = {
@@ -92,7 +93,7 @@ local function start()
                 '-Xbootclasspath/a:' .. lombok_jar,
                 '-jar', vim.fn.glob(mason_pkg_path .. '/jdtls/plugins/org.eclipse.equinox.launcher_*.jar'),
                 '-configuration', mason_pkg_path .. '/jdtls/config_' .. vim.loop.os_uname().sysname:lower(),
-                '-data', my.sys_local.java.workspace_dir .. vim.fn.fnamemodify(root_dir, ':p:h:t'),
+                '-data', workspace_dir,
             }
         end
 
