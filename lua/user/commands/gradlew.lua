@@ -53,7 +53,7 @@ local function gradlew_exec(task, gradlew_path)
     vim.fn.jobsend(job_id, './gradlew ' .. task .. '\n')
 
     vim.api.nvim_set_current_win(win)
-    vim.api.nvim_win_call(win, function() vim.cmd('normal! G') end)
+    vim.api.nvim_win_set_cursor(win, { vim.fn.line('$'), 0 })
 end
 
 ---Extract the task name from a given string
