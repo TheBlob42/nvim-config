@@ -175,7 +175,7 @@ packer.startup({function(use)
     use {
         'nvim-treesitter/nvim-treesitter',
         run = function()
-            require('nvim-treesitter.install').update({ with_sync = true })
+            require('nvim-treesitter.install').update({ with_sync = true })()
         end,
         config = load_config_file(),
     }
@@ -242,7 +242,7 @@ packer.startup({function(use)
     use 'williamboman/mason.nvim'              -- install external dependencies (LSP servers, DAP servers, etc.)
     use 'williamboman/mason-lspconfig.nvim'    -- make integration of mason.nvim and lspconfig easier
 
-    use 'folke/lua-dev.nvim'                   -- special configuration for Lua (NVIM development)
+    use 'folke/neodev.nvim'                    -- special configuration for Lua (NVIM development)
     use 'onsails/lspkind-nvim'                 -- add icons to completion candidates
     use 'mfussenegger/nvim-jdtls'              -- special configuration for Java
     use 'jose-elias-alvarez/nvim-lsp-ts-utils' -- special configuration for Type/Javascript

@@ -3,7 +3,7 @@ local M = {}
 local highlight_group = vim.api.nvim_create_augroup('LspDocumentHighlight', {})
 
 -- nvim-cmp supports additional capabilities
-M.capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+M.capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 ---Function to set LSP specific keybindings based on the given server capabilities
 ---@param client table

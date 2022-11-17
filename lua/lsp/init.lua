@@ -23,8 +23,9 @@ require('mason-lspconfig').setup_handlers {
         lspconfig[server_name].setup(config)
     end,
     ['sumneko_lua'] = function()
+        require('neodev').setup() -- needs to be before lspconfig
         lspconfig['sumneko_lua'].setup(
-            require('lsp.servers.sumneko_lua').config
+            require('lsp.servers.sumneko_lua')
         )
     end,
     ['tsserver'] = function()

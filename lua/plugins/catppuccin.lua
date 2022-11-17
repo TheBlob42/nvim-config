@@ -3,6 +3,8 @@ require('catppuccin')
 local dark = 'mocha'
 local light = 'latte'
 
+local current = light
+
 local function highlight_adaptions()
     -- make debug line better visible
     vim.cmd [[ hi! link debugPC CurSearch ]]
@@ -13,23 +15,17 @@ end
 -- startup NVIM in dark mode in the evening hours
 local hour = os.date('*t').hour
 if hour > 18 or hour < 8 then
-    vim.g.catppuccin_flavour = dark
+    current = dark
 else
-    vim.g.catppuccin_flavour = light
+    current = light
 end
 
-vim.cmd('colorscheme catppuccin')
+vim.cmd('colorscheme catppuccin-' .. current)
 highlight_adaptions()
 
 -- toggle colorscheme between light and dark
 vim.api.nvim_create_user_command('ToggleDarkMode', function()
-    if vim.g.catppuccin_flavour == dark then
-        vim.g.catppuccin_flavour = light
-        vim.cmd('Catppuccin ' .. light)
-    else
-        vim.g.catppuccin_flavour = dark
-        vim.cmd('Catppuccin ' .. dark)
-    end
-
+    current = current == dark and light or dark
+    vim.cmd('colorscheme catppuccin-' .. current)
     highlight_adaptions()
 end, {})
