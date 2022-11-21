@@ -7,9 +7,16 @@
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 my.sys_local = {
-    -- base directories to scan automatically for `telescope.project`
-    project_base_dirs = {
-        -- e.g. '/home/user/projects'
+    -- configuration to easily switch between projects using fuzzy find
+    projects = {
+        base_dirs = {
+            -- base directories which will be scanned for project folders
+            -- e.g. '/home/user/projects'
+        },
+        dirs = {
+            -- single project directories (if you want to add some from outside a base_dir)
+            -- e.g. '/home/user/projects/my-project'
+        },
     },
     git = {
         -- custom callback funtions for `gitlinker.nvim`

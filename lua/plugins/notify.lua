@@ -6,6 +6,3 @@ notify.setup {
 }
 
 vim.notify = notify
-
--- make sure telescope extension is loaded properly
-require('telescope').load_extension('notify')
