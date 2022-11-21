@@ -49,8 +49,13 @@ end
 
 local function start()
     if mason_registry.is_installed('jdtls') then
-        local root_dir = require('jdtls.setup').find_root({ 'gradlew', '.git', 'pom.xml', 'mvnw' })
+        local root_dir = require('jdtls.setup').find_root({ 'gradlew', 'pom.xml', 'mvnw' })
         local workspace_dir = vim.fn.fnamemodify(my.sys_local.java.workspace_dir, ':p') .. vim.fn.fnamemodify(root_dir, ':p:h:t')
+
+        -- to prevent multiple LSPs spawned per project (e.g. gradle multi projects)
+        if not root_dir then
+            return
+        end
 
         -- workaround for the gradle buildship issue:
         -- https://github.com/mfussenegger/nvim-jdtls/issues/38
