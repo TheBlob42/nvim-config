@@ -1,8 +1,5 @@
 local wk = require('which-key')
 
--- hinder `which-key` to mess with `telescope` when pasting in insert mode
-vim.cmd('autocmd FileType TelescopePrompt inoremap <buffer> <silent> <C-r> <C-r>')
-
 wk.setup {
     plugins = {
         spelling = { enabled = true },

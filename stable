@@ -44,6 +44,9 @@
   "friendly-snippets": {
     "commit": "ef8caa5"
   },
+  "fzf-lua": {
+    "commit": "0c6e614"
+  },
   "git-blame.nvim": {
     "commit": "d3afb1c"
   },
@@ -139,18 +142,6 @@
   },
   "suda.vim": {
     "commit": "2fc45dc"
-  },
-  "telescope-file-browser.nvim": {
-    "commit": "2429ecf"
-  },
-  "telescope-fzf-native.nvim": {
-    "commit": "65c0ee3"
-  },
-  "telescope-project.nvim": {
-    "commit": "ff4d3ce"
-  },
-  "telescope.nvim": {
-    "commit": "7a4ffef"
   },
   "undotree": {
     "commit": "bd60cb5"

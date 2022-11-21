@@ -87,6 +87,13 @@ packer.startup({function(use)
     use 'tpope/vim-abolish'        -- working with variant of words
 
     use {
+        -- fuzzy find stuff using `fzf`
+        'ibhagwan/fzf-lua',
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = load_config_file(),
+    }
+
+    use {
         -- sneak like motion plugin
         'ggandor/leap.nvim',
         config = load_config_file(),
@@ -221,21 +228,6 @@ packer.startup({function(use)
         requires = 'nvim-lua/plenary.nvim',
         module = 'gitlinker',
         config = load_config_file(),
-    }
-
-    -- TELESCOPE
-    use {
-        'nvim-telescope/telescope.nvim',
-        requires = 'nvim-lua/plenary.nvim',
-        config = load_config_file(),
-    }
-
-    use 'nvim-telescope/telescope-project.nvim'
-    use 'nvim-telescope/telescope-file-browser.nvim'
-
-    use {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        run = 'make',
     }
 
     -- LSP

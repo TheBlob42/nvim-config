@@ -9,7 +9,7 @@ local lspkind = require('lspkind')
 
 cmp.setup {
     enabled = function()
-        -- disable cmp for prompt buffers e.g. TelescopePrompt
+        -- disable cmp for prompt buffers
         if vim.bo.buftype == 'prompt' then
             return false
         end

@@ -33,16 +33,16 @@ function M.on_attach(client, bufnr)
         map('n', '<localleader>a', vim.lsp.buf.code_action, 'code action')
     end
     if client.server_capabilities.documentSymbolProvider then
-        map('n', '<localleader>s', '<CMD>Telescope lsp_document_symbols<CR>', 'document symbols')
+        map('n', '<localleader>s', '<CMD>FzfLua lsp_document_symbols<CR>', 'document symbols')
     end
     if client.server_capabilities.workspaceSymbolProvider then
-        map('n', '<localleader>S', '<CMD>Telescope lsp_dynamic_workspace_symbols<CR>', 'workspace symbols')
+        map('n', '<localleader>S', '<CMD>FzfLua lsp_live_workspace_symbols<CR>', 'workspace symbols')
     end
 
     -- navigation 'g' bindings
     map('n', 'gd', '<C-]>', 'goto definition') -- map to 'gd' for convenience
     if client.server_capabilities.referencesProvider then
-        map('n', 'gr', "<CMD>Telescope lsp_references<CR>", 'goto references')
+        map('n', 'gr', "<CMD>FzfLua lsp_references<CR>", 'goto references')
     end
     if client.server_capabilities.implementationProvider then
         map('n', 'gI', vim.lsp.buf.implementation, 'goto implementation')
