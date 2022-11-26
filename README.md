@@ -21,10 +21,12 @@ Only works with Neovim version >= `0.8`
 > Some functionality is tailored towards the usage of a Linux operating system
 
 - [curl](https://curl.se/)
-- [NerdFont](https://www.nerdfonts.com/)
+- [NerdFont](https://www.nerdfonts.com/)¹
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
+- [fzf](https://github.com/junegunn/fzf)
 - [xclip](https://github.com/astrand/xclip) or [xsel](https://github.com/kfish/xsel) 
 
+¹At least version `2.2.2` to include [codicons](https://github.com/microsoft/vscode-codicons) for [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui)
 ### Optional Dependencies 
 
 - [jq](https://stedolan.github.io/jq/)
