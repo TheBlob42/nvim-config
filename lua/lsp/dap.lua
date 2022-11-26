@@ -18,7 +18,23 @@ vim.fn.sign_define('DapBreakpointCondition', { text = '', texthl = 'Diagnosti
 vim.fn.sign_define('DapLogPoint',            { text = '', texthl = 'DiagnosticInformation' })
 vim.fn.sign_define('DapBreakpointRejected',  { text = '', texthl = 'DiagnosticHint' })
 
-dapui.setup()
+dapui.setup {
+    layouts = {
+        {
+            elements = { 'scopes', 'breakpoints', 'stacks' },
+            size = 40,
+            position = 'left',
+        },
+        {
+            elements = { 'console' },
+            size = 0.3,
+            position = 'bottom',
+        }
+    },
+    controls = {
+        element = 'console',
+    }
+}
 -- automatically open and close the `dapui` windows
 dap.listeners.after.event_initialized["dapui_config"] = function()
     dapui.open()
