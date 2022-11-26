@@ -1,4 +1,13 @@
-require('catppuccin')
+require('catppuccin').setup {
+    integrations = {
+        notify = true,
+        cmp = true,
+        dap = {
+            enabled = true,
+            enable_ui = true,
+        }
+    }
+}
 
 local dark = 'mocha'
 local light = 'latte'
