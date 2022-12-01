@@ -1,16 +1,20 @@
 local wk = require('which-key')
 
 wk.setup {
+    -- disable ALL builtin plugins
     plugins = {
-        spelling = { enabled = true },
+        marks = false,
+        registers = false,
+        spelling = { enabled = false },
         presets = {
             operators = false, -- not useful due to `vim-cutlass`
+            motions = false,
+            text_objects = false,
+            windows = false,
+            nav = false,
+            g = false,
+            z = false,
         }
-    },
-    triggers_blacklist = {
-        -- since I'm using 'fd' as escape sequence mostly
-        i = { 'f' },
-        v = { 'f' },
     },
 }
 
