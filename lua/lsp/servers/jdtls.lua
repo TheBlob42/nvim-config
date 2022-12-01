@@ -72,6 +72,13 @@ local function start()
             root_dir = root_dir,
             capabilities = require('lsp.utils').capabilities,
             on_attach = jdtls_on_attach,
+            settings = {
+                java = {
+                    settings = {
+                        url = vim.fn.stdpath('config') .. '/lua/lsp/servers/jdtls.properties' -- setting general compiler options
+                    }
+                }
+            }
         }
 
         -- choose the jdtls cmd: either the new "jdtls" python script or the "oldschool" java command
