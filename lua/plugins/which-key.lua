@@ -49,3 +49,7 @@ wk.register({
 wk.register({
     name = 'Local',
 }, { prefix = vim.g.maplocalleader })
+
+vim.keymap.set('v', '<leader>', function()
+    wk.show(vim.g.mapleader, { mode = 'v' })
+end)
