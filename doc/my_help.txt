@@ -178,6 +178,28 @@ of issues. Take the already existing entries for some inspiration:
 		</attributes>
 	</classpathentry>
 <
+-----------------------------------------------------------------------------
+COMPILER OPTIONS                           *my-jdtls-compiler* *my-java-compiler*
+
+Due to the vast variety of options there are many which can not be set
+directly in the JDTLS configuration. In case of the Java compiler options
+there is a setting (`java.settings.url`) to link a properties file with your
+specific options:
+>
+	{
+		[...]
+		settings = {
+			java = {
+				settings = {
+					url = 'path to your properties file'
+				}
+			}
+		}
+	}
+<
+For the list of all available options see:
+https://github.com/eclipse/eclipse.jdt.ls/wiki/Language-Server-Settings-&-Capabilities#java-compiler-options
+
 =============================================================================
 TOMCAT DEBUG                                                  *my-tomcat-debug*
 
