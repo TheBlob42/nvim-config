@@ -95,9 +95,6 @@
   "neodev.nvim": {
     "commit": "95d286e"
   },
-  "modes.nvim": {
-    "commit": "7abb725"
-  },
   "nvim-autopairs": {
     "commit": "6b6e35f"
   },
