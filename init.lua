@@ -108,15 +108,6 @@ packer.startup({function(use)
     }
 
     use {
-        -- eye candy on mode switch
-        'mvllow/modes.nvim',
-        after = 'catppuccin',
-        config = wrap(function()
-            require('modes').setup()
-        end)
-    }
-
-    use {
         -- improve default ui interface
         'stevearc/dressing.nvim',
         config = load_config_file(),
