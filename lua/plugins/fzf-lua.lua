@@ -7,6 +7,28 @@ fzf.setup {
     files = {
         git_icons = false -- remove git icons for better performance
     },
+    actions = {
+        files = {
+          -- default actions (needed since there is not table merge)
+          ["default"]       = fzf.actions.file_edit_or_qf,
+          ["ctrl-s"]        = fzf.actions.file_split,
+          ["ctrl-v"]        = fzf.actions.file_vsplit,
+          ["ctrl-t"]        = fzf.actions.file_tabedit,
+          ["alt-q"]         = fzf.actions.file_sel_to_qf,
+          ["alt-l"]         = fzf.actions.file_sel_to_ll,
+          -- open a DREX buffer for the cwd
+          ['alt-d'] = function(_, opts)
+            require('drex').open_directory_buffer(opts.cwd)
+          end,
+          -- start a live grep search from the cwd
+          ["alt-s"] = {
+              function(_, opts)
+                  fzf.live_grep { cwd = opts.cwd }
+              end,
+              fzf.actions.resume,
+          }
+        },
+      },
     winopts = {
         preview = {
             delay = 60 -- smoother preview experience
@@ -14,7 +36,7 @@ fzf.setup {
     },
     keymap = {
         builtin = {
-          -- default mappings
+          -- default mappings (needed since there is no table merge)
           ["<F1>"] = "toggle-help",
           ["<F2>"] = "toggle-fullscreen",
           ["<F3>"] = "toggle-preview-wrap",
@@ -26,7 +48,7 @@ fzf.setup {
           ["<C-u>"] = "preview-page-up",
         },
         fzf = {
-          -- default mappings
+          -- default mappings (needed since there is no table merge)
           ["ctrl-z"] = "abort",
           ["ctrl-f"] = "half-page-down",
           ["ctrl-b"] = "half-page-up",
