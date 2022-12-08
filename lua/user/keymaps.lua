@@ -120,22 +120,17 @@ local mappings = {
     -- leader mappings
     { '<leader><leader>', '<CMD>SwitchWindow<CR>', 'jump to another window' },
     { '<leader><TAB>', '<ESC>:b#<CR>', 'switch to previous buffer' },
-    { '<leader>1', '<ESC>1<C-w>w', 'switch to window 1' },
-    { '<leader>2', '<ESC>2<C-w>w', 'switch to window 2' },
-    { '<leader>3', '<ESC>3<C-w>w', 'switch to window 3' },
-    { '<leader>4', '<ESC>4<C-w>w', 'switch to window 4' },
-    { '<leader>5', '<ESC>5<C-w>w', 'switch to window 5' },
-    { '<leader>6', '<ESC>6<C-w>w', 'switch to window 6' },
-    { '<leader>7', '<ESC>7<C-w>w', 'switch to window 7' },
-    { '<leader>8', '<ESC>8<C-w>w', 'switch to window 8' },
-    { '<leader>9', '<ESC>9<C-w>w', 'switch to window 9' },
     -- buffers
     { '<leader>ba', '<ESC>ggVGo', 'select all' },
     { '<leader>bn', '<CMD>enew<CR>', 'new buffer' },
     -- errors
     { '<leader>en', '<Plug>NextError', 'next error' },
     { '<leader>eN', '<Plug>PrevError', 'previous error' },
-    { '<leader>ei', function() vim.diagnostic.open_float { border = 'rounded' } end, 'error details' },
+    {
+        '<leader>ei',
+        function() vim.diagnostic.open_float { border = 'rounded' } end,
+        'error details'
+    },
     -- files
     { '<leader>fs', '<CMD>w<CR>', 'save file' , { silent = false } },
     { '<leader>fS', '<ESC>:saveas ', 'save file as', { silent = false } },
