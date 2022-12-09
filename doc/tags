@@ -8,9 +8,11 @@ my-gradle-debugging	my_help.txt	/*my-gradle-debugging*
 my-gradle-misc	my_help.txt	/*my-gradle-misc*
 my-java	my_help.txt	/*my-java*
 my-java-classpath	my_help.txt	/*my-java-classpath*
+my-java-compiler	my_help.txt	/*my-java-compiler*
 my-java-versions	my_help.txt	/*my-java-versions*
 my-jdtls	my_help.txt	/*my-jdtls*
 my-jdtls-classpath	my_help.txt	/*my-jdtls-classpath*
+my-jdtls-compiler	my_help.txt	/*my-jdtls-compiler*
 my-jdtls-versions	my_help.txt	/*my-jdtls-versions*
 my-macros	my_help.txt	/*my-macros*
 my-macros-speed	my_help.txt	/*my-macros-speed*
@@ -19,3 +21,4 @@ my-macros-wrapscan	my_help.txt	/*my-macros-wrapscan*
 my-packer-snapshot	my_help.txt	/*my-packer-snapshot*
 my-postman	my_help.txt	/*my-postman*
 my-remove-duplicates	my_help.txt	/*my-remove-duplicates*
+my-tomcat-debug	my_help.txt	/*my-tomcat-debug*
