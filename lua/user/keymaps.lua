@@ -11,8 +11,9 @@ end
 map('x', 'fd', '<esc>')
 map('s', 'fd', '<esc><esc>')
 
--- go back to normal mode in terminal
-map('t', '<esc>', '<c-\\><c-n>')
+-- easier switch to normal mode from terminal mode
+-- leave <esc> unchanged to not interfere with terminal commands that need it like vi, lazygit, etc.
+map('t', '<C-q>', '<c-\\><c-n>')
 
 -- move line shortcuts
 map('n', '<a-j>', ':m .+1<cr>==')
@@ -53,15 +54,15 @@ end
 
 map('n', 'cn', '*``cgn', { desc = 'mc change word (forward)' })
 map('n', 'cN', '*``cgN', { desc = 'mc change word (backward)' })
-map('x', 'cn', mc_select .. '``cgn', { desc = 'mc change selection (forward)' })
-map('x', 'cN', mc_select .. '``cgN', { desc = 'mc change selection (backward)' })
+map('x', '<leader>cn', mc_select .. '``cgn', { desc = 'mc change selection (forward)' })
+map('x', '<leader>cN', mc_select .. '``cgN', { desc = 'mc change selection (backward)' })
 
 map('n', 'cq', '*Nqz', { desc = 'mc start macro (foward)' })
 map('n', 'cQ', '#Nqz', { desc = 'mc start macro (backward)' })
 map('n', '<F2>', mc_macro(), { expr = true, desc = 'mc end or replay macro' })
 
-map('x', 'cq', mc_select .. '``qz', { desc = 'mc start macro (foward)' })
-map('x', 'cQ', mc_select:gsub('/', '?') .. '``qz', { desc = 'mc start macro (backward)' })
+map('x', '<leader>cq', mc_select .. '``qz', { desc = 'mc start macro (foward)' })
+map('x', '<leader>cQ', mc_select:gsub('/', '?') .. '``qz', { desc = 'mc start macro (backward)' })
 map('x', '<F2>', mc_macro(mc_select), { expr = true, desc = 'mc end or replay macro' })
 
 -- check if file belongs to a Gradle project and add the appropriate key bindings
