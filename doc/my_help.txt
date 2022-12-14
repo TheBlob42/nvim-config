@@ -45,20 +45,22 @@ REPL                                                          *my-clojure-repl*
 
 When opening a Clojure file the `conjure` plugin automatically connects to an
 existing REPL. If none is found it tries to use `babashka` (if installed). To
-open an interactive REPL for the usage with Neovim use the following:
+open an interactive REPL for the usage with Neovim use `nREPL`. Merge the
+following snippet with your projects `deps.edn` file:
 >
-    {:deps
-     {org.clojure/clojure {:mvn/version "1.10.1"}
-      nrepl/nrepl {:mvn/version "0.7.0"}
-      cider/cider-nrepl {:mvn/version "0.25.2"}}}
+	{:aliases
+	 {:nREPL {:extra-deps {nrepl/nrepl {:mvn/version "1.0.0"}}
+		  :main-opts ["-m" "nrepl.cmdline"]}}}
 <
-To make this work check for the following dependencies in your `deps.edn`
-file:
+Then you can start the nrepl easily with the following command:
 >
-    clj -m nrepl.cmdline \
-	--middleware "[cider.nrepl/cider-middleware]" \
-	--interactive
+    clj -M:nREPL
 <
+References~
+
+- https://babashka.org/
+- https://github.com/nrepl/nrepl
+
 =============================================================================
 POSTMAN                                                    *my-curl* *my-postman*
 
