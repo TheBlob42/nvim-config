@@ -9,24 +9,24 @@ fzf.setup {
     },
     actions = {
         files = {
-          -- default actions (needed since there is not table merge)
-          ["default"]       = fzf.actions.file_edit_or_qf,
-          ["ctrl-s"]        = fzf.actions.file_split,
-          ["ctrl-v"]        = fzf.actions.file_vsplit,
-          ["ctrl-t"]        = fzf.actions.file_tabedit,
-          ["alt-q"]         = fzf.actions.file_sel_to_qf,
-          ["alt-l"]         = fzf.actions.file_sel_to_ll,
-          -- open a DREX buffer for the cwd
-          ['alt-d'] = function(_, opts)
-            require('drex').open_directory_buffer(opts.cwd)
-          end,
-          -- start a live grep search from the cwd
-          ["alt-s"] = {
-              function(_, opts)
-                  fzf.live_grep { cwd = opts.cwd }
-              end,
-              fzf.actions.resume,
-          }
+            -- default actions (needed since there is not table merge)
+            ["default"] = fzf.actions.file_edit_or_qf,
+            ["ctrl-s"]  = fzf.actions.file_split,
+            ["ctrl-v"]  = fzf.actions.file_vsplit,
+            ["ctrl-t"]  = fzf.actions.file_tabedit,
+            ["alt-q"]   = fzf.actions.file_sel_to_qf,
+            ["alt-l"]   = fzf.actions.file_sel_to_ll,
+            -- open a DREX buffer for the cwd
+            ['alt-d'] = function(_, opts)
+                require('drex').open_directory_buffer(opts.cwd)
+            end,
+            -- start a live grep search from the cwd
+            ['alt-s'] = {
+                function(_, opts)
+                    fzf.live_grep { cwd = opts.cwd }
+                end,
+                fzf.actions.resume,
+            },
         },
       },
     winopts = {
@@ -36,30 +36,30 @@ fzf.setup {
     },
     keymap = {
         builtin = {
-          -- default mappings (needed since there is no table merge)
-          ["<F1>"] = "toggle-help",
-          ["<F2>"] = "toggle-fullscreen",
-          ["<F3>"] = "toggle-preview-wrap",
-          ["<F4>"] = "toggle-preview",
-          ["<F5>"] = "toggle-preview-ccw",
-          ["<F6>"] = "toggle-preview-cw",
-          -- scroll preview easily
-          ["<C-d>"] = "preview-page-down",
-          ["<C-u>"] = "preview-page-up",
+            -- default mappings (needed since there is no table merge)
+            ["<F1>"] = "toggle-help",
+            ["<F2>"] = "toggle-fullscreen",
+            ["<F3>"] = "toggle-preview-wrap",
+            ["<F4>"] = "toggle-preview",
+            ["<F5>"] = "toggle-preview-ccw",
+            ["<F6>"] = "toggle-preview-cw",
+            -- scroll preview easily
+            ["<C-d>"] = "preview-page-down",
+            ["<C-u>"] = "preview-page-up",
         },
         fzf = {
-          -- default mappings (needed since there is no table merge)
-          ["ctrl-z"] = "abort",
-          ["ctrl-f"] = "half-page-down",
-          ["ctrl-b"] = "half-page-up",
-          ["ctrl-a"] = "beginning-of-line",
-          ["ctrl-e"] = "end-of-line",
-          ["alt-a"]  = "toggle-all",
-          ["f3"]     = "toggle-preview-wrap",
-          ["f4"]     = "toggle-preview",
-          -- scroll preview easily
-          ["ctrl-d"] = "preview-page-down",
-          ["ctrl-u"] = "preview-page-up",
+            -- default mappings (needed since there is no table merge)
+            ["ctrl-z"] = "abort",
+            ["ctrl-f"] = "half-page-down",
+            ["ctrl-b"] = "half-page-up",
+            ["ctrl-a"] = "beginning-of-line",
+            ["ctrl-e"] = "end-of-line",
+            ["alt-a"]  = "toggle-all",
+            ["f3"]     = "toggle-preview-wrap",
+            ["f4"]     = "toggle-preview",
+            -- scroll preview easily
+            ["ctrl-d"] = "preview-page-down",
+            ["ctrl-u"] = "preview-page-up",
         },
     },
 }
@@ -221,7 +221,7 @@ local mappings = {
     { '<leader>bb', '<CMD>FzfLua buffers<CR>', 'switch buffer' },
     { '<leader>pp', switch_project, 'switch project' },
     { '<leader>pf', '<CMD>FzfLua files<CR>', 'project files' },
-    { '<leader>pb', function() fzf.buffers { cwd_only = vim.loop.cwd() } end, 'project buffers' },
+    { '<leader>pb', function() fzf.buffers { cwd_only = true } end, 'project buffers' },
     { '<leader>ss', '<CMD>FzfLua blines<CR>', 'search in current buffer' },
     { '<leader>sd', '<CMD>FzfLua live_grep_native<CR>', 'search in cwd' },
     { '<leader>el', '<CMD>FzfLua diagnostics_document<CR>', 'list errors' },
