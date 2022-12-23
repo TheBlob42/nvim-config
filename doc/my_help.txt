@@ -168,7 +168,11 @@ a class can not be found during autocompletion or a resource file (e.g.
 something similar, take a peek and check if everything is set up correctly.
 
 You can easily add the missing `<classpathentry>` yourself to fix these kind
-of issues. Take the already existing entries for some inspiration:
+of issues. Take a look at the already existing entries for some inspiration.
+
+EXAMPLES~
+
+Adding the `src/test/resources` folder:
 >
 	<classpathentry kind="src"
 			output="bin/test"
@@ -179,6 +183,11 @@ of issues. Take the already existing entries for some inspiration:
 			<attribute name="test" value="true"/>
 		</attributes>
 	</classpathentry>
+<
+Adding classes generated automatically by an annotationProcessor:
+>
+	<classpathentry kind="src"
+	                path="build/generated/sources/annotationProcessor/java/main"/>
 <
 -----------------------------------------------------------------------------
 COMPILER OPTIONS                           *my-jdtls-compiler* *my-java-compiler*
