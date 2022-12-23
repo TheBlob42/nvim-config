@@ -13,7 +13,20 @@ map('s', 'fd', '<esc><esc>')
 
 -- easier switch to normal mode from terminal mode
 -- leave <esc> unchanged to not interfere with terminal commands that need it like vi, lazygit, etc.
-map('t', '<C-q>', '<c-\\><c-n>')
+map('t', '<C-q>', '<c-\\><c-n>', { desc = 'switch to normal mode' })
+map('t', '<M-r>', function()
+    -- add a custom highlight for visualisation
+    local highlight = vim.fn.matchadd('@todo', '\\%#')
+    vim.cmd.redraw()
+    vim.schedule(function()
+        pcall(vim.fn.matchdelete, highlight)
+    end)
+
+    local register = vim.fn.getcharstr()
+    if register ~= vim.api.nvim_replace_termcodes('<ESC>', true, true, true) then
+        return '<C-\\><C-N>"'..register..'pi'
+    end
+end, { expr = true, desc = 'paste from register' })
 
 -- move line shortcuts
 map('n', '<a-j>', ':m .+1<cr>==')
