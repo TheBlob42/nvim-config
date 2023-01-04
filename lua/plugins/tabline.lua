@@ -4,9 +4,8 @@ vim.keymap.set('n', '<leader>tr', require('tabline.actions').set_tabname, { desc
 
 local function adapt_highlights()
     -- updating highlight groups is not possible with lua
-    vim.cmd('hi TabLineSel guibg=NONE')
-    vim.cmd('hi TabLine guibg=NONE ctermbg=NONE')
-
+    vim.api.nvim_set_hl(0, 'TabLineSel', { bg = 'NONE' })
+    vim.api.nvim_set_hl(0, 'TabLine', { bg = 'NONE', ctermbg = 'NONE' })
     vim.api.nvim_set_hl(0, 'TabLineSeparatorActive', { link = 'Special' })
     vim.api.nvim_set_hl(0, 'TabLineSeparatorInactive', { link = 'Comment' })
 end

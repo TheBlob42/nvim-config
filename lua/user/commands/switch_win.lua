@@ -252,8 +252,8 @@ local function switch_window()
         targets[label] = win
     end
 
-    vim.cmd('normal :<esc>') -- clear command line
-    vim.cmd('redraw')        -- make overlay windows instantly visible
+    vim.cmd.normal(':<esc>') -- clear command line
+    vim.cmd.redraw()         -- make overlay windows instantly visible
 
     local input = vim.fn.nr2char(vim.fn.getchar())
     local target_window = targets[input]

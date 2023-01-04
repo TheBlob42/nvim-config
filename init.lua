@@ -21,7 +21,7 @@ local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.n
 local bootstrapping = vim.fn.isdirectory(install_path) ~= 1
 if bootstrapping then
     vim.api.nvim_command('!git clone https://github.com/wbthomason/packer.nvim ' .. install_path)
-    vim.cmd('packadd packer.nvim')
+    vim.cmd.packadd('packer.nvim')
 end
 
 local packer = require('packer')

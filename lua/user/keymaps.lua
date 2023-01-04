@@ -124,7 +124,7 @@ local function remove_trailing_whitespaces()
     vim.fn.setreg('/', last_search)     -- restore last search
     vim.api.nvim_win_set_cursor(0, pos) -- restore cursor position
     if hl_state == 0 then
-        vim.cmd('nohl') -- disable search highlighting again if it was disabled before
+        vim.cmd.nohlsearch() -- disable search highlighting again if it was disabled before
     end
 end
 

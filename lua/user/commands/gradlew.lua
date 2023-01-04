@@ -109,7 +109,7 @@ local function task_list(gradlew_path)
         local stages = { '⠇', '⠋', '⠙', '⠸', '⠴', '⠦' }
         local index = #stages
         while true do
-            vim.cmd('redraw')
+            vim.cmd.redraw()
             if status == 'progress' then
                 vim.wait(100)
                 index = index + 1

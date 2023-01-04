@@ -71,7 +71,7 @@ vim.api.nvim_create_user_command('ExpandSnippet', function()
         end,
     }, function(s)
         if s then
-            vim.cmd('normal a') -- make sure were in insert mode
+            vim.cmd.normal('a') -- make sure were in insert mode
             require('luasnip').snip_expand(s)
         end
     end)

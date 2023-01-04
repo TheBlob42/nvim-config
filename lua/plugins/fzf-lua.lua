@@ -102,7 +102,7 @@ local function file_explorer(dir)
                 if pre_cmd then
                     vim.cmd(pre_cmd)
                 end
-                vim.cmd('e ' .. element.path)
+                vim.cmd.e(element.path)
             else
                 fzf.actions.resume()
             end
@@ -124,7 +124,7 @@ local function file_explorer(dir)
                         file_explorer(element.path)
                     else
                         vim.api.nvim_win_close(0, true)
-                        vim.cmd('e ' .. element.path)
+                        vim.cmd.e(element.path)
                     end
                 end,
             },
