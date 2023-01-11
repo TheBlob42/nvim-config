@@ -32,6 +32,7 @@ cmp.setup {
     },
     sources = cmp.config.sources({
         { name = 'nvim_lsp'},
+        { name = 'conjure' },
         { name = 'luasnip'},
         { name = 'path'},
     }, {
@@ -48,17 +49,6 @@ cmp.setup {
         ghost_text = true,
     }
 }
-
--- setup `conjure` for all lisps file types
-for _, ft in ipairs(my.lisps) do
-    cmp.setup.filetype(ft, {
-        sources = cmp.config.sources({
-            { name = 'conjure' }
-        }, {
-            { name = 'buffer' }
-        })
-    })
-end
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- ~ command line autocompletion ~
