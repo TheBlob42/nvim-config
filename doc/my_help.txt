@@ -121,7 +121,7 @@ Sometimes it is necessary to debug the Java compiler. For example when dealing
 with annotation processors this can be really helpful. To enable this you need
 to set the `org.gradle.debug` flag:
 >
-	./gradlew compile --no-daemon -Dorg.gradle.debug=true
+	./gradlew compileJava --no-daemon -Dorg.gradle.debug=true
 <
 This will pause the execution during the startup of the daemon until you
 connect your debugger (see |my-gradle-debugging|).
