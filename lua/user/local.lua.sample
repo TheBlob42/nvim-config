@@ -30,7 +30,11 @@ my.sys_local = {
     -- java configuration for this computer
     java = {
         -- workspace data directory for JDTLS
-        workspace_dir = '/home/user/java_workspace',
+        -- (NOTE: make sure that either the directory does already exist or that your path ends with a "/")
+        workspace_dir = '/home/user/java_workspace/',
+
+        -- check the following page and search for "ExecutionEnvironment" enum for the exact values needed for the name
+        -- https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
         runtimes = {
             {
                 name = "JavaSE-11",
