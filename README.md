@@ -5,7 +5,7 @@ My ever changing Neovim configuration
 ## Installation
 
 ```
-git clone git@github.com:TheBlob42/nvim-config.git ~/.config/nvim
+git clone https://github.com/TheBlob42/nvim-config.git ~/.config/nvim
 ```
 
 To ensure a stable plugin environment use the snapshot feature of [packer.nvim](wbthomason/packer.nvim):
