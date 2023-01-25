@@ -23,10 +23,11 @@ Only works with Neovim version >= `0.8`
 - [curl](https://curl.se/)
 - [NerdFont](https://www.nerdfonts.com/)¹
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
-- [fzf](https://github.com/junegunn/fzf)
+- [fzf](https://github.com/junegunn/fzf)²
 - [xclip](https://github.com/astrand/xclip) or [xsel](https://github.com/kfish/xsel) 
 
-¹At least version `2.2.2` to include [codicons](https://github.com/microsoft/vscode-codicons) for [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui)
+¹At least version `2.2.2` to include [codicons](https://github.com/microsoft/vscode-codicons) for [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui)  
+²At least version `0.24.0` ([more](https://github.com/ibhagwan/fzf-lua/issues/227))
 ### Optional Dependencies 
 
 - [jq](https://stedolan.github.io/jq/)
@@ -85,3 +86,7 @@ The following servers have been tested explicitly:
 - sumneko_lua
 - tsserver
 - gopls
+
+## Troubleshooting
+
+If treesitter does not initialize correctly check if you have a proper C compiler installed ([more](https://github.com/nvim-treesitter/nvim-treesitter/wiki/Linux-Support))
