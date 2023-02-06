@@ -89,6 +89,20 @@ GRADLE                                                              *my-gradle*
 Everything about Gradle.
 
 -----------------------------------------------------------------------------
+UNIT TESTING                                                *my-gradle-testing*
+
+In order to get a better test logging output from unit tests started via
+Gradle one can use the following snippet in their `build.gradle` file:
+>
+	test {
+		testLogging {
+			events "passed", "failed", "skipped"
+			showStandardStreams = true
+			exceptionFormat = 'full'
+		}
+	}
+<
+-----------------------------------------------------------------------------
 DEBUGGING                                                 *my-gradle-debugging*
 
 Sometimes it is needed to debug a specific Gradle task either because the
