@@ -3,6 +3,8 @@ local M = {}
 local dap = require('dap')
 local dapui = require('dapui')
 
+local dap_controls = -1
+
 -- simple DAP REPL autocompletion
 vim.api.nvim_create_autocmd('FileType', {
     group = vim.api.nvim_create_augroup('DapReplCompletion', {}),
@@ -37,13 +39,19 @@ dapui.setup {
 }
 -- automatically open and close the `dapui` windows
 dap.listeners.after.event_initialized["dapui_config"] = function()
-    dapui.open()
+    dapui.open { reset = true }
 end
 dap.listeners.before.event_terminated["dapui_config"] = function()
-    dapui.close()
+    dapui.close {}
+    if vim.api.nvim_win_is_valid(dap_controls) then
+        vim.api.nvim_win_close(dap_controls, true)
+    end
 end
 dap.listeners.before.event_exited["dapui_config"] = function()
-    dapui.close()
+    dapui.close {}
+    if vim.api.nvim_win_is_valid(dap_controls) then
+        vim.api.nvim_win_close(dap_controls, true)
+    end
 end
 
 function M.setup_mappings(bufnr)
@@ -72,5 +80,58 @@ function M.setup_mappings(bufnr)
     end, { buffer = bufnr, desc = 'list breakpoints' })
     vim.keymap.set('n', '<localleader>dbC', dap.clear_breakpoints, { buffer = bufnr, desc = 'clear all breakpoints' })
 end
+
+local function open_dap_controls_win()
+    local lines = {
+        " [c] - continue   [n] - step over ",
+        " [T] - terminate  [i] - step into ",
+        " [R] - open REPL  [o] - step out  ",
+    }
+
+    local buf = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+
+    vim.keymap.set('n', 'q', '<cmd>q<cr>',  { buffer = buf })
+    vim.keymap.set('n', 'c', dap.continue,  { buffer = buf })
+    vim.keymap.set('n', 'n', dap.step_over, { buffer = buf })
+    vim.keymap.set('n', 'i', dap.step_into, { buffer = buf })
+    vim.keymap.set('n', 'o', dap.step_out,  { buffer = buf })
+    vim.keymap.set('n', 'T', function()
+        vim.api.nvim_win_close(0, true)
+        dap.disconnect()
+    end, { buffer = buf })
+    vim.keymap.set('n', 'R', function()
+        vim.api.nvim_win_close(0, true)
+        dapui.float_element('repl', {})
+    end, { buffer = buf })
+
+    -- show the window at the top middle position
+    dap_controls = vim.api.nvim_open_win(buf, true, {
+        relative = 'editor',
+        anchor = 'NW',
+        width = #lines[1],
+        height = #lines,
+        row = 0,
+        col = (vim.opt.columns:get() - #lines[1]) / 2,
+        border = 'single',
+        style = 'minimal',
+    })
+
+    -- automatically close the dap controls window when leaving the controls buffer
+    vim.api.nvim_buf_set_option(buf, 'bufhidden', 'wipe')
+    vim.api.nvim_create_autocmd('BufLeave', {
+        buffer = buf,
+        desc = 'close dap control window automatically',
+        callback = function()
+            vim.api.nvim_win_close(dap_controls, true)
+            dap_controls = -1
+        end,
+    })
+
+    -- highlight the command keys
+    vim.fn.matchadd('@number', '\\[\\zs.\\ze\\]', 1)
+end
+
+vim.keymap.set('n', '<leader>D', open_dap_controls_win, { desc = "open the DAP control window" })
 
 return M
