@@ -21,6 +21,7 @@ wk.setup {
 wk.register({
     name = 'Main-Menu',
     ['b'] = { name = 'Buffers' },
+    ['c'] = { name = 'Spelling' },
     ['e'] = { name = 'Errors' },
     ['f'] = {
         name = 'Files',

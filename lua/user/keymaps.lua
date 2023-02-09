@@ -108,6 +108,10 @@ my.repeat_map('<Plug>PrevError', function()
     vim.diagnostic.goto_prev { float = false }
 end)
 
+-- create repeatable spell mappings
+my.repeat_map('<Plug>SpellCheckNext', ']s')
+my.repeat_map('<Plug>SpellCheckPrev', '[s')
+
 -- make moving tabs repeatable (with `vim-repeat`)
 my.repeat_map('<Plug>MoveTabLeft',  '<CMD>-tabmove<CR>')
 my.repeat_map('<Plug>MoveTabRight', '<CMD>+tabmove<CR>')
@@ -129,14 +133,18 @@ local function remove_trailing_whitespaces()
 end
 
 local mappings = {
+    { '<F1>', '<CMD>setlocal spell!<CR>', 'toggle spell checking' },
     { '<F5>', remove_trailing_whitespaces, 'remove trailing whitespaces' },
     { 'gx', '<CMD>XOpen<CR>', 'open the link under the cursor via xdg-open' },
-    -- leader mappings
+
+    -- navigation
     { '<leader><leader>', '<CMD>SwitchWindow<CR>', 'jump to another window' },
     { '<leader><TAB>', '<ESC>:b#<CR>', 'switch to previous buffer' },
+
     -- buffers
     { '<leader>ba', '<ESC>ggVGo', 'select all' },
     { '<leader>bn', '<CMD>enew<CR>', 'new buffer' },
+
     -- errors
     { '<leader>en', '<Plug>NextError', 'next error' },
     { '<leader>eN', '<Plug>PrevError', 'previous error' },
@@ -145,17 +153,28 @@ local mappings = {
         function() vim.diagnostic.open_float { border = 'rounded' } end,
         'error details'
     },
+
     -- files
     { '<leader>fs', '<CMD>w<CR>', 'save file' , { silent = false } },
     { '<leader>fS', '<ESC>:saveas ', 'save file as', { silent = false } },
+
     -- insert
     { '<leader>iu', '<CMD>InsertUUID<CR>', 'insert uuid' },
     { '<leader>ij', ":<C-U>call append(line('.'), repeat([''], v:count1))<CR>", 'insert lines below' },
     { '<leader>ik', ":<C-U>call append(line('.')-1, repeat([''], v:count1))<CR>", 'insert lines above' },
+
     -- quit
     { '<leader>qq', '<CMD>confirm qall<CR>', 'quit NVIM' },
+
     -- search
     { '<leader>sc', '<CMD>nohl<CR>', 'clear search highlights' },
+
+    -- spelling
+    { '<leader>ct', '<CMD>setlocal spell!<CR>', 'toggle spell checking' },
+    { '<leader>cn', '<CMD>setlocal spell<CR><Plug>SpellCheckNext', 'next spelling error' },
+    { '<leader>cN', '<CMD>setlocal spell<CR><Plug>SpellCheckPrev', 'prev spelling error' },
+    { '<leader>cc', '<CMD>setlocal spell<CR><CMD>FzfLua spell_suggest<CR>', 'correct spelling error' },
+
     -- tabs
     { '<leader>tn', '<CMD>TabNew<CR>', 'new tab' },
     { '<leader>tt', '<CMD>SwitchTab<CR>', 'switch tab' },
@@ -164,6 +183,7 @@ local mappings = {
     { '<leader>tL', '<Plug>MoveTabRight', 'move tab right' },
     { '<leader>th', '<CMD>tabprevious<CR>', 'goto tab left' },
     { '<leader>tl', '<CMD>tabnext<CR>', 'goto tab right' },
+
     --windows
     { '<leader>w=', '<C-W>=', 'balance windows' },
     { '<leader>wh', '<C-W>h', 'goto window left' },
