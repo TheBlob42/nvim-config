@@ -1,5 +1,5 @@
 ---Search upwards from the current path for the 'gradlew' script
----@return string Absolute path of the corresponding 'gradlew' script or `nil` if not found
+---@return string? Absolute path of the corresponding 'gradlew' script or `nil` if not found
 local function get_gradlew_script_path()
     local path
     local buf_name = vim.api.nvim_buf_get_name(0)
@@ -10,9 +10,9 @@ local function get_gradlew_script_path()
         path = vim.fn.fnameescape(vim.fn.expand('%:p:h'))
     end
 
-    local gradlew_file = vim.fn.findfile('gradlew', path .. ';')
+    local gradlew_file = vim.fs.find('gradlew', { upward = true, type = 'file', path = path })[1]
 
-    if gradlew_file == '' then
+    if not gradlew_file or gradlew_file == '' then
         return
     end
 
@@ -86,10 +86,12 @@ local function task_list(gradlew_path)
         local status = 'progress'
         local result = ''
         local stdout = vim.loop.new_pipe()
+        local stderr = vim.loop.new_pipe()
+
         vim.loop.spawn('./gradlew', {
             cwd = gradlew_path,
             args = { 'tasks', '--all' },
-            stdio = { nil, stdout, nil },
+            stdio = { nil, stdout, stderr },
         }, function(code)
             if code ~= 0 then
                 status = 'error'
@@ -98,12 +100,18 @@ local function task_list(gradlew_path)
             end
             vim.loop.close(stdout)
         end)
-        vim.loop.read_start(stdout, function(err, data)
-            if err then
+
+        vim.loop.read_start(stdout, function(error, data)
+            if error then
                 status = 'error'
             elseif data then
                 result = result .. data
             end
+        end)
+
+        -- check for output on stderr
+        vim.loop.read_start(stderr, function()
+            status = 'error'
         end)
 
         local stages = { '⠇', '⠋', '⠙', '⠸', '⠴', '⠦' }
@@ -115,7 +123,7 @@ local function task_list(gradlew_path)
                 index = index + 1
                 vim.api.nvim_echo({{ 'loading gradlew tasks ' .. stages[math.fmod(index, #stages) + 1], 'Normal' }}, false, {})
             elseif status == 'error' then
-                -- TODO
+                vim.api.nvim_echo({{ 'Something went wrong when executing the "gradlew" script...', 'WarningMsg' }}, true, {})
                 return
             else
                 break
