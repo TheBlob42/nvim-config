@@ -1,6 +1,6 @@
 {
   "LuaSnip": {
-    "commit": "af60ac1"
+    "commit": "58fbfc6"
   },
   "bufdelete.nvim": {
     "commit": "f79e9d1"
@@ -126,7 +126,7 @@
     "commit": "49a5651"
   },
   "nvim-treesitter": {
-    "commit": "622baac"
+    "commit": "b23856a"
   },
   "nvim-web-devicons": {
     "commit": "bb6d4fd"
