@@ -26,11 +26,11 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 vim.opt.listchars = {
-    eol = '⮯',
+    eol = '',
     tab = '<.>',
     trail = '~',
-    extends = '➦',
-    precedes = '⮪',
+    extends = '',
+    precedes = '',
     space = '·',
 }
 
