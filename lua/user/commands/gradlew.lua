@@ -99,6 +99,7 @@ local function task_list(gradlew_path)
                 status = 'done'
             end
             vim.loop.close(stdout)
+            vim.loop.close(stderr)
         end)
 
         vim.loop.read_start(stdout, function(error, data)
