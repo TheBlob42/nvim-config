@@ -16,6 +16,9 @@ wk.setup {
             z = false,
         }
     },
+    window = {
+        border = 'single',
+    },
 }
 
 wk.register({
