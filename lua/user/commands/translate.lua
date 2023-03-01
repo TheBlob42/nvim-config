@@ -71,7 +71,7 @@ end, {
     nargs = '*',
     complete = function(lead, line, _)
         -- we only want completion for the first two (language) arguments
-        local arg = #vim.split(line, ' ') - 1
+        local arg = #vim.split(line, ' ', {}) - 1
         if arg < 3 then
             return vim.tbl_filter(function(e)
                 -- check for languages that start with the typed chars
@@ -86,7 +86,7 @@ end, {
 
 local function enter_translate_cmd(text)
     local go_left = vim.api.nvim_replace_termcodes('<left>', true, false, true)
-    vim.api.nvim_feedkeys(':Translate  ' .. text .. string.rep(go_left, #text + 1), 'n', true)
+    vim.api.nvim_feedkeys(':Translate  ' .. text .. string.rep(go_left, vim.str_utfindex(text) + 1), 'n', true)
 end
 
 vim.keymap.set('n', '<C-t>', function()
