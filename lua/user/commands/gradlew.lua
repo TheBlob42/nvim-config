@@ -85,6 +85,7 @@ local function task_list(gradlew_path)
     if not cached_task[gradlew_path] then
         local status = 'progress'
         local result = ''
+        local error_msg = ''
         local stdout = vim.loop.new_pipe()
         local stderr = vim.loop.new_pipe()
 
@@ -102,17 +103,16 @@ local function task_list(gradlew_path)
             vim.loop.close(stderr)
         end)
 
-        vim.loop.read_start(stdout, function(error, data)
-            if error then
-                status = 'error'
-            elseif data then
+        vim.loop.read_start(stdout, function(_, data)
+            if data then
                 result = result .. data
             end
         end)
 
-        -- check for output on stderr
-        vim.loop.read_start(stderr, function()
-            status = 'error'
+        vim.loop.read_start(stderr, function(_, data)
+            if data then
+                error_msg = error_msg .. data
+            end
         end)
 
         local stages = { '⠇', '⠋', '⠙', '⠸', '⠴', '⠦' }
@@ -124,9 +124,12 @@ local function task_list(gradlew_path)
                 index = index + 1
                 vim.api.nvim_echo({{ 'loading gradlew tasks ' .. stages[math.fmod(index, #stages) + 1], 'Normal' }}, false, {})
             elseif status == 'error' then
-                vim.api.nvim_echo({{ 'Something went wrong when executing the "gradlew" script...', 'WarningMsg' }}, true, {})
+                vim.api.nvim_echo({{ 'Error when executing the "gradlew" script:\n' .. error_msg, 'ErrorMsg' }}, true, {})
                 return
             else
+                if error_msg ~= '' then
+                    vim.api.nvim_echo({{ 'Something went wrong when executing the "gradlew" script:\n' .. error_msg, 'WarningMsg' }}, true, {})
+                end
                 break
             end
         end
