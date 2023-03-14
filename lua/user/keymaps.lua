@@ -132,6 +132,26 @@ local function remove_trailing_whitespaces()
     end
 end
 
+---Like `:wa` but only for a certain directory (including all sub-directories)
+---@param dir string? Directory to save all buffers (default: current working directory)
+local function save_all_files_in_dir(dir)
+    dir = dir or vim.loop.cwd()
+    dir = vim.fn.fnamemodify(vim.fn.expand(dir), ":p")
+
+    local saved = {}
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        local name = vim.api.nvim_buf_get_name(buf)
+        if vim.startswith(name, dir) then
+            vim.api.nvim_buf_call(buf, function()
+                vim.cmd.w();
+            end)
+            table.insert(saved, name)
+        end
+    end
+
+    vim.notify('Saved ' .. vim.tbl_count(saved) .. ' buffers:\n' .. table.concat(saved, '\n'), vim.log.levels.INFO, {})
+end
+
 local mappings = {
     { '<F1>', '<CMD>setlocal spell!<CR>', 'toggle spell checking' },
     { '<F5>', remove_trailing_whitespaces, 'remove trailing whitespaces' },
@@ -156,7 +176,7 @@ local mappings = {
 
     -- files
     { '<leader>fs', '<CMD>w<CR>', 'save file' , { silent = false } },
-    { '<leader>fS', '<ESC>:saveas ', 'save file as', { silent = false } },
+    { '<leader>f<C-s>', save_all_files_in_dir, 'save all files in cwd' },
 
     -- insert
     { '<leader>iu', '<CMD>InsertUUID<CR>', 'insert uuid' },
