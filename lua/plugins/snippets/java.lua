@@ -1,12 +1,10 @@
 local luasnip = require('luasnip')
 local fmt = require('luasnip.extras.fmt').fmt
 local snippet = luasnip.snippet
-local sn = luasnip.snippet_node
 local t = luasnip.text_node
 local i = luasnip.insert_node
 local f = luasnip.function_node
 local c = luasnip.choice_node
-local d = luasnip.dynamic_node
 
 ---Find the package path for the current java file
 ---This assumes your java code is located in a "src/.../java" folder structure
@@ -18,7 +16,7 @@ local function java_package()
 end
 
 ---Get the name of the current java class (based on the cursor position) via treesitter
----@return string
+---@return string?
 local function get_class_name()
     local node = require('nvim-treesitter.ts_utils').get_node_at_cursor()
 
@@ -36,48 +34,11 @@ local function get_class_name()
     return vim.treesitter.query.get_node_text(node:field('name')[1], 0)
 end
 
----Automatic javadoc creation from luasnip
----@param args table
----@return any
-local function java_doc(args)
-    local nodes = {
-        t({ '/**', ' * ' }),
-        i(1, 'A short description'),
-        t({ '', '' }),
-    }
-    local insert_index = 2
-
-    local return_type = args[1][1]
-    local raw_parameters = args[2][1]
-
-    if raw_parameters ~= '' then
-        local parameters = vim.split(raw_parameters, ',')
-        for _, param in ipairs(parameters) do
-            local name = param:match('%S+ (%w+).*')
-            table.insert(nodes, t(' * @param ' .. name .. ' '))
-            table.insert(nodes, i(insert_index))
-            table.insert(nodes, t({ '', '' }))
-            insert_index = insert_index + 1
-        end
-    end
-
-    if return_type ~= 'void' then
-        table.insert(nodes, t(' * @return '))
-        table.insert(nodes, i(insert_index))
-        table.insert(nodes, t({ '', '' }))
-        insert_index = insert_index + 1
-    end
-
-    table.insert(nodes, t({ ' */', '' }))
-    return sn(nil, nodes)
-end
-
 return {
     snippet({ trig = 'pa', name = 'Package' }, {
         f(java_package),
     }),
     snippet({ trig = 'm', name = 'Method' }, {
-        d(6, java_doc, { 3, 5 }),
         c(1, {
            i(nil, 'public'),
            i(nil, 'private'),
@@ -112,5 +73,6 @@ return {
         ]],
         {
             i(1, 'A short description')
-        })),
+        }
+    )),
 }
