@@ -129,7 +129,11 @@ packer.startup({function(use)
     use {
         -- two char escape sequence
         'TheBlob42/houdini.nvim',
-        config = load_config_file(),
+        config = wrap(function()
+            require('houdini').setup {
+                mappings = { 'fd' }
+            }
+        end),
     }
 
     use {
