@@ -27,6 +27,19 @@ fzf.setup {
                 end,
                 fzf.actions.resume,
             },
+            -- select from buffers rooted in the cwd
+            ['alt-b'] = {
+                function(_, opts)
+                    fzf.buffers {
+                        cwd = opts.cwd,
+                        fzf_opts = {
+                            -- no header lines, make every entry selectable
+                            ["--header-lines"] = false
+                        },
+                    }
+                end,
+                fzf.actions.resume,
+            },
         },
       },
     winopts = {
@@ -249,6 +262,16 @@ local function file_explorer(directory)
                     vim.api.nvim_set_current_buf(buf)
                     vim.fn.termopen(vim.o.shell, { cwd = dir })
                 end,
+                ['alt-b'] = {
+                    function()
+                        fzf.buffers {
+                            cwd = dir,
+                            -- no header lines, make every entry selectable
+                            fzf_opts = { ["--header-lines"] = false },
+                        }
+                    end,
+                    fzf.actions.resume,
+                },
                 ['ctrl-v'] = edit_file('vsplit'),
                 ['ctrl-x'] = edit_file('split'),
                 ['ctrl-t'] = edit_file('tabnew'),
