@@ -37,18 +37,16 @@ dapui.setup {
         element = 'console',
     }
 }
--- automatically open and close the `dapui` windows
+-- automatically open the `dapui` windows
 dap.listeners.after.event_initialized["dapui_config"] = function()
     dapui.open { reset = true }
 end
 dap.listeners.before.event_terminated["dapui_config"] = function()
-    dapui.close {}
     if vim.api.nvim_win_is_valid(dap_controls) then
         vim.api.nvim_win_close(dap_controls, true)
     end
 end
 dap.listeners.before.event_exited["dapui_config"] = function()
-    dapui.close {}
     if vim.api.nvim_win_is_valid(dap_controls) then
         vim.api.nvim_win_close(dap_controls, true)
     end
