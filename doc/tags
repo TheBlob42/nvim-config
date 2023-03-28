@@ -4,8 +4,10 @@ my-copy-lines	my_help.txt	/*my-copy-lines*
 my-curl	my_help.txt	/*my-curl*
 my-diff	my_help.txt	/*my-diff*
 my-gradle	my_help.txt	/*my-gradle*
+my-gradle-compiler-debugging	my_help.txt	/*my-gradle-compiler-debugging*
 my-gradle-debugging	my_help.txt	/*my-gradle-debugging*
 my-gradle-misc	my_help.txt	/*my-gradle-misc*
+my-gradle-testing	my_help.txt	/*my-gradle-testing*
 my-java	my_help.txt	/*my-java*
 my-java-classpath	my_help.txt	/*my-java-classpath*
 my-java-compiler	my_help.txt	/*my-java-compiler*
