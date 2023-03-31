@@ -136,20 +136,31 @@ end
 ---@param dir string? Directory to save all buffers (default: current working directory)
 local function save_all_files_in_dir(dir)
     dir = dir or vim.loop.cwd()
-    dir = vim.fn.fnamemodify(vim.fn.expand(dir), ":p")
+    assert(dir, 'something went wrong')
+    dir = vim.fn.fnamemodify(vim.fn.expand(dir), ':p')
 
     local saved = {}
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-        local name = vim.api.nvim_buf_get_name(buf)
+        local name = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ':p')
         if vim.startswith(name, dir) then
-            vim.api.nvim_buf_call(buf, function()
-                vim.cmd.w();
-            end)
-            table.insert(saved, name)
+            -- check for element type (file or directory) and modified status
+            local file_info = vim.loop.fs_stat(name)
+            local modified = vim.api.nvim_buf_get_option(buf, 'modified')
+
+            if file_info and file_info.type == 'file' and modified then
+                vim.api.nvim_buf_call(buf, function()
+                    vim.cmd.w()
+                end)
+                table.insert(saved, name)
+            end
         end
     end
 
-    vim.notify('Saved ' .. vim.tbl_count(saved) .. ' buffers:\n' .. table.concat(saved, '\n'), vim.log.levels.INFO, {})
+    if vim.tbl_isempty(saved) then
+        vim.notify('Nothing was saved!', vim.log.levels.INFO, {})
+    else
+        vim.notify('Saved ' .. vim.tbl_count(saved) .. ' buffers:\n' .. table.concat(saved, '\n'), vim.log.levels.INFO, {})
+    end
 end
 
 local mappings = {
