@@ -334,12 +334,33 @@ local function switch_project()
     })
 end
 
+---Simple helper to call git commit functions with custom window options
+---@param buffer_only boolean? Only check commits of the current buffer?
+---@return function Function that can be used in a keymapping
+local function fzf_git(buffer_only)
+    local fn = buffer_only and 'bcommits' or 'commits'
+    return function()
+        require('fzf-lua.providers.git')[fn] {
+            winopts = {
+                height = 1,
+                width = 0.95,
+                preview = {
+                    layout = 'vertical',
+                    vertical = 'down:80%',
+                },
+            }
+        }
+    end
+end
+
 local mappings = {
     { '<leader>h', '<CMD>FzfLua help_tags<CR>', 'help tags' },
     { '<leader>ff', file_explorer, 'file explorer (cwd)' },
     { '<leader>fF', function() file_explorer('%:h') end, 'file explorer (cwd)' },
     { '<leader>fr', '<CMD>FzfLua oldfiles<CR>', 'recent files' },
     { '<leader>fS', function() save_as('%:h') end, 'save as' },
+    { '<leader>gB', fzf_git(true), 'buffer commits' },
+    { '<leader>gC', fzf_git(false), 'cwd commits' },
     { '<leader>bb', '<CMD>FzfLua buffers<CR>', 'switch buffer' },
     { '<leader>pp', switch_project, 'switch project' },
     { '<leader>pf', '<CMD>FzfLua files<CR>', 'project files' },
