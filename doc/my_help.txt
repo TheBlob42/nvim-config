@@ -102,6 +102,13 @@ Gradle one can use the following snippet in their `build.gradle` file:
 		}
 	}
 <
+To only run specific tests via the `test` task you can provide packages, class
+and test method names including wildcards (`*`) via the `--tests` parameter:
+>
+	./gradlew test --tests 'com.custom.myproject.TestClass.firstTest'
+	./gradlew test --tests '*TestClass*method'
+	./gradlew test --tests '*SomeKeyword*'
+<
 -----------------------------------------------------------------------------
 DEBUGGING                                                 *my-gradle-debugging*
 
