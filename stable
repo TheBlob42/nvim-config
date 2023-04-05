@@ -33,7 +33,7 @@
     "commit": "db716a0"
   },
   "drex.nvim": {
-    "commit": "1560283"
+    "commit": "b587e39"
   },
   "fidget.nvim": {
     "commit": "9dc6d15"
@@ -45,7 +45,7 @@
     "commit": "1645e7c"
   },
   "fzf-lua": {
-    "commit": "e0dba1a"
+    "commit": "30fb626"
   },
   "git-blame.nvim": {
     "commit": "17840d0"
