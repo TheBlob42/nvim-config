@@ -13,13 +13,4 @@ require('nvim-treesitter.configs').setup {
             return vim.api.nvim_buf_line_count(buf) > 30000
         end,
     },
-    incremental_selection = {
-        enable = true,
-        keymaps = {
-            init_selection = "<CR>",
-            node_incremental = "<CR>",
-            scope_incremental = "<TAB>",
-            node_decremental = "<BS>",
-        },
-    },
 }
