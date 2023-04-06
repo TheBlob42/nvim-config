@@ -66,12 +66,14 @@ Depending on the LSP servers you might also need to fulfill additionally depende
 
 The following servers have been tested explicitly:
 
-- jdtls
-- jsonls
-- clojure
-- sumneko_lua
-- tsserver
-- gopls
+- [eclipse.jdt.ls](https://github.com/eclipse/eclipse.jdt.ls)
+  - also tested debugging via [java-debug](https://github.com/microsoft/java-debug) & [vscode-java-test](https://github.com/microsoft/vscode-java-test)
+- [jsonls](https://github.com/microsoft/vscode-json-languageservice )
+- [clojure-lsp](https://clojure-lsp.io/)
+- [lua-language-server](https://github.com/LuaLS/lua-language-server)
+- [gopls](https://pkg.go.dev/golang.org/x/tools/gopls)
+- [bash-language-server](https://github.com/bash-lsp/bash-language-server)
+  - check [shellcheck](https://github.com/koalaman/shellcheck#installing) for linting
 
 ## Troubleshooting
 
