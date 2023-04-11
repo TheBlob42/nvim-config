@@ -6,7 +6,7 @@
     "commit": "f79e9d1"
   },
   "catppuccin": {
-    "commit": "8e6a6df"
+    "commit": "73587f9"
   },
   "cmp-buffer": {
     "commit": "3022dbc"
@@ -29,17 +29,20 @@
   "conjure": {
     "commit": "d2e69a1"
   },
+  "copilot.vim": {
+    "commit": "b6e5624"
+  },
   "dressing.nvim": {
-    "commit": "db716a0"
+    "commit": "91b9ba8"
   },
   "drex.nvim": {
     "commit": "b587e39"
   },
   "fidget.nvim": {
-    "commit": "9dc6d15"
+    "commit": "0ba1e16"
   },
   "flit.nvim": {
-    "commit": "980e80e"
+    "commit": "f60e4b3"
   },
   "friendly-snippets": {
     "commit": "1645e7c"
@@ -54,7 +57,7 @@
     "commit": "cc59f73"
   },
   "gitsigns.nvim": {
-    "commit": "f388995"
+    "commit": "372d5cb"
   },
   "groovy.vim": {
     "commit": "392419d"
@@ -66,7 +69,7 @@
     "commit": "c90e273"
   },
   "indent-blankline.nvim": {
-    "commit": "8299fe7"
+    "commit": "018bd04"
   },
   "lazygit.nvim": {
     "commit": "32bffde"
@@ -126,7 +129,7 @@
     "commit": "49a5651"
   },
   "nvim-treesitter": {
-    "commit": "b23856a"
+    "commit": "a825012"
   },
   "nvim-web-devicons": {
     "commit": "bb6d4fd"
