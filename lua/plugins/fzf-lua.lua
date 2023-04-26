@@ -79,7 +79,6 @@ fzf.setup {
 
 ---@class FzfFilesOption
 ---@field prompt string|function The prompt string for the fzf dialog. Can also be a function which receives the directory path (e.g. '/home/user/projects') and returns the prompt string to use
----@field transform function Function to transform the displayed entries for the fzf dialog. The function receives the list of entries (strings) to display and returns a new list which is then displayed in the fzf dialog. Use it to add, delete or modify the default display entries for your custom use case
 ---@field actions function Function to create the actions for the fzf dialog. The function receives the directory path (e.g. '/home/user/projects') and the entries map (e.g. `{ ['file.txt'] = { type = 'file', path = '/home/user/file.txt' } }`) as parameters, so they can be used for the definition of custom actions. The return is a map of actions as defined by fzf-lua
 
 ---Display the files & directories in `dir` (by default the current working directory)
@@ -132,7 +131,6 @@ local function files(dir, opts)
     end
     local defaults_opts = {
         prompt = vim.fn.fnamemodify(dir, ':~') .. '> ',
-        transform = nil,
         actions = {
             ['default'] = {
                 function(selected)
@@ -154,10 +152,6 @@ local function files(dir, opts)
         options.prompt = options.prompt(dir)
     end
 
-    if options.transform then
-        display_entries = options.transform(display_entries)
-    end
-
     fzf.fzf_exec(display_entries, {
         prompt = options.prompt,
         actions = options.actions,
@@ -172,49 +166,64 @@ local function files(dir, opts)
 end
 
 local function save_as(directory)
-    local create_new = '+ [CREATE NEW FILE]'
     files(directory, {
         prompt = function(dir)
             return 'Save in "'..vim.fn.fnamemodify(dir, ':~')..'"> '
-        end,
-        transform = function(display_entries)
-            table.insert(display_entries, 2, create_new)
-            return display_entries
         end,
         actions = function(dir, entries)
             return {
                 ['default'] = {
                     function(selected)
-                        if selected[1] == create_new then
-                            vim.api.nvim_win_close(0, true)
-                            local ok, new_file = pcall(vim.fn.input, 'Save as: ', dir)
-                            if not ok then
-                                return
+                        local prompt
+                        local items = { 'Yes', 'No', 'Change selection' }
+                        local query = fzf.get_last_query()
+
+                        local element = selected[1] and entries[selected[1]]
+                        if element then
+                            if element.type == 'directory' then
+                                return save_as(element.path)
                             end
-                            vim.cmd.w(new_file)
-                            return
-                        end
 
-                        local element = entries[selected[1]]
-
-                        if element.type == 'directory' then
-                            save_as(element.path)
+                            -- add option to save the buffer to a file named EXACTLY like the given fzf query (if it differs)
+                            if (dir..query) ~= element.path then
+                                table.insert(items, 'Save as "' .. query .. '"')
+                            end
+                            prompt = 'Do you want to overwrite "' .. element.path .. '"?'
                         else
-                            vim.api.nvim_win_close(0, true)
-                            local overwrite = vim.fn.confirm('Do you want to overwrite "' .. element.path .. '"?', '&Yes\n&No', 1, 'Question')
-                            if overwrite == 1 then
-                                local buf = vim.fn.bufnr('^'..element.path..'$')
-                                if buf ~= -1 then
-                                    -- this could cause problems with large files (for now it should be ok)
-                                    vim.fn.writefile(vim.api.nvim_buf_get_lines(0, 0, -1, false), element.path)
-                                    vim.api.nvim_buf_call(buf, function()
-                                        vim.cmd.e()
-                                    end)
-                                else
-                                    vim.cmd.w(element.path)
-                                end
-                            end
+                            prompt = 'Save current buffer as "' .. dir .. query .. '"?'
                         end
+
+                        vim.api.nvim_win_close(0, true)
+
+                        vim.schedule(function()
+                            vim.ui.select(items, {
+                                prompt = prompt
+                            }, function(selection)
+                                if (selection == 'Yes' and not element) or vim.startswith(selection, 'Save as') then
+                                    -- save buffer as a new file
+                                    local new_path = vim.split(vim.fs.normalize(query), '/', { trimempty = true })
+                                    for i = 1, vim.tbl_count(new_path) - 1 do
+                                       local new_folder = table.concat(new_path, '/', 1, i)
+                                       vim.loop.fs_mkdir(dir .. new_folder, 509) -- decimal representation of "775" for chmod
+                                    end
+                                    vim.cmd.saveas(dir..table.concat(new_path, '/'))
+                                elseif selection == 'Yes' then
+                                    -- overwrite existing file
+                                    local buf = vim.fn.bufnr('^'..element.path..'$')
+                                    if buf ~= -1 then
+                                        -- this could cause problems with large files (for now it should be ok)
+                                        vim.fn.writefile(vim.api.nvim_buf_get_lines(0, 0, -1, false), element.path)
+                                        vim.api.nvim_buf_call(buf, function()
+                                            vim.cmd.e { bang = true }
+                                        end)
+                                    else
+                                        vim.cmd.saveas{ element.path, bang = true }
+                                    end
+                                elseif selection == 'Change selection' then
+                                    save_as(dir)
+                                end
+                            end)
+                        end)
                     end
                 },
             }
