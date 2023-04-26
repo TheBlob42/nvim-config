@@ -136,6 +136,11 @@ local function files(dir, opts)
                 function(selected)
                     local element = entries[selected[1]]
 
+                    if not element then
+                        vim.api.nvim_win_close(0, true)
+                        return
+                    end
+
                     if element.type == 'directory' then
                         files(element.path, opts)
                     else
