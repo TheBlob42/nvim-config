@@ -45,9 +45,9 @@ There is some preconfigured configuration which is expected by other parts of th
 
 ## Plugins
 
-In order to install plugins [packer.nvim](https://github.com/wbthomason/packer.nvim) is being used, check the `lua/init.lua` file
+In order to install plugins [packer.nvim](https://github.com/wbthomason/packer.nvim) is being used, check the `init.lua` file
 
-To ensure that the same plugin version/commits are installed on every system and to avoid breaking the configuration the snapshot feature is used (see [here](https://github.com/wbthomason/packer.nvim/pull/370)). The default snapshot name is `stable` located at `lua/stable`
+To ensure that the same plugin version/commits are installed on every system and to avoid breaking the configuration the snapshot feature is used (see [here](https://github.com/wbthomason/packer.nvim/pull/370)). The default snapshot name is `stable` located in the root directory of this configuration
 
 To update the installed plugins follow these steps:
 
