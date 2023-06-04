@@ -48,7 +48,7 @@ my.repeat_map('<Plug>MarkdownTodoCycle', cycle_todo_state)
 vim.keymap.set('n', '<localleader>t', '<Plug>MarkdownTodoCycle', { buffer = true, desc = 'cycle todo state' })
 
 ---Create a markdown link element from the currently selected text
----@param pre_select_cmd string Selection command to execute beforehand if called from normal mode (e.g. 'viW', 'V' etc.)
+---@param pre_select_cmd string? Selection command to execute beforehand if called from normal mode (e.g. 'viW', 'V' etc.)
 ---@return function rhs Function which can be used as key mapping
 local function create_link(pre_select_cmd)
     pre_select_cmd = pre_select_cmd or ''
@@ -61,3 +61,40 @@ end
 
 vim.keymap.set('x', '<localleader>l', create_link(), { buffer = true, desc = 'create link from selection' })
 vim.keymap.set('n', '<localleader>l', create_link('viW'), { buffer = true, desc = 'create link from WORD' })
+
+---Paste image data directly from the system clipboard
+---Create a new image file from the data using `xclip`
+---Then insert an image link to this newly created file
+---
+---Inspired from `ekickx/clipboard-image.nvim`
+---
+---@param paste_before_cursor boolean Paste before (`P`) or after (`p`) the cursor (default)
+---@return function
+local function md_paste(paste_before_cursor)
+    return function()
+        -- only check for the `unnamed` and `unnamedplus` registers
+        if vim.v.register == '*' or vim.v.register == '+' then
+            local out = io.popen('xclip -selection clipboard -o -t TARGETS')
+            assert(out)
+            for line in out:lines() do
+                if line == 'image/png' then
+                    local img_path = string.format('%s/pasted-%s.png',
+                    vim.fn.fnamemodify(vim.fn.expand('%'), ':p:h'),
+                    os.date('%Y-%m-%d-%H-%M-%S'))
+
+                    io.popen('xclip -selection clipboard -t image/png -o > "' .. img_path .. '"')
+
+                    return string.format('%s![](%s)<ESC>%si',
+                    (paste_before_cursor and 'i' or 'a'),
+                    img_path,
+                    string.rep('h', vim.str_utfindex(img_path) + 2))
+                end
+            end
+        end
+
+        return paste_before_cursor and 'P' or 'p'
+    end
+end
+
+vim.keymap.set('n', 'p', md_paste(false), { expr = true, desc = 'Paste text or copied image' })
+vim.keymap.set('n', 'P', md_paste(true),  { expr = true, desc = 'Paste text or copied image' })
