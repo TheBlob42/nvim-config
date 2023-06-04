@@ -16,14 +16,11 @@ return {
     snippet({ trig = 'bi', name = 'Bold & Italic' },
         fmt('***{}***', i(1))),
 
-    snippet({ trig = 'link', name = 'Link' },
-        fmt('[{}]({})', { i(1), i(2) })),
+    snippet({ trig = 'l', name = 'Link' },
+        fmt('[{}]({})', { i(2), i(1) })),
 
     snippet({ trig = 'img', name = 'Image' },
-        fmt('![{}]({})', { i(1), i(2) })),
-
-    snippet({ trig = 'meta', name = 'Meta tag' },
-        fmt('<meta name="{}" content="{}">', { i(1), i(2) })),
+        fmt('![{}]({})', { i(2), i(1) })),
 
     snippet({ trig = 'code', name = 'Codeblock' },
         fmt([[
