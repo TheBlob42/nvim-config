@@ -16,7 +16,7 @@ To ensure a stable plugin environment use the snapshot feature of [packer.nvim](
 
 ## Dependencies
 
-Only works with Neovim version >= `0.8`
+Tested with Neovim version `0.9.1`
 
 > Some functionality is tailored towards the usage of a Linux operating system
 
@@ -74,6 +74,7 @@ The following servers have been tested explicitly:
 - [gopls](https://pkg.go.dev/golang.org/x/tools/gopls)
 - [bash-language-server](https://github.com/bash-lsp/bash-language-server)
   - check [shellcheck](https://github.com/koalaman/shellcheck#installing) for linting
+- [marksman](https://github.com/artempyanykh/marksman) (markdown)
 
 ## Troubleshooting
 
