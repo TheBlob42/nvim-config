@@ -149,6 +149,13 @@ local function files(dir, opts)
                     end
                 end,
             },
+            -- quickly jump the home directory
+            ["ctrl-h"] = {
+                function()
+                    files('~', opts)
+                end,
+                fzf.actions.resume,
+            },
         },
     }
     options = vim.tbl_deep_extend('force', defaults_opts, options)
