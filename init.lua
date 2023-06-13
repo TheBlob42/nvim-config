@@ -1,5 +1,5 @@
-require('user.settings')     -- general non plugin related settings
-require('user.config')       -- general configuration stuff
+require('user.settings') -- general non plugin related settings
+require('user.config')   -- general configuration stuff
 
 -- local user configuration (if present)
 if not pcall(require, 'user.local') then
@@ -40,10 +40,10 @@ local function load_config_file(plugin)
 end
 
 require('lazy').setup {
-    'tpope/vim-surround',       -- easy "surroundings"
-    'tpope/vim-repeat',         -- repeat plug mappings with '.'
-    'tpope/vim-sleuth',         -- auto configure `shiftwidth`
-    'tpope/vim-abolish',        -- working with variant of words
+    'tpope/vim-surround', -- easy "surroundings"
+    'tpope/vim-repeat',   -- repeat plug mappings with '.'
+    'tpope/vim-sleuth',   -- auto configure `shiftwidth`
+    'tpope/vim-abolish',  -- working with variant of words
 
     {
         -- fuzzy find stuff using `fzf`
