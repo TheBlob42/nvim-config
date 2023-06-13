@@ -27,9 +27,15 @@ luasnip.add_snippets('java', require('plugins.snippets.java'))
 luasnip.add_snippets('lua', require('plugins.snippets.lua'))
 
 -- avoid duplicate & unwanted snippets by deleting snippet files from friendly snippet (but keep lazy loading functionality)
-local repo_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/friendly-snippets/snippets/'
+local repo_path = vim.fs.joinpath(vim.fn.stdpath('data'), 'lazy', 'friendly-snippets', 'snippets')
 for _, ft in ipairs({ 'lua', 'markdown' }) do
-    os.remove(repo_path .. ft .. '.json')
+    local ft_path = vim.fs.joinpath(repo_path, ft)
+    os.remove(ft_path .. '.json')
+
+    -- delete snippet files in subfolders
+    for file in vim.fs.dir(ft_path) do
+        os.remove(vim.fs.joinpath(ft_path, file))
+    end
 end
 
 require("luasnip.loaders.from_vscode").lazy_load()
