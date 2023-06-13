@@ -248,11 +248,11 @@ require('lazy').setup {
     'rcarriga/nvim-dap-ui',  -- an "out-of-the-box" UI for dap
 
     -- SNIPPETS
-    'rafamadriz/friendly-snippets',
 
     {
         'L3MON4D3/LuaSnip',
         config = load_config_file,
+        dependencies = { 'rafamadriz/friendly-snippets' }
     },
 
     -- AUTO COMPLETION
