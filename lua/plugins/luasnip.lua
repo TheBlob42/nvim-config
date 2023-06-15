@@ -67,7 +67,7 @@ vim.api.nvim_create_user_command('ExpandSnippet', function()
     end
 
     vim.ui.select(snippets, {
-        prompt = 'Available snippets for "'..ft..'"',
+        prompt = 'Available snippets for "'..ft..'"> ',
         format_item = function(s)
             local trigger = s.trigger .. string.rep(' ', max_trigger - #s.trigger)
             local name = s.name .. string.rep(' ', max_name - #s.name)

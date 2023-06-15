@@ -147,7 +147,7 @@ local function task_list(gradlew_path)
     end
 
     vim.ui.select(cached_task[gradlew_path], {
-        prompt = 'Select Gradlew Task',
+        prompt = 'Select Gradlew Task> ',
     }, function(task)
         if task then
             gradlew_exec(get_task_name(task), gradlew_path)
