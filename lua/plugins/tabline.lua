@@ -36,7 +36,7 @@ vim.api.nvim_create_user_command('SwitchTab', function()
     end, vim.api.nvim_list_tabpages())
 
     vim.ui.select(tabs, {
-        prompt = 'Switch to another tab',
+        prompt = 'Switch to another tab> ',
         format_item = function(tab)
             return tab[2]
         end
