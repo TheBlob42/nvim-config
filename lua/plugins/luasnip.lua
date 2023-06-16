@@ -48,7 +48,7 @@ vim.api.nvim_create_user_command('ExpandSnippet', function()
     local snippet_collection = require('luasnip.session.snippet_collection')
     local snippets = snippet_collection.get_snippets('all', 'snippets')
 
-    local ft = vim.api.nvim_buf_get_option(0, 'filetype')
+    local ft = vim.api.nvim_get_option_value('filetype', { buf = 0 })
     if ft ~= '' then
         snippets = vim.tbl_extend('force', snippets, snippet_collection.get_snippets(ft, 'snippets'))
     end

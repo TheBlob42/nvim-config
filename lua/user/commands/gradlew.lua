@@ -86,8 +86,8 @@ local function task_list(gradlew_path)
         local status = 'progress'
         local result = ''
         local error_msg = ''
-        local stdout = vim.loop.new_pipe()
-        local stderr = vim.loop.new_pipe()
+        local stdout = assert(vim.loop.new_pipe())
+        local stderr = assert(vim.loop.new_pipe())
 
         vim.loop.spawn('./gradlew', {
             cwd = gradlew_path,
