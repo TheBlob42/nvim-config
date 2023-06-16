@@ -10,7 +10,7 @@ vim.api.nvim_create_user_command('JsonFormat', function(args)
 
     -- if the whole buffer is JSON we can set the appropriate filetype
     if first == 1 and last == vim.fn.line('$') then
-        vim.api.nvim_buf_set_option(0, 'filetype', 'json')
+        vim.api.nvim_set_option_value('filetype', 'json', { buf = 0 })
     end
 
     vim.cmd(string.format('%s,%s!jq .', first, last))

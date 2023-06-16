@@ -145,7 +145,7 @@ local function save_all_files_in_dir(dir)
         if vim.startswith(name, dir) then
             -- check for element type (file or directory) and modified status
             local file_info = vim.loop.fs_stat(name)
-            local modified = vim.api.nvim_buf_get_option(buf, 'modified')
+            local modified = vim.api.nvim_get_option_value('modified', { buf = buf })
 
             if file_info and file_info.type == 'file' and modified then
                 vim.api.nvim_buf_call(buf, function()
