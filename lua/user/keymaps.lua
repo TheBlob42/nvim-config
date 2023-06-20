@@ -81,17 +81,19 @@ map('x', '<F2>', mc_macro(mc_select), { expr = true, desc = 'mc end or replay ma
 -- check if file belongs to a Gradle project and add the appropriate key bindings
 vim.api.nvim_create_autocmd('BufEnter', {
     callback = function(opts)
-        vim.api.nvim_create_autocmd('BufWinEnter', {
-            buffer = opts.buf,
-            once = true,
-            callback = function()
-                if require('user.commands.gradlew').get_gradlew_script_path() then
-                    vim.keymap.set('n', '<localleader>gg', '<CMD>GradlewList<CR>', { buffer = true, desc = 'gradlew list tasks' })
-                    vim.keymap.set('n', '<localleader>gc', '<CMD>GradlewClearCache<CR>', { buffer = true, desc = 'gradlew clear tasks cache' })
-                    vim.keymap.set('n', '<localleader>gt', ':GradlewTask ', { buffer = true, desc = 'gradlew execute task'})
+        if vim.api.nvim_buf_is_valid(opts.buf) then
+            vim.api.nvim_create_autocmd('BufWinEnter', {
+                buffer = opts.buf,
+                once = true,
+                callback = function()
+                    if require('user.commands.gradlew').get_gradlew_script_path() then
+                        vim.keymap.set('n', '<localleader>gg', '<CMD>GradlewList<CR>', { buffer = true, desc = 'gradlew list tasks' })
+                        vim.keymap.set('n', '<localleader>gc', '<CMD>GradlewClearCache<CR>', { buffer = true, desc = 'gradlew clear tasks cache' })
+                        vim.keymap.set('n', '<localleader>gt', ':GradlewTask ', { buffer = true, desc = 'gradlew execute task'})
+                    end
                 end
-            end
-        })
+            })
+        end
     end
 })
 
