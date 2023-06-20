@@ -129,6 +129,7 @@ require('lazy').setup {
             vim.g['conjure#filetypes'] = my.lisps
             vim.g['conjure#filetype#fennel'] = 'conjure.client.fennel.stdio'
         end,
+        dependencies = { 'PaterJason/cmp-conjure' }
     },
 
     {
@@ -261,7 +262,6 @@ require('lazy').setup {
     'hrsh7th/cmp-path',
     'hrsh7th/cmp-cmdline',
     'saadparwaiz1/cmp_luasnip',
-    'PaterJason/cmp-conjure',
     {
         'hrsh7th/nvim-cmp',
         config = load_config_file,
