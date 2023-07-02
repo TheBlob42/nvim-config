@@ -46,11 +46,14 @@ require('lazy').setup {
     'tpope/vim-abolish',  -- working with variant of words
 
     {
+        -- provide icons and colors
+        'kyazdani42/nvim-web-devicons',
+        lazy = true,
+    },
+
+    {
         -- fuzzy find stuff using `fzf`
         'ibhagwan/fzf-lua',
-        dependencies = {
-            'kyazdani42/nvim-web-devicons'
-        },
         config = load_config_file,
     },
 
@@ -160,7 +163,6 @@ require('lazy').setup {
 
     {
         'nvim-lualine/lualine.nvim',
-        dependencies = { 'kyazdani42/nvim-web-devicons' },
         config = load_config_file,
     },
 
@@ -361,7 +363,6 @@ require('lazy').setup {
         -- file/directory explorer
         'TheBlob42/drex.nvim',
         branch = 'develop', -- always testing the bleeding edge
-        dependencies = { 'kyazdani42/nvim-web-devicons' },
         config = load_config_file,
     },
 
