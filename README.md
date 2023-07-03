@@ -22,6 +22,7 @@ Tested with Neovim version `0.9.1`
 
 ¹At least version `2.2.2` to include [codicons](https://github.com/microsoft/vscode-codicons) for [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui)  
 ²At least version `0.24.0` ([more](https://github.com/ibhagwan/fzf-lua/issues/227))
+
 ### Optional Dependencies 
 
 - [jq](https://stedolan.github.io/jq/)
@@ -30,6 +31,7 @@ Tested with Neovim version `0.9.1`
 - [neovim-remote](https://github.com/mhinz/neovim-remote) 
   - for using the commit editor of `lazygit` (see [here](https://github.com/kdheepak/lazygit.nvim#usage))
 - for validating Jenkinsfiles see the template script in `./lua/user/commands/jenkins.lua`
+- [trash-cli](https://github.com/andreafrancia/trash-cli) (used with [drex.nvim](https://github.com/TheBlob42/drex.nvim))
 
 ## System Configuration
 

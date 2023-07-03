@@ -17,6 +17,11 @@ end, { desc = 'open parent dir' })
 
 require('drex.config').configure {
     hijack_netrw = true,
+    actions = {
+        files = {
+            delete_cmd = vim.fn.executable('trash-put') == 1 and 'trash-put',
+        }
+    },
     keybindings = {
         ['n'] = {
             ['~'] = '<CMD>Drex ~<CR>',
