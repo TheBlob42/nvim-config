@@ -96,7 +96,9 @@ local function files(dir, opts)
     dir = assert(dir or vim.loop.cwd())
     dir = vim.fn.fnamemodify(vim.fn.expand(dir), ':p') -- ensure trailing path separator
 
+    local icons = {}
     local entries = {}
+
     -- "goto parent" entry only if we're not at root level
     if dir ~= '/' then
         entries[' ..'] = {
@@ -112,7 +114,12 @@ local function files(dir, opts)
                 path = dir .. name
             }
         else
-            local icon = require('nvim-web-devicons').get_icon(name) or ''
+            local icon, hl = require('nvim-web-devicons').get_icon(
+                name,
+                vim.fn.fnamemodify(name, ':e'),
+                { default = true })
+
+            icons[icon] = hl
             entries[icon..' '..name] = {
                 type = type,
                 path = dir .. name
@@ -169,8 +176,8 @@ local function files(dir, opts)
         actions = options.actions,
         winopts = {
             on_create = function()
-                for _, icon in pairs(require('nvim-web-devicons').get_icons()) do
-                    vim.fn.matchadd('DevIcon'..icon.name, icon.icon)
+                for icon, hl in pairs(icons) do
+                    vim.fn.matchadd(hl, icon)
                 end
             end,
         },
