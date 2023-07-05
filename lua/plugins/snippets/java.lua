@@ -31,7 +31,7 @@ local function get_class_name()
         return
     end
 
-    return vim.treesitter.query.get_node_text(node:field('name')[1], 0)
+    return vim.treesitter.get_node_text(node:field('name')[1], 0)
 end
 
 return {

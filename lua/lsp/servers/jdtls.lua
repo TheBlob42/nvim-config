@@ -8,7 +8,7 @@ local lombok_jar = mason_pkg_path .. '/jdtls/lombok.jar'
 
 local function jdtls_on_attach(client, bufnr)
     -- https://github.com/ibhagwan/fzf-lua/issues/310#issuecomment-1013950684
-    if vim.api.nvim_buf_get_option(bufnr, 'bufhidden') == 'wipe' then return end
+    if vim.api.nvim_get_option_value('bufhidden', { buf = bufnr }) == 'wipe' then return end
 
     require('lsp.utils').on_attach(client, bufnr)
 
@@ -63,7 +63,7 @@ local function start()
             local build_gradle_file = io.open(root_dir .. "/build.gradle", "r")
             if build_gradle_file ~= nil then
                 io.close(build_gradle_file)
-                vim.api.nvim_exec([[ let test#java#runner = 'gradletest' ]], true)
+                vim.api.nvim_exec2([[ let test#java#runner = 'gradletest' ]], {})
                 os.execute('rm -rf ' .. root_dir .. '/.settings')
             end
         end

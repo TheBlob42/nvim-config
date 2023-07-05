@@ -116,7 +116,7 @@ local function open_dap_controls_win()
     })
 
     -- automatically close the dap controls window when leaving the controls buffer
-    vim.api.nvim_buf_set_option(buf, 'bufhidden', 'wipe')
+    vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = buf })
     vim.api.nvim_create_autocmd('BufLeave', {
         buffer = buf,
         desc = 'close dap control window automatically',
