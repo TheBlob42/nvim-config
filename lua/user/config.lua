@@ -58,4 +58,4 @@ end
 -- miscellaneous
 -- ~~~~~~~~~~~~~
 
-P = vim.pretty_print -- shortening for easier debugging
+P = vim.print -- shortening for easier debugging
