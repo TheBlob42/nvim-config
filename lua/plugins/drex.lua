@@ -16,6 +16,7 @@ vim.keymap.set('n', '-', function()
 end, { desc = 'open parent dir' })
 
 require('drex.config').configure {
+    keepalt = true,
     hijack_netrw = true,
     actions = {
         files = {
