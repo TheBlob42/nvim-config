@@ -83,6 +83,10 @@ Now you can execute it via |:!|, `sh` and |:%|:
 >
 	:!sh %
 <
+Or if you want to append the output to the current buffer (after the cursor):
+>
+	:r!sh filename.sh
+<
 =============================================================================
 GRADLE                                                              *my-gradle*
 
