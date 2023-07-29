@@ -128,6 +128,10 @@ require('lazy').setup {
         -- interactive code evaluation
         'Olical/conjure',
         ft = my.lisps,
+        config = function()
+            require("conjure.main").main()
+            require("conjure.mapping")["on-filetype"]()
+        end,
         init = function()
             vim.g['conjure#filetypes'] = my.lisps
             vim.g['conjure#filetype#fennel'] = 'conjure.client.fennel.stdio'
@@ -138,8 +142,6 @@ require('lazy').setup {
     {
         -- parinfer for Neovim
         'gpanders/nvim-parinfer',
-        ft = my.lisps,
-        cmd = { 'ParinferOn', 'ParinferToggle' },
         init = function()
             vim.g.parinfer_filetypes = my.lisps
         end,
