@@ -1,3 +1,5 @@
+vim.opt_local.conceallevel = 1
+
 ---Check if there are any closed folds. If so unfold everything, else collapse everything
 ---@return string Either 'zR' or 'zM'. Use this as an expression mapping
 local function toggle_all_folds()
@@ -16,10 +18,23 @@ local function toggle_all_folds()
     end
 end
 
-vim.keymap.set('n', '<TAB>', 'za', { silent = true, buffer = true})
-vim.keymap.set('n', '<S-TAB>', toggle_all_folds, { expr = true, buffer = true })
+vim.keymap.set('n', '<TAB>', 'za', {
+    silent = true,
+    buffer = true,
+    desc = 'toggle the fold under the cursor',
+})
+vim.keymap.set('n', '<S-TAB>', toggle_all_folds, {
+    expr = true,
+    buffer = true,
+    desc = 'toggle all folds in the current buffer',
+})
+-- use the 'z' mark to focus the current section (and fold the rest)
+vim.keymap.set('n', '<localleader>F', "mzzM'zzxzz", {
+    buffer = true,
+    desc = 'focus the current section'
+})
 
----Cycle the todo state of list elements between 'none', '[ ]', '[X]' and '[-]'
+---Cycle the todo state of list elements between 'none', '[ ]' and '[X]'
 local function cycle_todo_state()
     local row = unpack(vim.api.nvim_win_get_cursor(0))
     local line = vim.api.nvim_get_current_line()
@@ -29,10 +44,8 @@ local function cycle_todo_state()
         local state, text = rest:match('^(%[.]) (.*)$')
         if state and text then
             if state == '[ ]' then
-                state = '[X]'
-            elseif state == '[X]' then
-                state = '[-]'
-            elseif state == '[-]' then
+                state = '[x]'
+            else
                 vim.api.nvim_buf_set_lines(0, row - 1, row, false, { prefix .. ' ' .. text })
                 return
             end

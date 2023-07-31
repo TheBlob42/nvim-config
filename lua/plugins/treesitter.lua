@@ -6,13 +6,21 @@ require('nvim-treesitter.configs').setup {
             -- disable highlighting for certain file types
             -- help     : https://github.com/nvim-treesitter/nvim-treesitter/pull/3555
             -- vimdoc   : same as the "old" help filetype
-            -- markdown : bad performance on big files
-            if vim.tbl_contains({ 'help', 'vimdoc', 'markdown' }, lang) then
+            if vim.tbl_contains({ 'help', 'vimdoc' }, lang) then
+                return true
+            end
+
+            -- disable highlighting for big markdown files (bad performance)
+            if lang == 'markdown' and vim.api.nvim_buf_line_count(buf) > 3000 then
                 return true
             end
 
             -- disable highlighting for large buffers
-            return vim.api.nvim_buf_line_count(buf) > 30000
+            if vim.api.nvim_buf_line_count(buf) > 30000 then
+                return true
+            end
+
+            return false
         end,
     },
 }
