@@ -82,6 +82,9 @@ vim.fn.sign_define("DiagnosticSignInfo", {
 
 -- custom filetype detection
 vim.filetype.add {
+    extension = {
+        ['cljd'] = 'clojure'
+    },
     filename = {
         ['Jenkinsfile'] = 'groovy'
     }
