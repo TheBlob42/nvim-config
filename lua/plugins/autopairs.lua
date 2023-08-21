@@ -10,6 +10,9 @@ require('cmp').event:on('confirm_done', require('nvim-autopairs.completion.cmp')
     map_char = { tex = '' }
 })
 
+-- remove adding single quotes for lisp filetypes
+autopairs.get_rules("'")[1].not_filetypes = my.lisps
+
 -- add spaces between parentheses
 --
 -- | Before | Input | After |
