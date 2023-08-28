@@ -1,8 +1,6 @@
 local gitsigns = require('gitsigns')
 
-gitsigns.setup {
-    keymaps = {}, -- NO default keybindings
-}
+gitsigns.setup({})
 
 -- make jumps repeatable (with `vim-repeat`)
 local repeat_map = my.repeat_map
