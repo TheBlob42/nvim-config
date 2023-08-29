@@ -27,8 +27,8 @@ my.lisps = {
 ---@param plug string Name for the <Plug> mapping. Needs to start with "<Plug>"
 ---@param rhs string|function Either a mapping string or a function that should be executed
 function my.repeat_map(plug, rhs)
-    ---@diagnostic disable-next-line: undefined-global
-    if packer_plugins and not vim.tbl_get(packer_plugins, 'vim-repeat') then
+    local plugins = vim.tbl_map(function(p) return p[1] end, require('lazy').plugins())
+    if plugins and not vim.tbl_contains(plugins, 'tpope/vim-repeat') then
         print(debug.getinfo(2).source .. ' --> `vim-repeat` is not loaded!')
         return
     end
