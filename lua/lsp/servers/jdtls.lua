@@ -15,6 +15,7 @@ local function jdtls_on_attach(client, bufnr)
     -- initialize dap for jdtls (only if 'java-debug' is installed)
     if mason_registry.is_installed('java-debug-adapter') then
         jdtls.setup_dap {
+            config_overrides = {},
             hotcodereplace = 'auto'
         }
         require("jdtls.dap").setup_dap_main_class_configs()
