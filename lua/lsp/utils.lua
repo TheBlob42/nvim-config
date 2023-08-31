@@ -13,7 +13,7 @@ M.capabilities = vim.tbl_deep_extend(
 ---@param client table
 ---@param bufnr number
 function M.on_attach(client, bufnr)
-    -- some basics are set automatically since 0.8
+    -- some basics are set automatically since version 0.8
     -- > jump to definition with `<C-]>` (tagfunc)
     -- > (range) formatting with `gq` (formatexpr)
     -- > basic auto completion (omnifunc)
@@ -22,41 +22,47 @@ function M.on_attach(client, bufnr)
         vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
     end
 
-    -- key bindings without prefix
-    map('n', 'K', vim.lsp.buf.hover, 'keyword')
-    map('n', '<C-s>', vim.lsp.buf.signature_help, 'signature help')
-    map('i', '<C-s>', vim.lsp.buf.signature_help, 'signature help')
-    map('n', '<RightMouse>', '<LeftMouse><CMD>lua vim.lsp.buf.hover()<CR>', 'hover')
-    map('n', '<2-LeftMouse>', vim.lsp.buf.definition, 'goto definition')
+    -- "generic" keybindings
+    if client.supports_method('textDocument/hover', { bufnr = bufnr }) then
+        map('n', 'K', vim.lsp.buf.hover, 'keyword')
+        map('n', '<RightMouse>', '<LeftMouse><CMD>lua vim.lsp.buf.hover()<CR>', 'hover')
+    end
+    if client.supports_method('textDocument/signatureHelp', { bufnr = bufnr }) then
+        map('n', '<C-s>', vim.lsp.buf.signature_help, 'signature help')
+        map('i', '<C-s>', vim.lsp.buf.signature_help, 'signature help')
+    end
 
-    -- general LSP leader keybindings
-    if client.server_capabilities.renameProvider then
+    -- localleader keybindings
+    if client.supports_method('textDocument/rename', { bufnr = bufnr }) then
         map('n', '<localleader>r', vim.lsp.buf.rename, 'rename')
     end
-    if client.server_capabilities.codeActionProvider then
+    if client.supports_method('textDocument/codeAction', { bufnr = bufnr }) then
         map('n', '<localleader>a', vim.lsp.buf.code_action, 'code action')
     end
-    if client.server_capabilities.documentSymbolProvider then
+    if client.supports_method('textDocument/documentSymbol', { bufnr = bufnr }) then
         map('n', '<localleader>s', '<CMD>FzfLua lsp_document_symbols<CR>', 'document symbols')
     end
-    if client.server_capabilities.workspaceSymbolProvider then
+    if client.supports_method('workspace/symbol', { bufnr = bufnr }) then
         map('n', '<localleader>S', '<CMD>FzfLua lsp_live_workspace_symbols<CR>', 'workspace symbols')
     end
 
-    -- navigation 'g' bindings
-    map('n', 'gd', '<C-]>', 'goto definition') -- map to 'gd' for convenience
-    if client.server_capabilities.referencesProvider then
+    -- navigational keybindings ('g')
+    if client.supports_method('textDocument/definition', { bufnr = bufnr }) then
+        map('n', 'gd', '<C-]>', 'goto definition') -- map to 'gd' for convenience
+        map('n', '<2-LeftMouse>', vim.lsp.buf.definition, 'goto definition')
+    end
+    if client.supports_method('textDocument/references', { bufnr = bufnr }) then
         map('n', 'gr', "<CMD>FzfLua lsp_references<CR>", 'goto references')
     end
-    if client.server_capabilities.implementationProvider then
+    if client.supports_method('textDocument/implementation', { bufnr = bufnr }) then
         map('n', 'gI', vim.lsp.buf.implementation, 'goto implementation')
     end
-    if client.server_capabilities.declarationProvider then
+    if client.supports_method('textDocument/declaration', { bufnr = bufnr }) then
         map('n', 'gD', vim.lsp.buf.declaration, 'goto declaration')
     end
 
-    -- set autocommands conditional on server capabilities
-    if client.server_capabilities.documentHighlightProvider then
+    -- highlighting autocommands
+    if client.supports_method('textDocument/documentHighlight', { bufnr = bufnr }) then
         vim.api.nvim_clear_autocmds {
             group = highlight_group,
             buffer = bufnr,
