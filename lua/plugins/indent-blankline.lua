@@ -4,6 +4,7 @@ require('indent_blankline').setup {
         'help',
         'packer',
         'mason',
+        'DressingInput',
     },
     viewport_buffer = 30,
     use_treesitter = true,
