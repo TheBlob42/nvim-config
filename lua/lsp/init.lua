@@ -13,7 +13,6 @@ vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
 -- configure installed LSP servers (only if installed via mason.nvim)
 local lspconfig = require('lspconfig')
 require('mason').setup()
-require('mason-lspconfig').setup()
 require('mason-lspconfig').setup_handlers {
     function(server_name)
         local config = {
