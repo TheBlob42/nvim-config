@@ -20,7 +20,7 @@ vim.lsp.handlers['client/registerCapability'] = function(err, result, ctx)
     local orig_result = orig_handler(err, result, ctx)
 
     local client = vim.lsp.get_client_by_id(ctx.client_id)
-    for bufnr, _ in ipairs(client.attached_buffers) do
+    for bufnr, _ in pairs(client.attached_buffers) do
         utils.on_attach(client, bufnr)
     end
 
@@ -30,6 +30,7 @@ end
 -- configure installed LSP servers (only if installed via mason.nvim)
 local lspconfig = require('lspconfig')
 require('mason').setup()
+require('mason-lspconfig').setup({})
 require('mason-lspconfig').setup_handlers {
     function(server_name)
         local config = {
