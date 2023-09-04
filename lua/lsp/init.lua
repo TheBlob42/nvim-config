@@ -19,7 +19,7 @@ local orig_handler = vim.lsp.handlers['client/registerCapability']
 vim.lsp.handlers['client/registerCapability'] = function(err, result, ctx)
     local orig_result = orig_handler(err, result, ctx)
 
-    local client = vim.lsp.get_client_by_id(ctx.client_id)
+    local client = assert(vim.lsp.get_client_by_id(ctx.client_id))
     for bufnr, _ in pairs(client.attached_buffers) do
         utils.on_attach(client, bufnr)
     end
