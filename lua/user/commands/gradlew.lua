@@ -89,7 +89,8 @@ local function task_list(gradlew_path)
         local stdout = assert(vim.loop.new_pipe())
         local stderr = assert(vim.loop.new_pipe())
 
-        vim.loop.spawn('./gradlew', {
+        local handle
+        handle = vim.loop.spawn('./gradlew', {
             cwd = gradlew_path,
             args = { 'tasks', '--all' },
             stdio = { nil, stdout, stderr },
@@ -101,6 +102,7 @@ local function task_list(gradlew_path)
             end
             vim.loop.close(stdout)
             vim.loop.close(stderr)
+            handle:close()
         end)
 
         vim.loop.read_start(stdout, function(_, data)
@@ -115,35 +117,68 @@ local function task_list(gradlew_path)
             end
         end)
 
-        local stages = { '⠇', '⠋', '⠙', '⠸', '⠴', '⠦' }
-        local index = #stages
-        while true do
-            vim.cmd.redraw()
-            if status == 'progress' then
-                vim.wait(100)
-                index = index + 1
-                vim.api.nvim_echo({{ 'loading gradlew tasks ' .. stages[math.fmod(index, #stages) + 1], 'Normal' }}, false, {})
-            elseif status == 'error' then
-                vim.api.nvim_echo({{ 'Error when executing the "gradlew" script:\n' .. error_msg, 'ErrorMsg' }}, true, {})
-                return
-            else
+        -- show loading spinner async
+        local src_buf = vim.api.nvim_get_current_buf()
+        local timeout = 30000
+        local interval = 150
+        local time = 0
+        local i = 0
+        local spinner = { '⠇', '⠋', '⠙', '⠸', '⠴', '⠦' }
+        local text = 'loading gradlew tasks %s'
+        local spin_buf = vim.api.nvim_create_buf(false, true)
+        vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = spin_buf })
+        vim.api.nvim_buf_set_lines(spin_buf, 0, -1, false, { text:format(spinner[1]) })
+        local spin_win = vim.api.nvim_open_win(spin_buf, false, {
+            relative = 'editor',
+            anchor = 'SE',
+            row = vim.opt.lines:get() - 2,
+            col = vim.opt.columns:get(),
+            width = #text,
+            height = 1,
+            focusable = false,
+            noautocmd = true,
+            style = 'minimal',
+        })
+        vim.api.nvim_set_option_value('winhighlight', 'Normal:NonText', { win = spin_win })
+        local spin
+        spin = function()
+            if status ~= 'progress' then
+                vim.api.nvim_win_close(spin_win, true)
                 if error_msg ~= '' then
-                    vim.api.nvim_echo({{ 'Something went wrong when executing the "gradlew" script:\n' .. error_msg, 'WarningMsg' }}, true, {})
+                    vim.notify('An error occurred while loading the Gradle tasks:\n' .. error_msg, vim.log.levels.WARN, {})
                 end
-                break
-            end
-        end
 
-        local tasks = {}
-        for group in result:gmatch('[^\n]+ tasks\n[-]+\n[^\n]+.-\n\n') do
-            local group_name = group:match('(.-) tasks')
-            local lines = group:match('[-]+\n(.*)')
-            for line in lines:gmatch('([^\n]+)') do
-                table.insert(tasks, '['..group_name..'] '..line)
-            end
-        end
+                local tasks = {}
+                for group in result:gmatch('[^\n]+ tasks\n[-]+\n[^\n]+.-\n\n') do
+                    local group_name = group:match('(.-) tasks')
+                    local lines = group:match('[-]+\n(.*)')
+                    for line in lines:gmatch('([^\n]+)') do
+                        table.insert(tasks, '['..group_name..'] '..line)
+                    end
+                end
 
-        cached_task[gradlew_path] = tasks
+                cached_task[gradlew_path] = tasks
+
+                -- don't open the gradle task selection if the user switched to another buffer (context switch)
+                if vim.api.nvim_get_current_buf() == src_buf then
+                    task_list(gradlew_path)
+                end
+
+                return
+            end
+
+            time = time + interval
+            if time > timeout then
+                vim.notify('Loading the Gradle tasks timed out!', vim.log.levels.ERROR, {})
+                return
+            end
+
+            i = i + 1
+            vim.api.nvim_buf_set_lines(spin_buf, 0, -1, false, { text:format(spinner[i % vim.tbl_count(spinner) + 1]) })
+            vim.defer_fn(spin, interval)
+        end
+        spin()
+        return
     end
 
     vim.ui.select(cached_task[gradlew_path], {
