@@ -25,7 +25,6 @@ fzf.setup {
                 function(_, opts)
                     fzf.live_grep { cwd = opts.cwd }
                 end,
-                fzf.actions.resume,
             },
             -- select from buffers rooted in the cwd
             ['alt-b'] = {
@@ -38,7 +37,6 @@ fzf.setup {
                         },
                     }
                 end,
-                fzf.actions.resume,
             },
         },
       },
