@@ -1,5 +1,7 @@
-require('user.settings') -- general non plugin related settings
-require('user.config')   -- general configuration stuff
+require('user.settings')   -- general non plugin related settings
+require('user.config')     -- general configuration stuff
+require('user.statusline') -- custom statusline
+require('user.tabline')    -- custom tabline
 
 -- local user configuration (if present)
 if not pcall(require, 'user.local') then
@@ -84,13 +86,6 @@ require('lazy').setup {
     },
 
     {
-        -- pretty tabs and easy renaming
-        'seblj/nvim-tabline',
-        commit = '49a5651',
-        config = load_config_file,
-    },
-
-    {
         -- two char escape sequence
         'TheBlob42/houdini.nvim',
         config = function()
@@ -160,11 +155,6 @@ require('lazy').setup {
     {
         "catppuccin/nvim",
         name = "catppuccin",
-        config = load_config_file,
-    },
-
-    {
-        'nvim-lualine/lualine.nvim',
         config = load_config_file,
     },
 

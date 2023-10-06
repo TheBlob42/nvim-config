@@ -210,12 +210,13 @@ local mappings = {
 
     -- tabs
     { '<leader>tn', '<CMD>TabNew<CR>', 'new tab' },
-    { '<leader>tt', '<CMD>SwitchTab<CR>', 'switch tab' },
     { '<leader>td', '<CMD>tabclose<CR>', 'delete tab' },
     { '<leader>tH', '<Plug>MoveTabLeft', 'move tab left' },
     { '<leader>tL', '<Plug>MoveTabRight', 'move tab right' },
     { '<leader>th', '<CMD>tabprevious<CR>', 'goto tab left' },
     { '<leader>tl', '<CMD>tabnext<CR>', 'goto tab right' },
+    { '<leader>tt', require('user.tabline').switch_tab, 'switch tab' },
+    { '<leader>tr', require('user.tabline').rename_tab, 'rename tab' },
 
     --windows
     { '<leader>w=', '<C-W>=', 'balance windows' },
