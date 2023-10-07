@@ -65,4 +65,20 @@ The following servers have been tested explicitly:
 
 ## Troubleshooting
 
+### Treesitter
+
 If treesitter does not initialize correctly check if you have a proper C compiler installed ([more](https://github.com/nvim-treesitter/nvim-treesitter/wiki/Linux-Support))
+
+### Cursor Color
+
+Especially for the light theme the cursor color might be hard to see and read
+
+To control the highlighting of the cursor by Neovim you can add the following to your `local.lua` file:
+
+```lua
+vim.opt.guicursor:append{ "a:Cursor" }
+```
+
+Beware that this will only affect the cursor background color. The foreground (font) color is always defined by the terminal. For this reason the setting is not set by default
+
+> For [kitty](https://sw.kovidgoyal.net/kitty/) check out the `cursor_text_color background` option in `~/.config/kitty/kitty.conf`
