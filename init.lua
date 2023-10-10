@@ -276,7 +276,7 @@ require('lazy').setup {
         -- change VIM working dir to project root
         'airblade/vim-rooter',
         config = function()
-            vim.g.rooter_patterns =  { '.git', '_darcs', '.hg', '.bzr', '.svn', 'Makefile' }
+            vim.g.rooter_patterns =  { '.git', '_darcs', '.hg', '.bzr', '.svn', 'Makefile', '.marksman.toml' }
             vim.g.rooter_change_directory_for_non_project_files = 'current'
         end,
     },
