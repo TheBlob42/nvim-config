@@ -28,11 +28,6 @@ vim.keymap.set('n', '<S-TAB>', toggle_all_folds, {
     buffer = true,
     desc = 'toggle all folds in the current buffer',
 })
--- use the 'z' mark to focus the current section (and fold the rest)
-vim.keymap.set('n', '<localleader>F', "mzzM'zzxzz", {
-    buffer = true,
-    desc = 'focus the current section'
-})
 
 ---Cycle the todo state of list elements between 'none', '[ ]' and '[X]'
 local function cycle_todo_state()

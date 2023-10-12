@@ -43,6 +43,9 @@ map('v', '<', '<gv')
 -- paste in visual mode without replacing register content
 map('x', 'p', [['pgv"' . v:register . 'y']], { noremap = true, expr = true })
 
+-- close all other folds but the current one (using the 'z' mark)
+map('n', 'z<C-f>', "mzzM'zzxzz", { desc = 'focus the current fold' })
+
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- ~ multiple cursors (sort of) ~
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
