@@ -28,7 +28,7 @@ function M.tabline()
         local hl = (tab == current) and '%#TabLineSel#' or '%#Tabline#'
         local name = get_tab_name(tab)
 
-        s = s .. string.format('%s%%%dT %s ', hl, tab, name)
+        s = s .. string.format('%s%%%dT %s▕', hl, tab, name)
     end
 
     s = s .. '%#TabLineFill#%T'
