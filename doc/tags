@@ -25,3 +25,4 @@ my-packer-snapshot	my_help.txt	/*my-packer-snapshot*
 my-postman	my_help.txt	/*my-postman*
 my-remove-duplicates	my_help.txt	/*my-remove-duplicates*
 my-tomcat-debug	my_help.txt	/*my-tomcat-debug*
+my_help.txt	my_help.txt	/*my_help.txt*

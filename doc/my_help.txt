@@ -1,3 +1,9 @@
+*my_help.txt*          My personal help file for stuff that I look up too often
+
+When this file has been changed recreate the help tags using:
+>
+	:helptags <path>/doc
+<
 =============================================================================
 COPY MATCHING LINES                                             *my-copy-lines*
 
