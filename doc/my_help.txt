@@ -296,6 +296,14 @@ a search).
 	set nowrapscan
 <
 -----------------------------------------------------------------------------
+VISUAL SELECTION                                   *my-macros-visual-selection*
+
+If you want to execute a recorded macro on every line of an active visual
+selection you can use the `normal` command (here for the `q` macro):
+>
+	:'<,'>normal @q
+<
+-----------------------------------------------------------------------------
 SUB MACROS                                                *my-macros-submacros*
 
 For example to call a recursive sub macro.

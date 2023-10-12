@@ -19,6 +19,7 @@ my-jdtls-versions	my_help.txt	/*my-jdtls-versions*
 my-macros	my_help.txt	/*my-macros*
 my-macros-speed	my_help.txt	/*my-macros-speed*
 my-macros-submacros	my_help.txt	/*my-macros-submacros*
+my-macros-visual-selection	my_help.txt	/*my-macros-visual-selection*
 my-macros-wrapscan	my_help.txt	/*my-macros-wrapscan*
 my-packer-snapshot	my_help.txt	/*my-packer-snapshot*
 my-postman	my_help.txt	/*my-postman*
