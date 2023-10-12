@@ -12,8 +12,8 @@ wk.setup {
             text_objects = false,
             windows = false,
             nav = false,
-            g = false,
-            z = false,
+            g = true,
+            z = true,
         }
     },
     window = {
