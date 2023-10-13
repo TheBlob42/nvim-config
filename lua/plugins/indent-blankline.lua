@@ -1,13 +1,11 @@
-require('indent_blankline').setup {
-    buftype_exclude = { 'terminal' },
-    filetype_exclude = {
-        'help',
-        'packer',
-        'mason',
-        'DressingInput',
-    },
-    viewport_buffer = 30,
-    use_treesitter = true,
-    show_current_context = true,
-    show_current_context_start = true,
+require('ibl').setup {
+    exclude = {
+        buftypes = { 'terminal' },
+        filetypes = {
+            'help',
+            'packer',
+            'mason',
+            'DressingInput',
+        },
+    }
 }
