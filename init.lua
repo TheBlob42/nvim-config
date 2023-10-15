@@ -177,16 +177,6 @@ require('lazy').setup {
     },
 
     {
-        -- show git blame
-        'f-person/git-blame.nvim',
-        cmd = 'GitBlameToggle',
-        init = function()
-            vim.g.gitblame_enabled = 0 -- disable by default
-            vim.keymap.set('n', '<leader>gb', '<CMD>GitBlameToggle<CR>', { desc = 'git blame' })
-        end,
-    },
-
-    {
         -- call 'lazygit' from within nvim
         'kdheepak/lazygit.nvim',
         branch = 'main',
