@@ -85,7 +85,7 @@ function M.statusline()
             icon, hl = devicons.get_icon_by_filetype(ft, { default = true })
         end
 
-        filetype = '%#' .. hl .. '#' .. icon .. '%* ' .. ft
+        filetype = ft .. ' %#' .. hl .. '#' .. icon .. '%*'
     end
 
     -- ~~~~~~~~~~~~~~~~~~~~~~~~~
