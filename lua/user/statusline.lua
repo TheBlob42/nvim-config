@@ -58,10 +58,12 @@ function M.statusline()
 
     local diagnostics = {}
 
-    for _, attr in pairs(diagnostics_attrs) do
-        local n = vim.diagnostic.get(buf, { severity = attr[1] })
-        if vim.tbl_count(n) > 0 then
-            table.insert(diagnostics, string.format(' %%#%s#%d%s', attr[3], vim.tbl_count(n), attr[2]))
+    if not vim.diagnostic.is_disabled(buf) then
+        for _, attr in pairs(diagnostics_attrs) do
+            local n = vim.diagnostic.get(buf, { severity = attr[1] })
+            if vim.tbl_count(n) > 0 then
+                table.insert(diagnostics, string.format(' %%#%s#%d%s', attr[3], vim.tbl_count(n), attr[2]))
+            end
         end
     end
 
