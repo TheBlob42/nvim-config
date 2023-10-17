@@ -123,23 +123,10 @@ require('lazy').setup {
         -- interactive code evaluation
         'Olical/conjure',
         ft = my.lisps,
+        init = load_config_file,
         config = function()
             require("conjure.main").main()
             require("conjure.mapping")["on-filetype"]()
-        end,
-        init = function()
-            vim.g['conjure#filetypes'] = my.lisps
-            vim.g['conjure#filetype#fennel'] = 'conjure.client.fennel.stdio'
-
-            -- disable diagnostics for the log buffer as they contain "non-valid" clojure parts
-            vim.api.nvim_create_autocmd('BufNewFile', {
-                group = vim.api.nvim_create_augroup('ConjureLogDisableDiagnostic', {}),
-                pattern = { 'conjure-log-*' },
-                callback = function()
-                    vim.diagnostic.disable(0)
-                end,
-                desc = 'disable diagnostics for conjure log buffer',
-            })
         end,
         dependencies = { 'PaterJason/cmp-conjure' }
     },
