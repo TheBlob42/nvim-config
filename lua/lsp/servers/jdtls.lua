@@ -40,9 +40,6 @@ local function jdtls_on_attach(client, bufnr)
         end
     end
 
-    -- add jdtls specific commands
-    require('jdtls.setup').add_commands()
-
     -- add jdtls specific keybindings
     vim.keymap.set('n', '<localleader>i', jdtls.organize_imports, { buffer = bufnr, desc = 'organize imports' })
     vim.keymap.set('n', '<localleader>R', '<CMD>JdtWipeDataAndRestart<CR>', { buffer = bufnr, desc = 'reload project'})
@@ -50,13 +47,8 @@ end
 
 local function start()
     if mason_registry.is_installed('jdtls') then
-        local root_dir = require('jdtls.setup').find_root({ 'gradlew', 'pom.xml', 'mvnw' })
+        local root_dir = require('jdtls.setup').find_root({ 'gradlew', 'pom.xml', 'mvnw', '.git' })
         local workspace_dir = vim.fn.fnamemodify(my.sys_local.java.workspace_dir, ':p') .. vim.fn.fnamemodify(root_dir, ':p:h:t')
-
-        -- to prevent multiple LSPs spawned per project (e.g. gradle multi projects)
-        if not root_dir then
-            return
-        end
 
         -- workaround for the gradle buildship issue:
         -- https://github.com/mfussenegger/nvim-jdtls/issues/38
@@ -116,13 +108,15 @@ local function start()
         -- if the java runtimes are configured merge them into the config
         local runtimes = vim.tbl_get(my.sys_local, 'java', 'runtimes')
         if runtimes and not vim.tbl_isempty(runtimes) then
-            config = vim.tbl_deep_extend('force', config, {
-                settings = {
-                    java = {
-                        configuration = { runtimes = runtimes }
+            config = assert(
+                vim.tbl_deep_extend('force', config, {
+                    settings = {
+                        java = {
+                            configuration = { runtimes = runtimes }
+                        }
                     }
-                }
-            })
+                })
+            )
         end
 
         -- setup bundles for debug adapter protocol

@@ -220,11 +220,7 @@ require('lazy').setup {
 
     'folke/neodev.nvim',                    -- special configuration for Lua (NVIM development)
     'onsails/lspkind-nvim',                 -- add icons to completion candidates
-    {
-        -- special LSP configuration for Java
-        'mfussenegger/nvim-jdtls',
-        commit = '34202bc', -- keep support with JDK 11
-    },
+    'mfussenegger/nvim-jdtls',              -- special LSP configuration for Java
     'jose-elias-alvarez/nvim-lsp-ts-utils', -- special configuration for Type/Javascript
     'neovim/nvim-lspconfig',                -- "general" LSP configuration
 
