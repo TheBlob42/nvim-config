@@ -75,6 +75,9 @@ fzf.setup {
     },
 }
 
+-- register fzf-lua as handler for vim.ui.select
+vim.cmd('FzfLua register_ui_select')
+
 ---@class FzfFilesOption
 ---@field prompt string|function The prompt string for the fzf dialog. Can also be a function which receives the directory path (e.g. '/home/user/projects') and returns the prompt string to use
 ---@field actions function Function to create the actions for the fzf dialog. The function receives the directory path (e.g. '/home/user/projects') and the entries map (e.g. `{ ['file.txt'] = { type = 'file', path = '/home/user/file.txt' } }`) as parameters, so they can be used for the definition of custom actions. The return is a map of actions as defined by fzf-lua

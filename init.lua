@@ -45,7 +45,6 @@ require('lazy').setup {
     'tpope/vim-surround', -- easy "surroundings"
     'tpope/vim-repeat',   -- repeat plug mappings with '.'
     'tpope/vim-sleuth',   -- auto configure `shiftwidth`
-    'tpope/vim-abolish',  -- working with variant of words
 
     {
         -- provide icons and colors
@@ -71,12 +70,6 @@ require('lazy').setup {
         config = function()
             require('flit').setup()
         end,
-    },
-
-    {
-        -- improve default ui interface
-        'stevearc/dressing.nvim',
-        config = load_config_file,
     },
 
     {
@@ -327,12 +320,6 @@ require('lazy').setup {
             vim.keymap.set('x', 'ga', '<Plug>(EasyAlign)', { desc = 'easy align' })
             vim.keymap.set('n', 'ga', '<Plug>(EasyAlign)', { desc = 'easy align' })
         end,
-    },
-
-    {
-        -- measure NVIMs startup time
-        'dstein64/vim-startuptime',
-        cmd = 'StartupTime',
     },
 
     {
