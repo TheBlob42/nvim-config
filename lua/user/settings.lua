@@ -58,9 +58,16 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     desc = 'highlight yanked text',
 })
 
+vim.opt.numberwidth = 2
+vim.opt.signcolumn = 'auto:2-5'
+
 -- ###################
 -- ### Diagnostics ###
 -- ###################
+
+vim.diagnostic.config {
+    virtual_text = false
+}
 
 -- only show the "worst" diagnostic sign (highest severity, see ':h diagnostic-handlers-example')
 local ns = vim.api.nvim_create_namespace('max_severity_only')
