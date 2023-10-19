@@ -8,6 +8,38 @@ local diagnostics_attrs = {
     { 'Info',  '', 'DiagnosticInfo' },
 }
 
+-- in order for our icon highlights to have the correct background color ('StatusLine')
+-- we need to create custom highlights by manually combining foreground and background color
+local hl_cache = {}
+local function get_custom_hl(highlight)
+    local fg = vim.api.nvim_get_hl(0, { name = highlight }).fg
+
+    if not fg then
+        return 'StatusLine'
+    end
+
+    local key = vim.g.colors_name .. '_' .. fg
+
+    if not hl_cache[key] then
+        local bg = vim.api.nvim_get_hl(0, { name = 'StatusLine' }).bg
+        local name = 'StatusLine_' .. key
+        hl_cache[key] = name
+        vim.api.nvim_set_hl(0, name, { fg = fg, bg = bg })
+    end
+
+    return hl_cache[key]
+end
+
+-- clear the highlight cache when loading a new colorscheme (which usually resets all highlights)
+vim.api.nvim_create_autocmd('ColorSchemePre', {
+    group = vim.api.nvim_create_augroup('StatuslineClearHighlightCache', {}),
+    pattern = '*',
+    callback = function()
+        hl_cache = {}
+    end,
+    desc = 'clear the highlights cache for the statusline',
+})
+
 function M.statusline()
     local win = vim.g.statusline_winid
     local buf = vim.api.nvim_win_get_buf(win)
@@ -62,7 +94,7 @@ function M.statusline()
         for _, attr in pairs(diagnostics_attrs) do
             local n = vim.diagnostic.get(buf, { severity = attr[1] })
             if vim.tbl_count(n) > 0 then
-                table.insert(diagnostics, string.format(' %%#%s#%d%s', attr[3], vim.tbl_count(n), attr[2]))
+                table.insert(diagnostics, string.format(' %%#%s#%d%s', get_custom_hl(attr[3]), vim.tbl_count(n), attr[2]))
             end
         end
     end
@@ -83,6 +115,7 @@ function M.statusline()
         local ok, devicons = pcall(require, 'nvim-web-devicons')
         if ok then
             icon, hl = devicons.get_icon_by_filetype(ft, { default = true })
+            hl = get_custom_hl(hl)
         end
 
         filetype = ft .. ' %#' .. hl .. '#' .. icon .. '%*'
