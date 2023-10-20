@@ -40,10 +40,11 @@ function M.rename_tab()
     local current_tab = api.nvim_get_current_tabpage()
     vim.ui.input({
         prompt = 'Enter custom tab name: ',
-        default = tab_labels[current_tab],
     }, function(input)
-        tab_labels[current_tab] = input
-        vim.cmd.redrawtabline()
+        if input and not input:find('^ +$') then
+            tab_labels[current_tab] = input
+            vim.cmd.redrawtabline()
+        end
     end)
 end
 
