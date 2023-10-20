@@ -81,7 +81,7 @@ function M.statusline()
 
     -- for non-special inactive windows only show the file-/buffername
     if not active_win then
-        return ' %t'
+        return ' %t%( %m%)'
     end
 
     -- ~~~~~~~~~~~~~~~~~~
