@@ -329,7 +329,7 @@ local function switch_project()
     local projects = {}
 
     for _, project_base_dir in ipairs(my.sys_local.projects.base_dirs) do
-        local path = vim.fn.fnamemodify(vim.fn.expand(project_base_dir), ':p')
+        local path = assert(vim.fn.fnamemodify(vim.fn.expand(project_base_dir), ':p'))
         for name, type in vim.fs.dir(path) do
             if type == 'directory' then
                 projects[name] = path .. name
@@ -339,7 +339,7 @@ local function switch_project()
 
     for _, project in ipairs(my.sys_local.projects.dirs) do
         local full_path = vim.fn.fnamemodify(vim.fn.expand(project), ':p')
-        local name = vim.fn.fnamemodify(full_path, ':h:t')
+        local name = assert(vim.fn.fnamemodify(full_path, ':h:t'))
         projects[name] = full_path
     end
 
