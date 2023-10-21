@@ -21,9 +21,11 @@ local function get_custom_hl(highlight)
     local key = vim.g.colors_name .. '_' .. fg
 
     if not hl_cache[key] then
-        local bg = vim.api.nvim_get_hl(0, { name = 'StatusLine' }).bg
-        local name = 'StatusLine_' .. key
+        -- replace invalid characters (see ':h group-name')
+        local name = string.gsub('StatusLine_' .. key, '[^%w_.@]', '_')
         hl_cache[key] = name
+        -- retrieve correct background color and create new custom highlight group
+        local bg = vim.api.nvim_get_hl(0, { name = 'StatusLine' }).bg
         vim.api.nvim_set_hl(0, name, { fg = fg, bg = bg })
     end
 
