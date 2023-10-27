@@ -207,7 +207,7 @@ require('lazy').setup {
     {
         -- show lsp progress
         'j-hui/fidget.nvim',
-        tag = 'legacy',
+        branch = 'legacy',
         config = function()
             require('fidget').setup {
                 text = { spinner = 'dots' }
