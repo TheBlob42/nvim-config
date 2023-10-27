@@ -62,7 +62,7 @@ function M.statusline()
             mode_hl = 'Keyword'
         end
 
-        active_indicator = '%#' .. mode_hl .. '#█🭬%*'
+        active_indicator = '%#' .. mode_hl .. '#█ %*'
     end
 
     -- ~~~~~~~~~~~~~~~
