@@ -62,10 +62,16 @@ Then you can start the nrepl easily with the following command:
 >
     clj -M:nREPL
 <
+Alternatively you can also start the nREPL from the project directory using
+`-Sdeps` without the need to define an alias:
+>
+    clj -Sdeps '{:deps {nrepl/nrepl {:mvn/version "1.0.0"}}}' -M -m nrepl.cmdline
+<
 References~
 
 - https://babashka.org/
 - https://github.com/nrepl/nrepl
+- https://clojure.org/reference/deps_and_cli
 
 =============================================================================
 POSTMAN                                                    *my-curl* *my-postman*
