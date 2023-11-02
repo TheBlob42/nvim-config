@@ -50,7 +50,7 @@ local function gradlew_exec(task, gradlew_path)
     end
 
     local job_id = vim.api.nvim_buf_get_var(buf, 'terminal_job_id')
-    vim.fn.jobsend(job_id, './gradlew ' .. task .. '\n')
+    vim.fn.chansend(job_id, './gradlew ' .. task .. '\n')
 
     vim.api.nvim_set_current_win(win)
     vim.api.nvim_win_set_cursor(win, { vim.fn.line('$'), 0 })
