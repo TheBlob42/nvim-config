@@ -24,7 +24,6 @@ function M.on_attach(client, bufnr)
 
     -- "generic" keybindings
     if client.supports_method('textDocument/hover', { bufnr = bufnr }) then
-        map('n', 'K', vim.lsp.buf.hover, 'keyword')
         map('n', '<RightMouse>', '<LeftMouse><CMD>lua vim.lsp.buf.hover()<CR>', 'hover')
     end
     if client.supports_method('textDocument/signatureHelp', { bufnr = bufnr }) then
