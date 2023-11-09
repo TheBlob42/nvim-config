@@ -30,30 +30,11 @@ local function gradlew_exec(task, gradlew_path)
         return
     end
 
-    -- terminal buffer names use the short (~) version for the home folder
-    local escaped_path = vim.fn.fnamemodify(gradlew_path, ":~")
-    local buf = vim.fn.bufnr("^term://" .. escaped_path .. "*gw:" .. task .. "$")
-
-    if buf < 0 then
-        -- create a new terminal buffer
-        buf = vim.api.nvim_create_buf(true, false)
-        vim.api.nvim_buf_call(buf, function()
-            -- `termopen` always uses the current buffer for the connection
-            vim.fn.termopen(vim.o.shell .. ';#gw:' .. task, { cwd = gradlew_path })
-        end)
-    end
-
-    local win = vim.fn.bufwinid(buf)
-    if win == -1 then
-        win = vim.api.nvim_get_current_win()
-        vim.api.nvim_win_set_buf(win, buf)
-    end
-
-    local job_id = vim.api.nvim_buf_get_var(buf, 'terminal_job_id')
-    vim.fn.chansend(job_id, './gradlew ' .. task .. '\n')
-
-    vim.api.nvim_set_current_win(win)
-    vim.api.nvim_win_set_cursor(win, { vim.fn.line('$'), 0 })
+    my.start_terminal('gw:'..task, './gradlew ' .. task, {
+        cwd = gradlew_path,
+        win = 'current',
+        focus = true,
+    })
 end
 
 ---Extract the task name from a given string
