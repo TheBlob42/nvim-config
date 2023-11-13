@@ -7,6 +7,7 @@ local function get_gradlew_script_path()
         -- in terminal buffer extract cwd from the bufname
         path = vim.fn.expand(buf_name:match('^term://(.-)//'))
     else
+        ---@diagnostic disable-next-line: param-type-mismatch
         path = vim.fn.fnameescape(vim.fn.expand('%:p:h'))
     end
 
@@ -16,7 +17,7 @@ local function get_gradlew_script_path()
         return
     end
 
-    return vim.fn.fnameescape(vim.fn.fnamemodify(gradlew_file, ':p:h'))
+    return vim.fn.fnameescape(assert(vim.fn.fnamemodify(gradlew_file), ':p:h'))
 end
 
 ---Execute a given Gradlew task
@@ -83,7 +84,7 @@ local function task_list(gradlew_path)
             end
             vim.loop.close(stdout)
             vim.loop.close(stderr)
-            handle:close()
+            assert(handle:close())
         end)
 
         vim.loop.read_start(stdout, function(_, data)
