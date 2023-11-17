@@ -22,7 +22,7 @@ return {
     snippet({ trig = 'img', name = 'Image' },
         fmt('![{}]({})', { i(2), i(1) })),
 
-    snippet({ trig = 'code', name = 'Codeblock' },
+    snippet({ trig = 'c', name = 'Codeblock' },
         fmt([[
             ```{}
             {}
@@ -30,7 +30,7 @@ return {
         ]], { i(1), i(2) })),
 
     snippet({
-        trig = "tbl(%d?)(%d?)",
+        trig = "tbl(%d+)(,%d+)",
         regTrig = true,
         name = 'Table',
         dscr = 'Insert table with X columns and Y rows. First row is the heading.',
@@ -40,11 +40,10 @@ return {
             '| Item 1    | ... | Item n    |',
         }, '\n'),
     },
-
     {
         d(1, function(_, parent)
             local cols = tonumber(parent.snippet.captures[1])
-            local rows = tonumber(parent.snippet.captures[2])
+            local rows = tonumber(parent.snippet.captures[2]:sub(2))
 
             if not cols or cols < 1 then
                 cols = 1
