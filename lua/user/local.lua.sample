@@ -27,6 +27,11 @@ my.sys_local = {
             -- end
         }
     },
+    -- clojure configuration for this computer
+    clojure = {
+        -- this is the current default command for starting a clojure REPL with 'JackIn'
+        repl_cmd = [[clj -Sdeps '{:deps {nrepl/nrepl {:mvn/version "1.1.0"}}}' -M -m nrepl.cmdline]],
+    },
     -- java configuration for this computer
     java = {
         -- workspace data directory for JDTLS
