@@ -28,16 +28,16 @@ vim.lsp.handlers['client/registerCapability'] = function(err, result, ctx)
 end
 
 -- configure installed LSP servers (only if installed via mason.nvim)
+local default_config = {
+    on_attach = utils.on_attach,
+    capabilities = utils.capabilities,
+}
 local lspconfig = require('lspconfig')
 require('mason').setup()
 require('mason-lspconfig').setup({})
 require('mason-lspconfig').setup_handlers {
     function(server_name)
-        local config = {
-            on_attach = utils.on_attach,
-            capabilities = utils.capabilities,
-        }
-        lspconfig[server_name].setup(config)
+        lspconfig[server_name].setup(default_config)
     end,
     ['lua_ls'] = function()
         require('neodev').setup() -- needs to be before lspconfig
@@ -49,6 +49,21 @@ require('mason-lspconfig').setup_handlers {
         lspconfig['tsserver'].setup(
             require('lsp.servers.tsserver')
         )
+    end,
+    ['clojure_lsp'] = function()
+        local config = vim.tbl_extend('force', default_config, {
+            --[[
+                conjure log files created at `pwd` might spawn additional LSPs that will be picked up by other buffer
+                even though there might be a more specific root path available (e.g. in "multi projects" or "mono-repositories")
+                also this avoids diagnostics in the log buffer which contains non-valid clojure code (e.g. results)
+            --]]
+            root_dir = function(fname, _)
+                if not fname:find('conjure%-log%-') then
+                    return lspconfig.util.root_pattern("project.clj", "deps.edn", "build.boot", "shadow-cljs.edn", ".git", "bb.edn")(fname)
+                end
+            end,
+        })
+        lspconfig['clojure_lsp'].setup(config)
     end,
     ['jdtls'] = function()
         -- do nothing (see 'ftplugin/java.lua')

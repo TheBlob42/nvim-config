@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 local cmp = require('cmp')
 -- additional requirements for cmp setup
 local luasnip = require('luasnip')
@@ -52,9 +53,11 @@ cmp.setup {
 for _, ft in ipairs(my.lisps) do
     cmp.setup.filetype(ft, {
         sources = cmp.config.sources({
-            { name = 'conjure' }
+            { name = 'nvim_lsp' },
         }, {
-            { name = 'buffer' }
+            { name = 'conjure' },
+            { name = 'path' },
+            { name = 'buffer', keyword_length = 5 }
         })
     })
 end

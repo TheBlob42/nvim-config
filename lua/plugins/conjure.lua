@@ -5,18 +5,9 @@
 vim.g['conjure#filetypes'] = my.lisps
 vim.g['conjure#filetype#fennel'] = 'conjure.client.fennel.stdio'
 
--- the log buffer contains non-valid clojure in the presented evaluation results
-vim.api.nvim_create_autocmd('BufNewFile', {
-    group = vim.api.nvim_create_augroup('ConjureLogDisableDiagnostic', {}),
-    pattern = { 'conjure-log-*' },
-    callback = function()
-        vim.diagnostic.disable(0)
-    end,
-    desc = 'disable diagnostics for conjure log buffer',
-})
-
 -- experimental mapping for now, lets see how (and if) this evolves
 vim.g['conjure#mapping#prefix'] = ','
+vim.g['conjure#mapping#doc_word'] = { '<C-k>' } -- avoid conflict with LSP mapping
 
 -- add custom prefix labels for which-key
 vim.api.nvim_create_autocmd('FileType', {
