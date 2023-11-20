@@ -11,7 +11,10 @@ vim.keymap.set('n', '-', function()
         require('drex').open_directory_buffer() -- open at cwd
     else
         require('drex').open_directory_buffer(vim.fn.fnamemodify(path, ':h'))
-        require('drex.elements').focus_element(0, path)
+        -- check if the file actually exists or if the buffer just has a name
+        if vim.loop.fs_stat(path) then
+            require('drex.elements').focus_element(0, path)
+        end
     end
 end, { desc = 'open parent dir' })
 
