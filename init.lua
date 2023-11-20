@@ -261,20 +261,6 @@ require('lazy').setup {
     },
 
     {
-        -- simple terminal manager
-        'voldikss/vim-floaterm',
-        cmd = { 'FloatermToggle', 'FloatermShow' },
-        init = function()
-            -- configuration for the floating terminal window
-            vim.g.floaterm_width      = 0.75
-            vim.g.floaterm_height     = 0.75
-            vim.g.floaterm_autoinsert = false
-
-            vim.keymap.set('n', "<leader>'", '<CMD>FloatermToggle<CR>', { desc = 'toggle terminal' })
-        end,
-    },
-
-    {
         -- edit files with sudo privileges
         'lambdalisue/suda.vim',
         cmd = { 'SudaRead', 'SudaWrite' },
