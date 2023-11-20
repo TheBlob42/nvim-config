@@ -10,7 +10,7 @@ git clone https://github.com/TheBlob42/nvim-config.git ~/.config/nvim
 
 ## Dependencies
 
-Tested with Neovim version `0.9.1`
+Requires Neovim version `0.10.0` (current nightly branch)
 
 > Some functionality is tailored towards the usage of a Linux operating system
 

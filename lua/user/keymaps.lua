@@ -171,7 +171,6 @@ end
 local mappings = {
     { '<F1>', '<CMD>setlocal spell!<CR>', 'toggle spell checking' },
     { '<F5>', remove_trailing_whitespaces, 'remove trailing whitespaces' },
-    { 'gx', '<CMD>XOpen<CR>', 'open the link under the cursor via xdg-open' },
 
     -- navigation
     { '<leader><leader>', '<CMD>SwitchWindow<CR>', 'jump to another window' },
