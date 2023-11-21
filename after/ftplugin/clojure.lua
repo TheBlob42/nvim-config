@@ -39,7 +39,7 @@ local function jack_in(cmd, root_markers)
 end
 
 local default_clj_cmd = [[clj -Sdeps '{:deps {nrepl/nrepl {:mvn/version "1.1.0"}}}' -M -m nrepl.cmdline]]
-local clj_cmd = my.sys_local.clojure.repl_cmd or default_clj_cmd
+local clj_cmd = vim.tbl_get(my.sys_local, 'clojure', 'repl_cmd') or default_clj_cmd
 
 vim.api.nvim_buf_create_user_command(0, 'JackIn', jack_in(clj_cmd, { 'deps.edn' }), {
     desc = 'start a clojure REPL for the current buffer'
