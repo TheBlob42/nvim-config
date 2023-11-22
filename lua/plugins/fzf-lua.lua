@@ -307,6 +307,14 @@ local function file_explorer(directory)
                     vim.api.nvim_set_current_buf(buf)
                     vim.fn.termopen(vim.o.shell, { cwd = dir })
                 end,
+                ['alt-f'] = {
+                    function()
+                        fzf.files {
+                            cwd = dir
+                        }
+                    end,
+                    fzf.actions.resume,
+                },
                 ['alt-b'] = {
                     function()
                         fzf.buffers {
