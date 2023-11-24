@@ -78,19 +78,23 @@ fzf.setup {
 -- register fzf-lua as handler for vim.ui.select
 vim.cmd('FzfLua register_ui_select')
 
+local function highlight_adaptions()
+    -- resetting the colorscheme clears some special escape sequences needed for certain commands
+    -- see https://github.com/ibhagwan/fzf-lua/issues/832
+    require('fzf-lua').setup_highlights()
+
+    -- certain fzf highlights are directly linked to `nvim_get_color_map` colors
+    vim.api.nvim_set_hl(0, 'FzfLuaBufNr',      { link = 'Constant' })
+    vim.api.nvim_set_hl(0, 'FzfLuaBufFlagAlt', { link = 'Operator' })
+    vim.api.nvim_set_hl(0, 'FzfLuaHeaderBind', { link = 'Operator' })
+end
+
+highlight_adaptions()
+
 vim.api.nvim_create_autocmd('ColorScheme', {
     group = vim.api.nvim_create_augroup('FzfLuaHighlightAdaptions', {}),
     pattern = '*',
-    callback = function()
-        -- resetting the colorscheme clears some special escape sequences needed for certain commands
-        -- see https://github.com/ibhagwan/fzf-lua/issues/832
-        require('fzf-lua').setup_highlights()
-
-        -- certain fzf highlights are directly linked to `nvim_get_color_map` colors
-        vim.api.nvim_set_hl(0, 'FzfLuaBufNr',      { link = 'Constant' })
-        vim.api.nvim_set_hl(0, 'FzfLuaBufFlagAlt', { link = 'Operator' })
-        vim.api.nvim_set_hl(0, 'FzfLuaHeaderBind', { link = 'Operator' })
-    end,
+    callback = highlight_adaptions,
     desc = 'adopt fzf-lua highlights',
 })
 
