@@ -1,3 +1,17 @@
+local buf = vim.api.nvim_get_current_buf()
+local bufname = vim.api.nvim_buf_get_name(buf)
+
+--[[
+    Attach clojure-lsp to "zipfile://" dependency buffers as well (despite them having no root directory)
+    The LS will only run in single file mode anyway so we just use the first clojure-lsp client that we retrieve
+--]]
+if vim.startswith(bufname, 'zipfile://') then
+    local clients = vim.lsp.get_clients({ name = 'clojure_lsp' })
+    if not vim.tbl_isempty(clients) then
+        vim.lsp.buf_attach_client(buf, clients[1].id)
+    end
+end
+
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- jack-in utility to start a REPL
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
