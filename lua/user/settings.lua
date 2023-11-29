@@ -131,9 +131,11 @@ local builtin_plugins = {
     -- 'matchparen',
     -- '2html_plugin',
 
+    -- used for "zipfile://" links (e.g. clojure-lsp)
+    -- 'zip',
+    -- 'zipPlugin',
+
     'gzip',
-    'zip',
-    'zipPlugin',
     'tar',
     'tarPlugin',
     'getscript',
