@@ -21,7 +21,7 @@ Requires Neovim version `0.10.0` (current nightly branch)
 - [xclip](https://github.com/astrand/xclip) or [xsel](https://github.com/kfish/xsel) 
 
 ¹At least version `2.2.2` to include [codicons](https://github.com/microsoft/vscode-codicons) for [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui)  
-²At least version `0.24.0` ([more](https://github.com/ibhagwan/fzf-lua/issues/227))
+²At least version `0.35.0` (to include the `--no-separator` option)
 
 ### Optional Dependencies 
 
