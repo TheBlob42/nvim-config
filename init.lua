@@ -302,16 +302,6 @@ require('lazy').setup {
     },
 
     {
-        -- simple alignment plugin
-        'junegunn/vim-easy-align',
-        keys = '<Plug>(EasyAlign)',
-        init = function()
-            vim.keymap.set('x', 'ga', '<Plug>(EasyAlign)', { desc = 'easy align' })
-            vim.keymap.set('n', 'ga', '<Plug>(EasyAlign)', { desc = 'easy align' })
-        end,
-    },
-
-    {
         -- file/directory explorer
         'TheBlob42/drex.nvim',
         branch = 'develop', -- always testing the bleeding edge

@@ -106,3 +106,6 @@ end
 
 vim.keymap.set('n', 'p', md_paste(false), { expr = true, desc = 'Paste text or copied image' })
 vim.keymap.set('n', 'P', md_paste(true),  { expr = true, desc = 'Paste text or copied image' })
+
+-- needs `sed` and `column` (including the `-t` option) to be installed
+vim.keymap.set('x', '<localleader>f', [[!sed "s/|/:|/g" | column -t -s ":"<CR>]], { desc = 'Format table' })
