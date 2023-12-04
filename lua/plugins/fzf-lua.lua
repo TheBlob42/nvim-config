@@ -1,11 +1,23 @@
 local fzf = require('fzf-lua')
 
+-- configuration to show the previewer (default: hidden)
+local winopts_preview_nohidden = {
+    winopts = {
+        preview = {
+            hidden = 'nohidden'
+        }
+    }
+}
+
 fzf.setup {
     fzf_colors = {
         ['gutter'] = { 'bg', 'Normal' },
     },
+    fzf_opts = {
+        ["--no-separator"] = '',
+    },
     files = {
-        git_icons = false -- remove git icons for better performance
+        git_icons = false, -- remove git icons for better performance
     },
     actions = {
         files = {
@@ -39,12 +51,18 @@ fzf.setup {
                 end,
             },
         },
-      },
+    },
     winopts = {
+        split = 'botright new',
+        border = 'rounded',
         preview = {
+            hidden = 'hidden',
             delay = 60 -- smoother preview experience
         }
     },
+    blines = winopts_preview_nohidden,
+    grep = winopts_preview_nohidden,
+    lsp = winopts_preview_nohidden,
     keymap = {
         builtin = {
             -- default mappings (needed since there is no table merge)
