@@ -17,7 +17,7 @@ local function get_gradlew_script_path()
         return
     end
 
-    return vim.fn.fnameescape(assert(vim.fn.fnamemodify(gradlew_file), ':p:h'))
+    return vim.fn.fnameescape(assert(vim.fn.fnamemodify(gradlew_file, ':p:h')))
 end
 
 ---Execute a given Gradlew task
