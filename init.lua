@@ -2,6 +2,7 @@ require('user.settings')   -- general non plugin related settings
 require('user.config')     -- general configuration stuff
 require('user.statusline') -- custom statusline
 require('user.tabline')    -- custom tabline
+require('user.clever-f')   -- "clever-f" like functionality
 
 -- local user configuration (if present)
 if not pcall(require, 'user.local') then
@@ -62,14 +63,6 @@ require('lazy').setup {
         -- sneak like motion plugin
         'ggandor/leap.nvim',
         config = load_config_file,
-    },
-
-    {
-        -- clever-f built on leap.nvim
-        'ggandor/flit.nvim',
-        config = function()
-            require('flit').setup()
-        end,
     },
 
     {
