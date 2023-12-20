@@ -6,6 +6,7 @@ vim.opt.mouse = 'a'
 
 vim.opt.splitbelow = true
 vim.opt.splitright = true
+vim.opt.splitkeep = 'screen'
 
 vim.opt.number = true
 vim.opt.signcolumn = 'number'
