@@ -16,8 +16,8 @@ Requires Neovim version `0.10.0` (current nightly branch)
 
 - [curl](https://curl.se/)
 - [NerdFont](https://www.nerdfonts.com/)¹
-- [ripgrep](https://github.com/BurntSushi/ripgrep)
 - [fzf](https://github.com/junegunn/fzf)²
+- [ripgrep](https://github.com/BurntSushi/ripgrep)
 - [xclip](https://github.com/astrand/xclip) or [xsel](https://github.com/kfish/xsel) 
 
 ¹At least version `2.2.2` to include [codicons](https://github.com/microsoft/vscode-codicons) for [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui)  
@@ -25,7 +25,6 @@ Requires Neovim version `0.10.0` (current nightly branch)
 
 ### Optional Dependencies 
 
-- [jq](https://stedolan.github.io/jq/)
 - [translate-shell](https://github.com/soimort/translate-shell)
 - [lazygit](https://github.com/jesseduffield/lazygit)
 - [neovim-remote](https://github.com/mhinz/neovim-remote) 
