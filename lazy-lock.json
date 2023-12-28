@@ -9,7 +9,7 @@
   "cmp-path": { "branch": "main", "commit": "91ff86cd9c29299a64f968ebb45846c485725f23" },
   "cmp_luasnip": { "branch": "master", "commit": "18095520391186d634a0045dacaa346291096566" },
   "conjure": { "branch": "master", "commit": "0d9b823db06cc11e6115b54297f690dff10c0299" },
-  "drex.nvim": { "branch": "develop", "commit": "744499c3433a60e6fb50299d40228a2a80bd9cbd" },
+  "drex.nvim": { "branch": "develop", "commit": "acccc1225e61a3977d86a590420b868e708cc64a" },
   "fidget.nvim": { "branch": "main", "commit": "956c8da3fa4072e6e00a4d8d4e52b88d887b9cfa" },
   "friendly-snippets": { "branch": "main", "commit": "43727c2ff84240e55d4069ec3e6158d74cb534b6" },
   "fzf-lua": { "branch": "main", "commit": "1fa0252f760cec028709e02f7473a5156d1ad040" },
