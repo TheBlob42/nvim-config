@@ -42,7 +42,7 @@ local function load_config_file(plugin)
     require('plugins.'..name)
 end
 
-require('lazy').setup {
+require('lazy').setup({
     'tpope/vim-surround', -- easy "surroundings"
     'tpope/vim-repeat',   -- repeat plug mappings with '.'
     'tpope/vim-sleuth',   -- auto configure `shiftwidth`
@@ -312,7 +312,9 @@ require('lazy').setup {
         'AndrewRadev/linediff.vim',
         cmd = 'Linediff',
     },
-}
+}, {
+    ui = { border = 'single' }
+})
 
 -- load all custom user commands from "lua/user/commands"
 for name, _ in vim.fs.dir(vim.fn.fnamemodify(vim.env.MYVIMRC, ':h') .. '/lua/user/commands') do

@@ -12,6 +12,9 @@ vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
     { border = "rounded" }
 )
 
+-- window border for the LSP info float
+require('lspconfig.ui.windows').default_options.border = 'single'
+
 -- check for dynamic registered capabilities to ensure all mappings are set properly
 -- should be fixed by: https://github.com/neovim/neovim/issues/24229
 -- (see also https://github.com/neovim/neovim/pull/23681)
