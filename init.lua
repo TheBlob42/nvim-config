@@ -192,7 +192,6 @@ require('lazy').setup({
     'williamboman/mason-lspconfig.nvim',    -- make integration of mason.nvim and lspconfig easier
 
     'folke/neodev.nvim',                    -- special configuration for Lua (NVIM development)
-    'onsails/lspkind-nvim',                 -- add icons to completion candidates
     'mfussenegger/nvim-jdtls',              -- special LSP configuration for Java
     'jose-elias-alvarez/nvim-lsp-ts-utils', -- special configuration for Type/Javascript
     'neovim/nvim-lspconfig',                -- "general" LSP configuration

@@ -2,7 +2,6 @@
 local cmp = require('cmp')
 -- additional requirements for cmp setup
 local luasnip = require('luasnip')
-local lspkind = require('lspkind')
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- ~ "regular" autocompletion ~
@@ -37,9 +36,6 @@ cmp.setup {
     }, {
         { name = 'buffer', keyword_length = 5 },
     }),
-    formatting = {
-        format = lspkind.cmp_format({ with_text = true, maxwidth = 50 }),
-    },
     window = {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
