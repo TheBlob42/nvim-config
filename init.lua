@@ -282,18 +282,6 @@ require('lazy').setup({
     },
 
     {
-        -- undo history visualizer
-        'mbbill/undotree',
-        cmd = 'UndotreeToggle',
-        init = function()
-            vim.g.undotree_WindowLayout = 4
-            vim.g.undotree_SetFocusWhenToggle = 1
-
-            vim.keymap.set('n', '<leader>U', '<CMD>UndotreeToggle<CR>', { desc = 'undo tree' })
-        end,
-    },
-
-    {
         -- file/directory explorer
         'TheBlob42/drex.nvim',
         branch = 'develop', -- always testing the bleeding edge
