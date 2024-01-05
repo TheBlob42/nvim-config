@@ -42,12 +42,13 @@ vim.opt.updatetime = 400 -- speed up 'cursorhold' events
 
 vim.g.markdown_folding = 1 -- see 'ft-markdown-plugin'
 
--- enable cursorline (except for terminal buffers)
 vim.opt.cursorline = true
+
+-- disable cursorline and signcolumn for terminal buffers
 vim.api.nvim_create_autocmd('TermOpen', {
     group = vim.api.nvim_create_augroup('NoCursorline', {}),
     pattern = '*',
-    command = 'setlocal nocursorline',
+    command = 'setlocal nocursorline signcolumn=no',
     desc = 'disable cursorline for terminal buffers',
 })
 
