@@ -7,5 +7,8 @@ require('ibl').setup {
             'mason',
             'DressingInput',
         },
-    }
+    },
+    indent = {
+        char = '▏'
+    },
 }
