@@ -3,6 +3,7 @@ require('user.config')     -- general configuration stuff
 require('user.statusline') -- custom statusline
 require('user.tabline')    -- custom tabline
 require('user.clever-f')   -- "clever-f" like functionality
+require('user.rooter')     -- set cwd to "project" root automatically
 
 -- local user configuration (if present)
 if not pcall(require, 'user.local') then
@@ -240,15 +241,6 @@ require('lazy').setup({
         config = function()
             vim.g.CutlassRecursiveSelectBindings = 1 -- make it work with "autopairs"
             vim.keymap.set('x', 'x', 'd')            -- "cut operation" for visual mode
-        end,
-    },
-
-    {
-        -- change VIM working dir to project root
-        'airblade/vim-rooter',
-        config = function()
-            vim.g.rooter_patterns =  { '.git', '_darcs', '.hg', '.bzr', '.svn', 'Makefile', '.marksman.toml' }
-            vim.g.rooter_change_directory_for_non_project_files = 'current'
         end,
     },
 
