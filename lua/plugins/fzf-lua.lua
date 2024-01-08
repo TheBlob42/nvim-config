@@ -1,32 +1,5 @@
 local fzf = require('fzf-lua')
 
----Improved file picker version that allows toggling the `rg` unrestricted option
----@param opts table Fzf options for customization
-local function ifiles(opts)
-    opts = opts or {}
-    opts.cmd = opts.cmd or 'rg --color=never --files --hidden --follow -g "!.git" --unrestricted'
-    opts.actions = {
-        ['ctrl-g'] = {
-            function()
-                ifiles(opts)
-            end,
-            fzf.actions.resume,
-        }
-    }
-
-    if opts.cmd:match('%-%-unrestricted$') then
-        opts.cmd = opts.cmd:gsub('%-%-unrestricted$', '')
-        opts.fzf_opts = {}
-    else
-        opts.cmd = opts.cmd .. ' --unrestricted'
-        opts.fzf_opts = {
-            ['--header'] = [["Searching via 'rg [...] --unrestricted'"]]
-        }
-    end
-
-    fzf.files(opts)
-end
-
 -- configuration to show the previewer (default: hidden)
 local winopts_preview_nohidden = {
     winopts = {
@@ -358,7 +331,7 @@ local function file_explorer(directory)
                 end,
                 ['alt-f'] = {
                     function()
-                        ifiles {
+                        fzf.files {
                             cwd = dir
                         }
                     end,
@@ -408,7 +381,7 @@ local function switch_project()
         actions = {
             ['default'] = {
                 function(selected)
-                    ifiles {
+                    fzf.files {
                         prompt = 'Project files> ',
                         cwd = projects[selected[1]],
                     }
@@ -465,7 +438,7 @@ local mappings = {
     { '<leader>gC', fzf_git(false), 'cwd commits' },
     { '<leader>bb', '<CMD>FzfLua buffers<CR>', 'switch buffer' },
     { '<leader>pp', switch_project, 'switch project' },
-    { '<leader>pf', ifiles, 'project files' },
+    { '<leader>pf', fzf.files, 'project files' },
     { '<leader>pb', function() fzf.buffers { cwd_only = true } end, 'project buffers' },
     { '<leader>ss', '<CMD>FzfLua blines<CR>', 'search in current buffer' },
     { '<leader>sd', '<CMD>FzfLua live_grep_native<CR>', 'search in cwd' },
