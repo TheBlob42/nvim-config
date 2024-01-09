@@ -94,7 +94,8 @@ fzf.setup {
 }
 
 -- register fzf-lua as handler for vim.ui.select
-vim.cmd('FzfLua register_ui_select')
+-- use a floating window so other windows do not cover it up
+fzf.register_ui_select({ winopts = { split = false, height = 0.5, width = 0.9  }}, true)
 
 local function highlight_adaptions()
     -- resetting the colorscheme clears some special escape sequences needed for certain commands
