@@ -22,12 +22,12 @@ fzf.setup {
     actions = {
         files = {
             -- default actions (needed since there is not table merge)
-            ["default"] = fzf.actions.file_edit_or_qf,
-            ["ctrl-s"]  = fzf.actions.file_split,
-            ["ctrl-v"]  = fzf.actions.file_vsplit,
-            ["ctrl-t"]  = fzf.actions.file_tabedit,
-            ["alt-q"]   = fzf.actions.file_sel_to_qf,
-            ["alt-l"]   = fzf.actions.file_sel_to_ll,
+            ['default'] = fzf.actions.file_edit_or_qf,
+            ['ctrl-s']  = fzf.actions.file_split,
+            ['ctrl-v']  = fzf.actions.file_vsplit,
+            ['ctrl-t']  = fzf.actions.file_tabedit,
+            ['alt-q']   = fzf.actions.file_sel_to_qf,
+            ['alt-l']   = fzf.actions.file_sel_to_ll,
             -- open a DREX buffer for the cwd
             ['alt-d'] = function(_, opts)
                 require('drex').open_directory_buffer(opts.cwd)
@@ -56,8 +56,8 @@ fzf.setup {
         split = 'botright new',
         border = 'rounded',
         preview = {
-            hidden = 'hidden',
-            delay = 60 -- smoother preview experience
+            hidden = 'hidden', -- hide the previewer by default
+            delay = 60         -- smoother preview experience
         }
     },
     blines = winopts_preview_nohidden,
@@ -103,9 +103,9 @@ local function highlight_adaptions()
     require('fzf-lua').setup_highlights()
 
     -- certain fzf highlights are directly linked to `nvim_get_color_map` colors
-    vim.api.nvim_set_hl(0, 'FzfLuaBufNr',      { link = 'Constant' })
-    vim.api.nvim_set_hl(0, 'FzfLuaBufFlagAlt', { link = 'Operator' })
-    vim.api.nvim_set_hl(0, 'FzfLuaHeaderBind', { link = 'Operator' })
+    vim.api.nvim_set_hl(0, 'FzfLuaBufNr', { link = 'Normal' }) -- includes padding
+    vim.api.nvim_set_hl(0, 'FzfLuaBufFlagAlt', {})
+    vim.api.nvim_set_hl(0, 'FzfLuaHeaderBind', {})
 end
 
 highlight_adaptions()
@@ -118,7 +118,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
 })
 
 ---@class FzfFilesOption
----@field prompt string|function The prompt string for the fzf dialog. Can also be a function which receives the directory path (e.g. '/home/user/projects') and returns the prompt string to use
+---@field prompt string|function? The prompt string for the fzf dialog. Can also be a function which receives the directory path (e.g. '/home/user/projects') and returns the prompt string to use
 ---@field actions function Function to create the actions for the fzf dialog. The function receives the directory path (e.g. '/home/user/projects') and the entries map (e.g. `{ ['file.txt'] = { type = 'file', path = '/home/user/file.txt' } }`) as parameters, so they can be used for the definition of custom actions. The return is a map of actions as defined by fzf-lua
 
 ---Display the files & directories in `dir` (by default the current working directory)
@@ -205,7 +205,7 @@ local function files(dir, opts)
             },
         },
     }
-    options = vim.tbl_deep_extend('force', defaults_opts, options)
+    options = assert(vim.tbl_deep_extend('force', defaults_opts, options))
 
     if type(options.prompt) == 'function' then
         options.prompt = options.prompt(dir)
