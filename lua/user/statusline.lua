@@ -106,6 +106,15 @@ function M.statusline()
     end
 
     -- ~~~~~~~~~~~~~
+    -- conjure state
+    -- ~~~~~~~~~~~~~
+
+    local conjure_state = ''
+    if vim.tbl_contains(my.lisps, ft) then
+        conjure_state = ' %#' .. get_custom_hl('Comment') .. '#[' .. require('conjure.client')['state-key']() .. ']%*'
+    end
+
+    -- ~~~~~~~~~~~~~
     -- filetype icon
     -- ~~~~~~~~~~~~~
 
@@ -133,7 +142,7 @@ function M.statusline()
         indicators = indicators .. '🔍'
     end
 
-    return active_indicator .. '%t%( %m%)' .. table.concat(diagnostics) .. '%=' .. filetype .. ' %P ' .. indicators
+    return active_indicator .. '%t%( %m%)' .. conjure_state .. table.concat(diagnostics) .. '%=' .. filetype .. ' %P ' .. indicators
 end
 
 vim.opt.statusline = '%!v:lua.require("user.statusline").statusline()'
