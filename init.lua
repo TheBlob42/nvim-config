@@ -135,11 +135,12 @@ require('lazy').setup({
         config = load_config_file,
     },
 
-    -- COLORSCHEME & STATUSLINE
+    -- COLORSCHEME
     {
-        "catppuccin/nvim",
-        name = "catppuccin",
-        config = load_config_file,
+        'miikanissi/modus-themes.nvim',
+        config = function()
+            require('user.modus')
+        end,
     },
 
     -- GIT

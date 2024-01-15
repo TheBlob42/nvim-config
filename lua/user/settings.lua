@@ -44,6 +44,15 @@ vim.g.markdown_folding = 1 -- see 'ft-markdown-plugin'
 
 vim.opt.cursorline = true
 
+-- set background according to the current time ("dark mode" in the evening/night)
+-- the colorscheme should take this into consideration automatically
+local hour = os.date('*t').hour
+if hour > 18 or hour < 8 then
+    vim.opt.background = "dark"
+else
+    vim.opt.background = "light"
+end
+
 -- disable cursorline and signcolumn for terminal buffers
 vim.api.nvim_create_autocmd('TermOpen', {
     group = vim.api.nvim_create_augroup('NoCursorline', {}),
