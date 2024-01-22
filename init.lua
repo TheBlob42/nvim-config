@@ -28,19 +28,13 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
----Utility function to automatically load the "appropriate" configuration from the plugin directory
----@param plugin table The plugin specification by lazy.nvim
-local function load_config_file(plugin)
-    -- use custom name over "regular" name over local directory
-    local name = plugin.name or plugin[1] or plugin.dir
-
-    name = name
-        :lower()              -- looking at you LuaSnip ;-)
-        :gsub('.*/', '')      -- remove file system path prefix
-        :gsub('^n?vim%-', '') -- remove "vim-" or "nvim-" prefix
-        :gsub('%.n?vim$', '') -- remove ".vim" or ".nvim" postfix
-
-    require('plugins.'..name)
+---Utility function which just returns a function requiring the specific plugin module
+---@param module string The configuration module to require (must reside in the "plugin" folder)
+---@return function config-fn A proper configuration function being used with lazy.nvim package manager
+local function plugin_config(module)
+    return function()
+        require('plugins.' .. module)
+    end
 end
 
 require('lazy').setup({
@@ -57,19 +51,19 @@ require('lazy').setup({
     {
         -- fuzzy find stuff using `fzf`
         'ibhagwan/fzf-lua',
-        config = load_config_file,
+        config = plugin_config('fzf-lua'),
     },
 
     {
         -- sneak like motion plugin
         'ggandor/leap.nvim',
-        config = load_config_file,
+        config = plugin_config('leap'),
     },
 
     {
         -- "gc" to comment regions and lines
         'tpope/vim-commentary',
-        config = load_config_file,
+        config = plugin_config('commentary'),
     },
 
     {
@@ -85,32 +79,32 @@ require('lazy').setup({
     {
         -- indent guides for all lines
         'lukas-reineke/indent-blankline.nvim',
-        config = load_config_file,
+        config = plugin_config('indent-blankline'),
     },
 
     {
         -- fancy notifications
         'rcarriga/nvim-notify',
-        config = load_config_file,
+        config = plugin_config('notify'),
     },
 
     {
         -- insert parentheses, brackets & quotes in pairs
         'windwp/nvim-autopairs',
-        config = load_config_file,
+        config = plugin_config('autopairs'),
     },
 
     {
         -- display possible key bindings in a popup
         'folke/which-key.nvim',
-        config = load_config_file,
+        config = plugin_config('which-key'),
     },
 
     {
         -- interactive code evaluation
         'Olical/conjure',
         ft = my.lisps,
-        init = load_config_file,
+        init = plugin_config('conjure'),
         config = function()
             require("conjure.main").main()
             require("conjure.mapping")["on-filetype"]()
@@ -132,15 +126,13 @@ require('lazy').setup({
         build = function()
             require('nvim-treesitter.install').update({ with_sync = true })()
         end,
-        config = load_config_file,
+        config = plugin_config('treesitter'),
     },
 
     -- COLORSCHEME
     {
         'miikanissi/modus-themes.nvim',
-        config = function()
-            require('user.modus')
-        end,
+        config = plugin_config('modus'),
     },
 
     -- GIT
@@ -148,7 +140,7 @@ require('lazy').setup({
         -- git information integration
         'lewis6991/gitsigns.nvim',
         dependencies = 'nvim-lua/plenary.nvim',
-        config = load_config_file,
+        config = plugin_config('gitsigns'),
     },
 
     {
@@ -173,7 +165,7 @@ require('lazy').setup({
         -- create shareable file permalinks
         'ruifm/gitlinker.nvim',
         dependencies = 'nvim-lua/plenary.nvim',
-        config = load_config_file,
+        config = plugin_config('gitlinker'),
         init = function()
             vim.keymap.set('n', '<leader>gy', function()
                 require('gitlinker').get_buf_range_url('n')
@@ -220,7 +212,7 @@ require('lazy').setup({
 
     {
         'L3MON4D3/LuaSnip',
-        config = load_config_file,
+        config = plugin_config('luasnip'),
         dependencies = { 'rafamadriz/friendly-snippets' }
     },
 
@@ -232,7 +224,7 @@ require('lazy').setup({
     'saadparwaiz1/cmp_luasnip',
     {
         'hrsh7th/nvim-cmp',
-        config = load_config_file,
+        config = plugin_config('cmp'),
     },
 
     -- UTILITIES
@@ -278,7 +270,7 @@ require('lazy').setup({
         -- file/directory explorer
         'TheBlob42/drex.nvim',
         branch = 'develop', -- always testing the bleeding edge
-        config = load_config_file,
+        config = plugin_config('drex'),
     },
 
     {
