@@ -25,18 +25,25 @@ local function set_root()
 
     local root = root_cache[path]
     if root == nil then
-        local root_file = vim.fs.find(root_names, { path = path, upward = true })[1]
-        if not root_file then
-            return
+        root = path -- defaults to the parent directory of the current file
+
+        local root_file = vim.fs.find(root_names, {
+            path = path,
+            upward = true,
+            stop = vim.env.HOME,
+        })[1]
+
+        if root_file then
+            root = vim.fs.dirname(root_file)
         end
-        root = vim.fs.dirname(root_file)
+
         root_cache[path] = root
     end
 
     vim.fn.chdir(root)
 end
 
-vim.api.nvim_create_autocmd('BufEnter', {
+vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost' }, {
     group = vim.api.nvim_create_augroup('AutoRoot', {}),
     callback = set_root,
 })
