@@ -18,7 +18,9 @@ local function get_custom_hl(highlight)
         return 'StatusLine'
     end
 
-    local key = vim.g.colors_name .. '_' .. fg
+    -- check for default NVIM colorscheme
+    local colorscheme = vim.g.colors_name or ('default_' .. vim.opt.background:get())
+    local key = colorscheme .. '_' .. fg
 
     if not hl_cache[key] then
         -- replace invalid characters (see ':h group-name')
