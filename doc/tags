@@ -1,6 +1,7 @@
 my-clojure	my_help.txt	/*my-clojure*
 my-clojure-repl	my_help.txt	/*my-clojure-repl*
 my-copy-lines	my_help.txt	/*my-copy-lines*
+my-copy-messages-output	my_help.txt	/*my-copy-messages-output*
 my-curl	my_help.txt	/*my-curl*
 my-diff	my_help.txt	/*my-diff*
 my-gradle	my_help.txt	/*my-gradle*

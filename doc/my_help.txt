@@ -23,6 +23,17 @@ You can remove dupliate lines from a buffer using:
 	:sort u
 <
 =============================================================================
+COPY MESSAGES OUTPUT                                  *my-copy-messages-output*
+
+To copy the output from |:messages| one can use the following:
+>
+	:put =execute('messages')
+<
+- |execute()| captures the output of an `Ex` command
+- |:put| put the text from an register into the current buffer
+- `=` the expression register (|quote_=|)
+
+=============================================================================
 DIFF                                                                  *my-diff*
 
 Open all buffers you want to compare in separate |windows| (same |tabpage|)
