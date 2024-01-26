@@ -170,6 +170,7 @@ end
 
 local mappings = {
     { '<F1>', '<CMD>setlocal spell!<CR>', 'toggle spell checking' },
+    { '<F3>', function() vim.opt.background = vim.o.background == 'dark' and 'light' or 'dark' end, 'toggle background' },
     { '<F5>', remove_trailing_whitespaces, 'remove trailing whitespaces' },
 
     -- navigation
