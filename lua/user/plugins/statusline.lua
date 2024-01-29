@@ -147,6 +147,6 @@ function M.statusline()
     return active_indicator .. '%t%( %m%)' .. conjure_state .. table.concat(diagnostics) .. '%=' .. filetype .. ' %P ' .. indicators
 end
 
-vim.opt.statusline = '%!v:lua.require("user.statusline").statusline()'
+vim.opt.statusline = '%!v:lua.require("user.plugins.statusline").statusline()'
 
 return M

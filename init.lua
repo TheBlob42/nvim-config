@@ -1,9 +1,10 @@
-require('user.settings')   -- general non plugin related settings
-require('user.config')     -- general configuration stuff
-require('user.statusline') -- custom statusline
-require('user.tabline')    -- custom tabline
-require('user.clever-f')   -- "clever-f" like functionality
-require('user.rooter')     -- set cwd to "project" root automatically
+require('user.settings') -- general non plugin related settings
+require('user.config')   -- general configuration stuff
+
+require('user.plugins.statusline') -- custom statusline
+require('user.plugins.tabline')    -- custom tabline
+require('user.plugins.clever-f')   -- "clever-f" like functionality
+require('user.plugins.rooter')     -- set cwd to "project" root automatically
 
 -- local user configuration (if present)
 if not pcall(require, 'user.local') then

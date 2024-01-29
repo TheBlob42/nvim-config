@@ -65,6 +65,6 @@ function M.switch_tab()
     end)
 end
 
-vim.opt.tabline = '%!v:lua.require("user.tabline").tabline()'
+vim.opt.tabline = '%!v:lua.require("user.plugins.tabline").tabline()'
 
 return M

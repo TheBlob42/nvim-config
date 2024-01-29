@@ -218,8 +218,8 @@ local mappings = {
     { '<leader>tL', '<Plug>MoveTabRight', 'move tab right' },
     { '<leader>th', '<CMD>tabprevious<CR>', 'goto tab left' },
     { '<leader>tl', '<CMD>tabnext<CR>', 'goto tab right' },
-    { '<leader>tt', require('user.tabline').switch_tab, 'switch tab' },
-    { '<leader>tr', require('user.tabline').rename_tab, 'rename tab' },
+    { '<leader>tt', require('user.plugins.tabline').switch_tab, 'switch tab' },
+    { '<leader>tr', require('user.plugins.tabline').rename_tab, 'rename tab' },
 
     --windows
     { '<leader>w=', '<C-W>=', 'balance windows' },
