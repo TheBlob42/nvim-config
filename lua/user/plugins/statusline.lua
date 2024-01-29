@@ -141,10 +141,17 @@ function M.statusline()
     local indicators = ''
 
     if vim.api.nvim_get_option_value('spell', { win = win }) then
-        indicators = indicators .. '🔍'
-    end
+        indicators = indicators .. '🔍 '
+     end
 
-    return active_indicator .. '%t%( %m%)' .. conjure_state .. table.concat(diagnostics) .. '%=' .. filetype .. ' %P ' .. indicators
+    return active_indicator
+        .. '%t%( %m%)' -- filename + modified status
+        .. conjure_state
+        .. table.concat(diagnostics)
+        .. '%='        -- start righ alignment from here
+        .. filetype
+        .. ' %c %P '   -- column count (c) and percentage through file (P)
+        .. indicators
 end
 
 vim.opt.statusline = '%!v:lua.require("user.plugins.statusline").statusline()'
