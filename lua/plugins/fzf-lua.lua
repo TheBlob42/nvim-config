@@ -179,23 +179,19 @@ local function files(dir, opts)
     local defaults_opts = {
         prompt = vim.fn.fnamemodify(dir, ':~') .. '> ',
         actions = {
-            ['default'] = {
-                function(selected)
-                    local element = entries[selected[1]]
+            ['default'] = function(selected)
+                local element = entries[selected[1]]
 
-                    if not element then
-                        vim.api.nvim_win_close(0, true)
-                        return
-                    end
+                if not element then
+                    return
+                end
 
-                    if element.type == 'directory' then
-                        files(element.path, opts)
-                    else
-                        vim.api.nvim_win_close(0, true)
-                        vim.cmd.e(element.path)
-                    end
-                end,
-            },
+                if element.type == 'directory' then
+                    files(element.path, opts)
+                else
+                    vim.cmd.e(element.path)
+                end
+            end,
             -- quickly jump the home directory
             ["ctrl-h"] = {
                 function()
@@ -295,21 +291,15 @@ local function file_explorer(directory)
         actions = function(dir, entries)
             -- a little helper function to avoid repetition
             local edit_file = function(pre_cmd)
-                return {
-                    function(selected)
-                        local element = entries[selected[1]]
+                return function(selected)
+                    local element = entries[selected[1]]
 
-                        if element.type ~= 'directory' then
-                            vim.api.nvim_win_close(0, true)
-                            if pre_cmd then
-                                vim.cmd(pre_cmd)
-                            end
-                            vim.cmd.e(element.path)
-                        else
-                            fzf.actions.resume()
-                        end
+                    if pre_cmd then
+                        vim.cmd(pre_cmd)
                     end
-                }
+
+                    vim.cmd.e(element.path)
+                end
             end
 
             return {
