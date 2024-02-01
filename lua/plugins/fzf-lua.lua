@@ -339,7 +339,7 @@ local function file_explorer(directory)
                     fzf.actions.resume,
                 },
                 ['ctrl-v'] = edit_file('vsplit'),
-                ['ctrl-x'] = edit_file('split'),
+                ['ctrl-s'] = edit_file('split'),
                 ['ctrl-t'] = edit_file('tabnew'),
             }
         end,
