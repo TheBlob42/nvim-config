@@ -10,14 +10,10 @@ M.capabilities = vim.tbl_deep_extend(
     { capabilities = require('cmp_nvim_lsp').default_capabilities() })
 
 ---Function to set LSP specific keybindings based on the given server capabilities
+---Some basic keybindings are set by default (`lsp-defaults`) and are not repeated here
 ---@param client table
 ---@param bufnr number
 function M.on_attach(client, bufnr)
-    -- some basics are set automatically since version 0.8
-    -- > jump to definition with `<C-]>` (tagfunc)
-    -- > (range) formatting with `gq` (formatexpr)
-    -- > basic auto completion (omnifunc)
-
     local map = function(mode, lhs, rhs, desc)
         vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
     end
