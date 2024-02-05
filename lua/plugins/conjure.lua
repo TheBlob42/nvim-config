@@ -35,7 +35,7 @@ vim.api.nvim_create_autocmd('FileType', {
                 buffer = opts.buf
             })
 
-            vim.keymap.set('n', conjure_prefix .. 'cc', ':ConjureConnect ', { desc = 'Connect to port' })
+            vim.keymap.set('n', conjure_prefix .. 'cc', ':ConjureConnect ', { buffer = opts.buf, desc = 'Connect to port' })
         end
     end,
 })
