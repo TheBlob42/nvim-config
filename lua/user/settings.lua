@@ -85,8 +85,7 @@ local ns = vim.api.nvim_create_namespace('max_severity_only')
 local orig_signs_handler = vim.diagnostic.handlers.signs
 
 vim.diagnostic.handlers.signs = {
-    show = function(_, bufnr, _, opts)
-        local diagnostics = vim.diagnostic.get(bufnr)
+    show = function(_, bufnr, diagnostics, opts)
         local max_severity_per_line = {}
         for _, d in pairs(diagnostics) do
             local m = max_severity_per_line[d.lnum]
