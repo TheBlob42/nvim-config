@@ -13,6 +13,7 @@ local function update_highlights()
 
     link('LeapLabelPrimary', 'Sneak')
     link('@lsp.type.enumMember.markdown', 'Keyword') -- markdown tags
+    link('@markdown.quote', 'Comment') -- markdown quotes
 end
 
 update_highlights()
