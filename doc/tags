@@ -22,7 +22,6 @@ my-macros-speed	my_help.txt	/*my-macros-speed*
 my-macros-submacros	my_help.txt	/*my-macros-submacros*
 my-macros-visual-selection	my_help.txt	/*my-macros-visual-selection*
 my-macros-wrapscan	my_help.txt	/*my-macros-wrapscan*
-my-packer-snapshot	my_help.txt	/*my-packer-snapshot*
 my-postman	my_help.txt	/*my-postman*
 my-remove-duplicates	my_help.txt	/*my-remove-duplicates*
 my-tomcat-debug	my_help.txt	/*my-tomcat-debug*

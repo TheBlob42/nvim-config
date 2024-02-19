@@ -298,14 +298,6 @@ handler afterwards we need to run:
 	}
 <
 =============================================================================
-PACKER SNAPSHOT                                            *my-packer-snapshot*
-
-If |PackerSnapshotRollback| does not work check if the snapshot file contains
-any entries for a plugin which is actually loaded from a local directory (e.g.
-for development). This fails the rollback with a very incomprehensible error
-message.
-
-=============================================================================
 MACROS HELP                                                         *my-macros*
 
 Everything about Neovim macros.
