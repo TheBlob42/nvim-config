@@ -5,6 +5,7 @@ require('user.plugins.statusline') -- custom statusline
 require('user.plugins.tabline')    -- custom tabline
 require('user.plugins.clever-f')   -- "clever-f" like functionality
 require('user.plugins.rooter')     -- set cwd to "project" root automatically
+require('user.plugins.journal')    -- simple journal functionality
 
 -- local user configuration (if present)
 if not pcall(require, 'user.local') then
