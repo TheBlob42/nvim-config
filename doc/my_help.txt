@@ -84,6 +84,17 @@ References~
 - https://github.com/nrepl/nrepl
 - https://clojure.org/reference/deps_and_cli
 
+-----------------------------------------------------------------------------
+CLOJURE-LSP                                                    *my-clojure-lsp*
+
+You can retrieve more details about the running Clojure LSP using the custom
+"clojure/serverInfo/raw" command. You need to call this from a Clojure buffer
+with an attached Clojure-LSP client:
+>
+    vim.lsp.buf_request_sync(0, 'clojure/serverInfo/raw')
+<
+See also: https://clojure-lsp.io/capabilities/#server-info-raw
+
 =============================================================================
 POSTMAN                                                    *my-curl* *my-postman*
 

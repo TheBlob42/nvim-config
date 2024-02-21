@@ -1,4 +1,5 @@
 my-clojure	my_help.txt	/*my-clojure*
+my-clojure-lsp	my_help.txt	/*my-clojure-lsp*
 my-clojure-repl	my_help.txt	/*my-clojure-repl*
 my-copy-lines	my_help.txt	/*my-copy-lines*
 my-copy-messages-output	my_help.txt	/*my-copy-messages-output*
