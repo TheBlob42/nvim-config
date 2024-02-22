@@ -191,7 +191,7 @@ local mappings = {
     },
 
     -- files
-    { '<leader>fs', '<CMD>w<CR>', 'save file' , { silent = false } },
+    { '<leader>fs', '<CMD>update<CR>', 'save file' , { silent = false } },
     { '<leader>f<C-s>', save_all_files_in_dir, 'save all files in cwd' },
 
     -- insert
