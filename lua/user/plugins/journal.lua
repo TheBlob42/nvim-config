@@ -7,6 +7,9 @@ local date_rgx = '%d%d%d%d%-%d%d%-%d%d'
 
 ---@diagnostic disable-next-line: param-type-mismatch
 local journal_folder = vim.fs.joinpath(vim.fn.stdpath('data'), 'journal')
+if not vim.loop.fs_stat(journal_folder) then
+    vim.fn.mkdir(journal_folder, 'p')
+end
 
 ---Return the relevant context for the given todo-list-item
 ---- If the item is part of a level 2 section (even if nested deeper) return the whole level 2 section
@@ -131,10 +134,11 @@ function M.open_latest_entry(before)
     if path then
         vim.cmd.e(path)
         setup_journal_buffer()
-        return
+        return true
     end
 
     print('No journal entries found')
+    return false
 end
 
 function M.open_next_entry(from)
@@ -142,10 +146,11 @@ function M.open_next_entry(from)
     if path then
         vim.cmd.e(path)
         setup_journal_buffer()
-        return
+        return true
     end
 
     print('No journal entries found')
+    return false
 end
 
 function M.open_today()
@@ -161,9 +166,10 @@ function M.open_today()
     vim.api.nvim_buf_set_lines(buf, 0, -1, false, { '# Notes for ' .. today, '' })
     vim.api.nvim_buf_set_name(buf, vim.fs.joinpath(journal_folder, today .. '.md'))
 
-    M.open_latest_entry(today)
-    local lines = extract_todo_text()
-    vim.api.nvim_buf_set_lines(buf, 2, -1, false, lines)
+    if M.open_latest_entry(today) then
+        local lines = extract_todo_text()
+        vim.api.nvim_buf_set_lines(buf, 2, -1, false, lines)
+    end
 
     vim.api.nvim_set_current_buf(buf)
     vim.cmd.w()
