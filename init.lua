@@ -292,6 +292,12 @@ require('lazy').setup({
     },
 
     {
+        -- since there is no default syntax highlighting
+        "kongo2002/fsharp-vim",
+        ft = 'fsharp'
+    },
+
+    {
         -- perform diffs only on parts of a buffer
         'AndrewRadev/linediff.vim',
         cmd = 'Linediff',
