@@ -126,7 +126,7 @@ local function setup_journal_buffer(buf)
     vim.keymap.set('n', 'gh', function()
         local date = vim.fn.expand('%:t'):match('[^.]+')
         M.open_latest_entry(date)
-    end, { buffer = buf, desc = 'jump to next journal entry' })
+    end, { buffer = buf, desc = 'jump to previous journal entry' })
 end
 
 function M.open_latest_entry(before)
