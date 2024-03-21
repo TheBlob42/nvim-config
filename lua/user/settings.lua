@@ -58,7 +58,7 @@ vim.api.nvim_create_autocmd('TermOpen', {
     group = vim.api.nvim_create_augroup('NoCursorline', {}),
     pattern = '*',
     command = 'setlocal nocursorline signcolumn=no',
-    desc = 'disable cursorline for terminal buffers',
+    desc = 'disable cursorline and signcolumn for terminal buffers',
 })
 
 -- highlight yanked text
