@@ -70,58 +70,15 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 vim.opt.numberwidth = 2
-vim.opt.signcolumn = 'auto:2-5'
+vim.opt.signcolumn = 'auto:1-2'
 
--- ###################
--- ### Diagnostics ###
--- ###################
-
-vim.diagnostic.config {
-    virtual_text = false
-}
-
--- only show the "worst" diagnostic sign (highest severity, see ':h diagnostic-handlers-example')
-local ns = vim.api.nvim_create_namespace('max_severity_only')
-local orig_signs_handler = vim.diagnostic.handlers.signs
-
-vim.diagnostic.handlers.signs = {
-    show = function(_, bufnr, diagnostics, opts)
-        local max_severity_per_line = {}
-        for _, d in pairs(diagnostics) do
-            local m = max_severity_per_line[d.lnum]
-            if not m or d.severity < m.severity then
-                max_severity_per_line[d.lnum] = d
-            end
-        end
-
-        local filtered_diagnostics = vim.tbl_values(max_severity_per_line)
-        orig_signs_handler.show(ns, bufnr, filtered_diagnostics, opts)
-    end,
-    hide = function(_, bufnr)
-        orig_signs_handler.hide(ns, bufnr)
-    end
-}
-
--- define diagnostic icons and colors
-vim.fn.sign_define("DiagnosticSignError", {
-    text = "",
-    texthl = "DiagnosticError",
-    numhl = "DiagnosticError",
-})
-vim.fn.sign_define("DiagnosticSignWarn", {
-    text = "",
-    texthl = "DiagnosticWarn",
-    numhl = "DiagnosticWarn",
-})
-vim.fn.sign_define("DiagnosticSignHint", {
-    text = "",
-    texthl = "DiagnosticHint",
-    numhl = "DiagnosticHint",
-})
-vim.fn.sign_define("DiagnosticSignInfo", {
-    text = "",
-    texthl = "DiagnosticInformation",
-    numhl = "DiagnosticInformation",
+-- mark diagnostics with the little "default squares"
+vim.diagnostic.config({
+    virtual_text = {
+        format = function() return '' end,
+        spacing = 0,
+    },
+    signs = false,
 })
 
 -- custom filetype detection
