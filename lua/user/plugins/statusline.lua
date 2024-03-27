@@ -85,7 +85,7 @@ function M.statusline()
 
     -- for non-special inactive windows only show the file-/buffername
     if not active_win then
-        return ' %t%( %m%)'
+        return ' %f%( %m%)'
     end
 
     -- ~~~~~~~~~~~~~~~~~~
@@ -145,7 +145,7 @@ function M.statusline()
      end
 
     return active_indicator
-        .. '%t%( %m%)' -- filename + modified status
+        .. '%f%( %m%)' -- filename + modified status
         .. conjure_state
         .. table.concat(diagnostics)
         .. '%='        -- start righ alignment from here
