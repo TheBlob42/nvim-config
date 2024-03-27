@@ -84,10 +84,11 @@ vim.diagnostic.config({
 -- custom filetype detection
 vim.filetype.add {
     extension = {
-        ['cljd'] = 'clojure'
+        ['cljd'] = 'clojure',
+        ['tf'] = 'terraform',
     },
     filename = {
-        ['Jenkinsfile'] = 'groovy'
+        ['Jenkinsfile'] = 'groovy',
     }
 }
 
