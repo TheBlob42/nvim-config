@@ -42,6 +42,9 @@ vim.opt.updatetime = 400 -- speed up 'cursorhold' events
 
 vim.g.markdown_folding = 1 -- see 'ft-markdown-plugin'
 
+-- to preserve the highlighting of the underlying text (needs 0.10)
+vim.opt.foldtext = ''
+
 vim.opt.cursorline = true
 
 -- set background according to the current time ("dark mode" in the evening/night)
