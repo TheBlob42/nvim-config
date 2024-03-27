@@ -10,7 +10,6 @@
   "conjure": { "branch": "master", "commit": "0d9b823db06cc11e6115b54297f690dff10c0299" },
   "drex.nvim": { "branch": "develop", "commit": "acccc1225e61a3977d86a590420b868e708cc64a" },
   "fidget.nvim": { "branch": "main", "commit": "956c8da3fa4072e6e00a4d8d4e52b88d887b9cfa" },
-  "friendly-snippets": { "branch": "main", "commit": "43727c2ff84240e55d4069ec3e6158d74cb534b6" },
   "fsharp-vim": { "branch": "master", "commit": "64aec6089558ec290287a9c935b53feeedd0c974" },
   "fzf-lua": { "branch": "main", "commit": "9c005ec0e68984772f2c2a0bff4c7399e44cfe03" },
   "gitlinker.nvim": { "branch": "master", "commit": "cc59f732f3d043b626c8702cb725c82e54d35c25" },

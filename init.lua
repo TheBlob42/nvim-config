@@ -199,7 +199,6 @@ require('lazy').setup({
 
     'folke/neodev.nvim',                    -- special configuration for Lua (NVIM development)
     'mfussenegger/nvim-jdtls',              -- special LSP configuration for Java
-    'jose-elias-alvarez/nvim-lsp-ts-utils', -- special configuration for Type/Javascript
     'neovim/nvim-lspconfig',                -- "general" LSP configuration
 
     {
@@ -225,7 +224,6 @@ require('lazy').setup({
     {
         'L3MON4D3/LuaSnip',
         config = plugin_config('luasnip'),
-        dependencies = { 'rafamadriz/friendly-snippets' }
     },
 
     -- AUTO COMPLETION
