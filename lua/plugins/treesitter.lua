@@ -1,3 +1,4 @@
+---@diagnostic disable-next-line: missing-fields
 require('nvim-treesitter.configs').setup {
     ensure_installed = "all",
     -- this helps with some performance issues (especially with long block comments)
