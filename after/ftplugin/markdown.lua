@@ -1,5 +1,8 @@
 vim.opt_local.conceallevel = 1
 
+-- this would is otherwise overridden by 'ft-markdown-plugin'
+vim.opt_local.foldtext = ''
+
 ---Check if there are any closed folds. If so unfold everything, else collapse everything
 ---@return string Either 'zR' or 'zM'. Use this as an expression mapping
 local function toggle_all_folds()
