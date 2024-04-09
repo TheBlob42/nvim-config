@@ -63,12 +63,6 @@ require('lazy').setup({
     },
 
     {
-        -- "gc" to comment regions and lines
-        'tpope/vim-commentary',
-        config = plugin_config('commentary'),
-    },
-
-    {
         -- two char escape sequence
         'TheBlob42/houdini.nvim',
         config = function()

@@ -7,6 +7,15 @@ end
 -- ~ some general keybindings ~
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+-- copy before commenting via 'gy'
+my.copy_then_comment = function()
+    vim.cmd.normal { '`[V`]y', bang = true }
+    vim.cmd.normal { '`[V`]gc' } -- no '!' (bang) so that 'gc' works properly
+end
+vim.keymap.set('n', 'gy', ':set opfunc=v:lua.my.copy_then_comment<CR>g@')
+vim.keymap.set('n', 'gyy', 'yygcc', { remap = true, desc = 'copy then comment' })
+vim.keymap.set('x', 'gy', 'ygvgc', { remap = true, desc = 'copy then comment' })
+
 -- simply escape visual/select mode (for the "iRct" we have `houdini`)
 map('x', 'fd', '<esc>')
 map('s', 'fd', '<esc><esc>')
