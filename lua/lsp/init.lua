@@ -48,11 +48,6 @@ require('mason-lspconfig').setup_handlers {
             require('lsp.servers.lua_ls')
         )
     end,
-    ['tsserver'] = function()
-        lspconfig['tsserver'].setup(
-            require('lsp.servers.tsserver')
-        )
-    end,
     ['clojure_lsp'] = function()
         local config = vim.tbl_extend('force', default_config, {
             --[[
