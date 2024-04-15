@@ -8,7 +8,7 @@ local i = luasnip.insert_node
 local c = luasnip.choice_node
 local sn = luasnip.snippet_node
 
-return {
+local lua_snippets = {
     snippet({ trig = 'fn', name = 'Function', dscr = 'Insert a function' },
         fmt("function({}){}end",
         {
@@ -71,3 +71,5 @@ return {
         })
     ),
 }
+
+luasnip.add_snippets('lua', lua_snippets)

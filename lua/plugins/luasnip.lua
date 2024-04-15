@@ -18,9 +18,9 @@ luasnip.config.setup {
     region_check_events = "CursorHold"
 }
 
-luasnip.add_snippets('markdown', require('plugins.snippets.markdown'))
-luasnip.add_snippets('java', require('plugins.snippets.java'))
-luasnip.add_snippets('lua', require('plugins.snippets.lua'))
+require('plugins.snippets.java')
+require('plugins.snippets.lua')
+require('plugins.snippets.markdown')
 
 -- ~~~~~~~~~~~~~~~~~~~~~
 -- ~ snippet selection ~

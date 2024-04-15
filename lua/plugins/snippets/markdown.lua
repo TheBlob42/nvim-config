@@ -8,7 +8,7 @@ local t = luasnip.text_node
 local i = luasnip.insert_node
 local d = luasnip.dynamic_node
 
-return {
+local md_snippets = {
     snippet({ trig = 'b', name = 'Bold' },
         fmt('**{}**', i(1))),
 
@@ -76,3 +76,5 @@ return {
         end, {})
     }),
 }
+
+luasnip.add_snippets('markdown', md_snippets)

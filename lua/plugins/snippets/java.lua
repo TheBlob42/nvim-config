@@ -36,7 +36,7 @@ local function get_class_name()
     return vim.treesitter.get_node_text(node:field('name')[1], 0)
 end
 
-return {
+local java_snippets = {
     snippet({ trig = 'pa', name = 'Package' }, {
         f(java_package),
     }),
@@ -78,3 +78,5 @@ return {
         }
     )),
 }
+
+luasnip.add_snippets('java', java_snippets)
