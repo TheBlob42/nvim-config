@@ -204,7 +204,7 @@ local mappings = {
     { '<leader>f<C-s>', save_all_files_in_dir, 'save all files in cwd' },
 
     -- insert
-    { '<leader>iu', '<CMD>InsertUUID<CR>', 'insert uuid' },
+    { '<leader>iu', '<CMD>InsertUUIDv4<CR>', 'insert uuid' },
     { '<leader>ij', ":<C-U>call append(line('.'), repeat([''], v:count1))<CR>", 'insert lines below' },
     { '<leader>ik', ":<C-U>call append(line('.')-1, repeat([''], v:count1))<CR>", 'insert lines above' },
 

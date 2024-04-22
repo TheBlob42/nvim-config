@@ -1,4 +1,4 @@
--- generate a new UUID
+-- generate a new UUID v4
 -- https://gist.github.com/jrus/3197011
 local function gen_uuid()
     math.randomseed(os.time())
@@ -10,7 +10,7 @@ local function gen_uuid()
     end)
 end
 
-vim.api.nvim_create_user_command('InsertUUID', function()
+vim.api.nvim_create_user_command('InsertUUIDv4', function()
     local uuid = gen_uuid()
     vim.cmd('normal! a' .. uuid)
-end, { desc = 'insert a newly generated uuid' })
+end, { desc = 'insert a newly generated uuid (version 4)' })
