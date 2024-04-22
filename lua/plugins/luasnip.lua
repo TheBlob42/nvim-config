@@ -18,6 +18,7 @@ luasnip.config.setup {
     region_check_events = "CursorHold"
 }
 
+require('plugins.snippets.clojure')
 require('plugins.snippets.java')
 require('plugins.snippets.lua')
 require('plugins.snippets.markdown')
