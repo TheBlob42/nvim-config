@@ -65,6 +65,7 @@ require('lazy').setup({
     {
         -- two char escape sequence
         'TheBlob42/houdini.nvim',
+        branch = 'develop',
         config = function()
             require('houdini').setup {
                 mappings = { 'fd' }

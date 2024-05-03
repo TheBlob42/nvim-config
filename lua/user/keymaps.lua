@@ -16,10 +16,6 @@ vim.keymap.set('n', 'gy', ':set opfunc=v:lua.my.copy_then_comment<CR>g@')
 vim.keymap.set('n', 'gyy', 'yygcc', { remap = true, desc = 'copy then comment' })
 vim.keymap.set('x', 'gy', 'ygvgc', { remap = true, desc = 'copy then comment' })
 
--- simply escape visual/select mode (for the "iRct" we have `houdini`)
-map('x', 'fd', '<esc>')
-map('s', 'fd', '<esc><esc>')
-
 -- move line shortcuts
 map('n', '<a-j>', ':m .+1<cr>==')
 map('n', '<a-k>', ':m .-2<cr>==')
