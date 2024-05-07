@@ -21,7 +21,10 @@ local function set_root()
     if path == '' then
         return
     end
-    path = assert(vim.fs.dirname(path))
+
+    if vim.fn.isdirectory(path) == 0 then
+        path = assert(vim.fs.dirname(path))
+    end
 
     local root = root_cache[path]
     if root == nil then
