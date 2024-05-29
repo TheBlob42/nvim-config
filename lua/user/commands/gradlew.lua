@@ -1,3 +1,5 @@
+local Term = require('user.plugins.terminal')
+
 ---Search upwards from the current path for the 'gradlew' script
 ---@return string? Absolute path of the corresponding 'gradlew' script or `nil` if not found
 local function get_gradlew_script_path()
@@ -31,9 +33,11 @@ local function gradlew_exec(task, gradlew_path)
         return
     end
 
-    my.start_terminal('gw:'..task, './gradlew ' .. task, {
+    Term:start('gw:'..task, {
         cwd = gradlew_path,
-        win = 'current',
+        cmd = './gradlew ' .. task,
+    }):show({
+        location = 'current',
         focus = true,
     })
 end
@@ -84,7 +88,9 @@ local function task_list(gradlew_path)
             end
             vim.loop.close(stdout)
             vim.loop.close(stderr)
-            assert(handle:close())
+            if handle then
+                handle:close()
+            end
         end)
 
         vim.loop.read_start(stdout, function(_, data)

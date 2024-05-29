@@ -41,9 +41,11 @@ local function jack_in(cmd, root_markers)
                 end
             end
 
-            my.start_terminal('jack-in', cmd, {
+            require('user.plugins.terminal'):start('jack-in', {
                 cwd = path,
-                win = 'split',
+                cmd = cmd,
+            }):show({
+                location = 'split',
                 focus = true,
             })
         else
