@@ -89,6 +89,7 @@ vim.filetype.add {
     extension = {
         ['cljd'] = 'clojure',
         ['tf'] = 'terraform',
+        ['Jenkinsfile'] = 'groovy',
     },
     filename = {
         ['Jenkinsfile'] = 'groovy',
