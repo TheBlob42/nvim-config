@@ -106,7 +106,8 @@ function M:show(opts)
 end
 
 ---Execute a command in the terminal
----@param cmd string|table The command to execute
+---Make sure that the command ends with a newline character if it should be executed
+---@param cmd string|table The command to execute. If its a table it will be joined with newlines ('\n')
 function M:send(cmd)
     if not cmd or cmd == '' or cmd == {} then
         return
@@ -114,10 +115,6 @@ function M:send(cmd)
 
     if type(cmd) == 'table' then
         cmd = table.concat(cmd, '\n')
-    end
-
-    if not vim.endswith(cmd, '\n') then
-        cmd = cmd .. '\n'
     end
 
     vim.fn.chansend(self.job_id, cmd)
