@@ -17,12 +17,10 @@ vim.keymap.set('n', 'gyy', 'yygcc', { remap = true, desc = 'copy then comment' }
 vim.keymap.set('x', 'gy', 'ygvgc', { remap = true, desc = 'copy then comment' })
 
 -- move line shortcuts
-map('n', '<a-j>', ':m .+1<cr>==')
-map('n', '<a-k>', ':m .-2<cr>==')
-map('i', '<a-j>', '<esc>:m .+1<cr>==gi')
-map('i', '<a-k>', '<esc>:m .-2<cr>==gi')
-map('v', '<a-j>', ':m \'>+1<cr>gv=gv')
-map('v', '<a-k>', ':m \'<-2<cr>gv=gv')
+map('n', '<a-j>', ':m .+1<cr>')
+map('n', '<a-k>', ':m .-2<cr>')
+map('v', '<a-j>', ":m '>+1<cr>gv")
+map('v', '<a-k>', ":m '<-2<cr>gv")
 
 -- keep selection while shifting
 map('v', '>', '>gv')
