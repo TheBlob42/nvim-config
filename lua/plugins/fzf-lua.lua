@@ -30,7 +30,7 @@ fzf.setup {
             ['alt-l']   = fzf.actions.file_sel_to_ll,
             -- open a DREX buffer for the cwd
             ['alt-d'] = function(_, opts)
-                require('drex').open_directory_buffer(opts.cwd)
+                vim.cmd.edit(opts.cwd)
             end,
             -- start a live grep search from the cwd
             ['alt-s'] = {
@@ -304,7 +304,7 @@ local function file_explorer(directory)
 
             return {
                 ['alt-d'] = function()
-                    require('drex').open_directory_buffer(dir)
+                    vim.cmd.edit(dir)
                 end,
                 ['alt-s'] = {
                     function()
@@ -380,7 +380,7 @@ local function switch_project()
                 fzf.actions.resume,
             },
             ['alt-d'] = function(selected)
-                require('drex').open_directory_buffer(projects[selected[1]])
+                vim.cmd.edit(projects[selected[1]])
             end,
             ['alt-s'] = {
                 function(selected)
