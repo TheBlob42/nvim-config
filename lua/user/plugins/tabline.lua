@@ -24,11 +24,11 @@ function M.tabline()
     local current = vim.api.nvim_get_current_tabpage()
     local s = ''
 
-    for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
+    for i, tab in ipairs(vim.api.nvim_list_tabpages()) do
         local hl = (tab == current) and '%#TabLineSel#' or '%#Tabline#'
         local name = get_tab_name(tab)
 
-        s = s .. string.format('%s%%%dT %s▕', hl, tab, name)
+        s = s .. string.format('%s%%%dT %s▕', hl, i, name)
     end
 
     s = s .. '%#TabLineFill#%T'
