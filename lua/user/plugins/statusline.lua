@@ -1,11 +1,21 @@
+--[[
+    Custom statusline configuration with the following features:
+
+    - diagnostic counter (by type)
+    - filetype icon + string
+    - modified status
+    - correctly reset highlights on colorscheme change
+    - special cases for drex.nvim and terminal buffers
+--]]
+
 local M = {}
 
 -- diagnostic names + corresponding icon and highlight
 local diagnostics_attrs = {
-    { 'Error', '', 'DiagnosticError' },
-    { 'Warn',  '', 'DiagnosticWarn' },
-    { 'Hint',  '', 'DiagnosticHint' },
-    { 'Info',  '', 'DiagnosticInfo' },
+    { vim.diagnostic.severity.ERROR, '', 'DiagnosticError' },
+    { vim.diagnostic.severity.WARN,  '', 'DiagnosticWarn' },
+    { vim.diagnostic.severity.HINT,  '', 'DiagnosticHint' },
+    { vim.diagnostic.severity.INFO,  '', 'DiagnosticInfo' },
 }
 
 -- in order for our icon highlights to have the correct background color ('StatusLine')
@@ -76,11 +86,12 @@ function M.statusline()
     end
 
     local ft = vim.api.nvim_get_option_value('filetype', { buf = buf })
+
     if ft == 'drex' then
         local utils = require('drex.utils')
         local width = vim.api.nvim_win_get_width(win)
         local clipboard_count = vim.tbl_count(require('drex.clipboard').clipboard)
-        return active_indicator .. ' ' .. utils.shorten_path(utils.get_root_path(buf), width - 4) .. '%=' .. clipboard_count
+        return active_indicator .. ' ' .. utils.shorten_path(utils.get_root_path(buf), width - 4) .. '%=' .. clipboard_count .. ' '
     end
 
     -- for non-special inactive windows only show the file-/buffername
@@ -94,7 +105,7 @@ function M.statusline()
 
     local diagnostics = {}
 
-    if not vim.diagnostic.is_disabled(buf) then
+    if vim.diagnostic.is_enabled({ bufnr = buf }) then
         for _, attr in pairs(diagnostics_attrs) do
             local n = vim.diagnostic.get(buf, { severity = attr[1] })
             if vim.tbl_count(n) > 0 then
