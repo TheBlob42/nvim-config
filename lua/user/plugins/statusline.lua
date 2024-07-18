@@ -6,6 +6,10 @@
     - modified status
     - correctly reset highlights on colorscheme change
     - special cases for drex.nvim and terminal buffers
+
+    Requires the following dependencies:
+
+    - 'gitsigns.nvim' for the current git branch
 --]]
 
 local M = {}
@@ -94,6 +98,10 @@ function M.statusline()
         return active_indicator .. ' ' .. utils.shorten_path(utils.get_root_path(buf), width - 4) .. '%=' .. clipboard_count .. ' '
     end
 
+    if ft == 'gitsigns.blame' then
+        return active_indicator .. 'Blame'
+    end
+
     -- for non-special inactive windows only show the file-/buffername
     if not active_win then
         return ' %f%( %m%)'
@@ -145,6 +153,17 @@ function M.statusline()
         filetype = ft .. ' %#' .. hl .. '#' .. icon .. '%*'
     end
 
+    -- ~~~~~~~~~~~~~~~~~~
+    -- current git branch
+    -- ~~~~~~~~~~~~~~~~~~
+
+    local git_branch = vim.b[buf].gitsigns_head
+    if git_branch then
+        git_branch = '%#' .. get_custom_hl('Comment') .. '#' .. git_branch .. '%*'
+    else
+        git_branch = ''
+    end
+
     -- ~~~~~~~~~~~~~~~~~~~~~~~~~
     -- several status indicators
     -- ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -158,8 +177,11 @@ function M.statusline()
     return active_indicator
         .. '%f%( %m%)' -- filename + modified status
         .. conjure_state
+        .. '%< '       -- truncate from here if needed
+        .. git_branch
+        .. '%= '       -- start righ alignment from here
         .. table.concat(diagnostics)
-        .. '%='        -- start righ alignment from here
+        .. ' '
         .. filetype
         .. ' %c %P '   -- column count (c) and percentage through file (P)
         .. indicators

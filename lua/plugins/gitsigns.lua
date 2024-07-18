@@ -16,6 +16,7 @@ vim.keymap.set('n', '<leader>gN', '<Plug>GitSignsPrevHunk', { desc = 'previous g
 vim.keymap.set('n', '<leader>gs', gitsigns.stage_hunk, { desc = 'stage git hunk' })
 vim.keymap.set('n', '<leader>gr', gitsigns.reset_hunk, { desc = 'reset git hunk' })
 vim.keymap.set('n', '<leader>gb', '<CMD>Gitsigns toggle_current_line_blame<CR>', { desc = 'git blame' })
+vim.keymap.set('n', '<leader>gB', '<CMD>Gitsigns blame<CR>', { desc = 'git blame sidebar' })
 
 -- make line blame message more visible
 local blame_cmd = 'highlight! link GitSignsCurrentLineBlame Special'
