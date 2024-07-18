@@ -1,11 +1,11 @@
 local wk = require('which-key')
 
 wk.setup {
-    -- disable ALL builtin plugins
+    preset = 'modern',
     plugins = {
         marks = false,
         registers = false,
-        spelling = { enabled = false },
+        spelling = { enabled = true },
         presets = {
             operators = false, -- not useful due to `vim-cutlass`
             motions = false,
@@ -16,44 +16,34 @@ wk.setup {
             z = true,
         }
     },
-    window = {
-        border = 'single',
-    },
+    icons = {
+        rules = false
+    }
 }
 
-wk.register({
-    name = 'Main-Menu',
-    ['b'] = { name = 'Buffers' },
-    ['c'] = { name = 'Spelling' },
-    ['e'] = { name = 'Errors' },
-    ['f'] = {
-        name = 'Files',
-        ['e'] = { name = 'Sudo Edit' }
+wk.add({
+    { '<leader>', group = 'Main-Menu' },
+    { '<leader>b', group = 'Buffers' },
+    { '<leader>c', group = 'Spelling' },
+    { '<leader>e', group = 'Errors' },
+    { '<leader>f', group = 'Files'},
+    { '<leader>fe', group = 'Sudo Edit' },
+    { '<leader>i', group = 'Insert' },
+    { '<leader>p', group = 'Project' },
+    { '<leader>q', group = 'Quit' },
+    { '<leader>s', group = 'Search' },
+    { '<leader>t', group = 'Tabs' },
+    { '<leader>w', group = 'Windows' },
+    {
+        mode = { 'v' },
+        { '<leader>c', group = 'Multi Cursor' },
     },
-    ['g'] = { name = 'Git' },
-    ['i'] = { name = 'Insert' },
-    ['p'] = { name = 'Project' },
-    ['q'] = { name = 'Quit' },
-    ['s'] = { name = 'Search' },
-    ['t'] = { name = 'Tabs' },
-    ['w'] = { name = 'Windows' },
-}, {
-    prefix = '<leader>'
-})
-
-wk.register({
-    name = 'Main-Menu',
-    [''] =  { function() wk.show(vim.g.mapleader, { mode = 'v' }) end, ''},
-    ['c'] = { name = 'Multi Cursor' },
-    ['g'] = { name = 'Git'},
-}, {
-    prefix = '<leader>',
-    mode = 'v'
-})
-
-wk.register({
-    name = 'Local',
-}, {
-    prefix = vim.g.maplocalleader,
-    mode = { 'n', 'v' }
+    {
+        mode = { 'n', 'v' },
+        { '<leader>g', group = 'Git' },
+        { '<localleader>', group = function()
+            local ft = vim.opt.filetype:get()
+            return string.upper(ft:sub(1, 1)) .. ft:sub(2)
+        end },
+    }
 })
