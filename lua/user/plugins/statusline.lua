@@ -177,7 +177,7 @@ function M.statusline()
     return active_indicator
         .. '%f%( %m%)' -- filename + modified status
         .. conjure_state
-        .. '%< '       -- truncate from here if needed
+        .. ' %<'       -- truncate from here if needed
         .. git_branch
         .. '%= '       -- start righ alignment from here
         .. table.concat(diagnostics)
