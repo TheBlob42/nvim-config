@@ -197,7 +197,6 @@ local function files(dir, opts)
                 function()
                     files('~', opts)
                 end,
-                fzf.actions.resume,
             },
         },
     }
@@ -313,7 +312,6 @@ local function file_explorer(directory)
                             cwd = dir,
                         }
                     end,
-                    fzf.actions.resume,
                 },
                 ['alt-t'] = function()
                     local buf = vim.api.nvim_create_buf(true, false)
@@ -326,7 +324,6 @@ local function file_explorer(directory)
                             cwd = dir
                         }
                     end,
-                    fzf.actions.resume,
                 },
                 ['alt-b'] = {
                     function()
@@ -336,7 +333,6 @@ local function file_explorer(directory)
                             fzf_opts = { ["--header-lines"] = false },
                         }
                     end,
-                    fzf.actions.resume,
                 },
                 ['ctrl-v'] = edit_file('vsplit'),
                 ['ctrl-s'] = edit_file('split'),
@@ -377,7 +373,6 @@ local function switch_project()
                         cwd = projects[selected[1]],
                     }
                 end,
-                fzf.actions.resume,
             },
             ['alt-d'] = function(selected)
                 vim.cmd.edit(projects[selected[1]])
@@ -389,7 +384,6 @@ local function switch_project()
                         cwd = projects[selected[1]],
                     }
                 end,
-                fzf.actions.resume,
             },
             ['alt-t'] = function(selected)
                 local buf = vim.api.nvim_create_buf(true, false)

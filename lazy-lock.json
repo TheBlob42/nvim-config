@@ -11,7 +11,7 @@
   "drex.nvim": { "branch": "develop", "commit": "acccc1225e61a3977d86a590420b868e708cc64a" },
   "fidget.nvim": { "branch": "main", "commit": "956c8da3fa4072e6e00a4d8d4e52b88d887b9cfa" },
   "fsharp-vim": { "branch": "master", "commit": "64aec6089558ec290287a9c935b53feeedd0c974" },
-  "fzf-lua": { "branch": "main", "commit": "9c005ec0e68984772f2c2a0bff4c7399e44cfe03" },
+  "fzf-lua": { "branch": "main", "commit": "023b95078f9cc28ce67d7a7a6b4ea1bc7cfa488d" },
   "gitlinker.nvim": { "branch": "master", "commit": "cc59f732f3d043b626c8702cb725c82e54d35c25" },
   "gitsigns.nvim": { "branch": "main", "commit": "f4928ba14eb6c667786ac7d69927f6aee6719f1e" },
   "groovy.vim": { "branch": "master", "commit": "392419dafb8a2f0a93f605ba5b1e90ba48f1644d" },
