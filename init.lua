@@ -146,7 +146,6 @@ require('lazy').setup({
     {
         -- git information integration
         'lewis6991/gitsigns.nvim',
-        dependencies = 'nvim-lua/plenary.nvim',
         config = plugin_config('gitsigns'),
     },
 
