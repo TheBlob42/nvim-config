@@ -1,5 +1,3 @@
-vim.opt_local.conceallevel = 1
-
 -- this would is otherwise overridden by 'ft-markdown-plugin'
 vim.opt_local.foldtext = ''
 
