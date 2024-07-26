@@ -60,8 +60,16 @@ fzf.setup {
             delay = 60         -- smoother preview experience
         }
     },
+    grep = {
+        -- make the path color "intense green" for better readability with light themes (default for the rest)
+        rg_opts = '--column --line-number --no-heading --color=always --colors=path:fg:green --colors=path:style:intense --smart-case --max-columns=4096 -e',
+        winopts = {
+            preview = {
+                hidden = 'nohidden'
+            }
+        }
+    },
     blines = winopts_preview_nohidden,
-    grep = winopts_preview_nohidden,
     lsp = winopts_preview_nohidden,
     keymap = {
         builtin = {

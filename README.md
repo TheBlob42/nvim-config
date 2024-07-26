@@ -81,11 +81,3 @@ vim.opt.guicursor:append{ "a:Cursor" }
 Beware that this will only affect the cursor background color. The foreground (font) color is always defined by the terminal. For this reason the setting is not set by default
 
 > For [kitty](https://sw.kovidgoyal.net/kitty/) check out the `cursor_text_color background` option in `~/.config/kitty/kitty.conf`
-
-### Ripgrep Coloring
-
-Especially with the light theme some parts of [ripgreps](https://github.com/BurntSushi/ripgrep) search output might be hard to read. To control these colors you can use the [`--colors`](https://github.com/BurntSushi/ripgrep/blob/master/FAQ.md#how-do-i-configure-ripgreps-colors) option and put your adaptions into a [configuration file](https://github.com/BurntSushi/ripgrep/blob/master/GUIDE.md#configuration-file):
-
-```bash
---colors=path:fg:cyan
-```
