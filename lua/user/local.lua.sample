@@ -39,7 +39,7 @@ my.sys_local = {
         workspace_dir = '/home/user/java_workspace/',
 
         -- check the following page and search for "ExecutionEnvironment" enum for the exact values needed for the name
-        -- https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
+        -- https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
         runtimes = {
             {
                 name = "JavaSE-11",

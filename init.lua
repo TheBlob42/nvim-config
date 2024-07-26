@@ -187,7 +187,10 @@ require('lazy').setup({
     {
         -- install external dependencies (LSP servers, DAP servers, etc.)
         'williamboman/mason.nvim',
-        build = ':MasonUpdate',
+        build = function()
+            -- the `:MasonUpdate` editor command is not ready for some reason
+            require('mason-registry').refresh()
+        end
     },
     'williamboman/mason-lspconfig.nvim',    -- make integration of mason.nvim and lspconfig easier
 
@@ -266,7 +269,8 @@ require('lazy').setup({
         'iamcco/markdown-preview.nvim',
         ft = 'markdown',
         build = function()
-            vim.fn['mkdp#util#install']()
+            -- currently not working here see: https://github.com/iamcco/markdown-preview.nvim/issues/690
+            -- vim.fn['mkdp#util#install']()
         end,
     },
 

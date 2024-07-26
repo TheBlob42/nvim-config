@@ -1,7 +1,7 @@
 require('gitlinker').setup {
     mappings = '<leader>gy',
     -- check for locally configured custom callback
-    callbacks = vim.tbl_get(my.sys_local, 'git', 'gitlinker_callbacks') or {},
+    callbacks = vim.tbl_get(my.sys_local or {}, 'git', 'gitlinker_callbacks') or {},
 }
 
 -- override keybindings to get descriptions

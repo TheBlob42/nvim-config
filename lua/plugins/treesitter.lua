@@ -3,7 +3,7 @@ require('nvim-treesitter.configs').setup {
     ensure_installed = "all",
     -- this helps with some performance issues (especially with long block comments)
     -- should be resolved by: https://github.com/neovim/neovim/issues/22426
-    ignore_install = { 'comment' },
+    ignore_install = { 'comment', 'wing' },
     highlight = {
         enable = true,
         disable = function(lang, buf)
