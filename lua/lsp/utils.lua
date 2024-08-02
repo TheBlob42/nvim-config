@@ -14,13 +14,14 @@ M.capabilities = vim.tbl_deep_extend(
 ---@param client table
 ---@param bufnr number
 function M.on_attach(client, bufnr)
+    local fzf = require('fzf-lua')
     local map = function(mode, lhs, rhs, desc)
         vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
     end
 
     -- "generic" keybindings
     if client.supports_method('textDocument/hover', { bufnr = bufnr }) then
-        map('n', '<RightMouse>', '<LeftMouse><CMD>lua vim.lsp.buf.hover()<CR>', 'hover')
+        map('n', '<RightMouse>', vim.lsp.buf.hover, 'hover')
     end
     if client.supports_method('textDocument/signatureHelp', { bufnr = bufnr }) then
         map('n', '<C-s>', vim.lsp.buf.signature_help, 'signature help')
@@ -35,10 +36,10 @@ function M.on_attach(client, bufnr)
         map('n', '<localleader>a', vim.lsp.buf.code_action, 'code action')
     end
     if client.supports_method('textDocument/documentSymbol', { bufnr = bufnr }) then
-        map('n', '<localleader>s', '<CMD>FzfLua lsp_document_symbols<CR>', 'document symbols')
+        map('n', '<localleader>s', fzf.lsp_document_symbols, 'document symbols')
     end
     if client.supports_method('workspace/symbol', { bufnr = bufnr }) then
-        map('n', '<localleader>S', '<CMD>FzfLua lsp_live_workspace_symbols<CR>', 'workspace symbols')
+        map('n', '<localleader>S', fzf.lsp_live_workspace_symbols, 'workspace symbols')
     end
 
     -- navigational keybindings ('g')
@@ -47,7 +48,12 @@ function M.on_attach(client, bufnr)
         map('n', '<2-LeftMouse>', vim.lsp.buf.definition, 'goto definition')
     end
     if client.supports_method('textDocument/references', { bufnr = bufnr }) then
-        map('n', 'gr', "<CMD>FzfLua lsp_references<CR>", 'goto references')
+        map('n', 'gr', function()
+            fzf.lsp_references {
+                ignore_current_line = true,
+                jump_to_single_result = true,
+            }
+        end, 'goto references')
     end
     if client.supports_method('textDocument/implementation', { bufnr = bufnr }) then
         map('n', 'gI', vim.lsp.buf.implementation, 'goto implementation')
