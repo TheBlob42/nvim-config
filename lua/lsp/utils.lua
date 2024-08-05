@@ -15,39 +15,42 @@ M.capabilities = vim.tbl_deep_extend(
 ---@param bufnr number
 function M.on_attach(client, bufnr)
     local fzf = require('fzf-lua')
+    local supports = function(method)
+        return client.supports_method(method, { bufnr = bufnr })
+    end
     local map = function(mode, lhs, rhs, desc)
         vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
     end
 
     -- "generic" keybindings
-    if client.supports_method('textDocument/hover', { bufnr = bufnr }) then
+    if supports('textDocument/hover') then
         map('n', '<RightMouse>', vim.lsp.buf.hover, 'hover')
     end
-    if client.supports_method('textDocument/signatureHelp', { bufnr = bufnr }) then
+    if supports('textDocument/signatureHelp') then
         map('n', '<C-s>', vim.lsp.buf.signature_help, 'signature help')
         map('i', '<C-s>', vim.lsp.buf.signature_help, 'signature help')
     end
 
     -- localleader keybindings
-    if client.supports_method('textDocument/rename', { bufnr = bufnr }) then
+    if supports('textDocument/rename') then
         map('n', '<localleader>r', vim.lsp.buf.rename, 'rename')
     end
-    if client.supports_method('textDocument/codeAction', { bufnr = bufnr }) then
+    if supports('textDocument/codeAction') then
         map('n', '<localleader>a', vim.lsp.buf.code_action, 'code action')
     end
-    if client.supports_method('textDocument/documentSymbol', { bufnr = bufnr }) then
+    if supports('textDocument/documentSymbol') then
         map('n', '<localleader>s', fzf.lsp_document_symbols, 'document symbols')
     end
-    if client.supports_method('workspace/symbol', { bufnr = bufnr }) then
+    if supports('workspace/symbol') then
         map('n', '<localleader>S', fzf.lsp_live_workspace_symbols, 'workspace symbols')
     end
 
     -- navigational keybindings ('g')
-    if client.supports_method('textDocument/definition', { bufnr = bufnr }) then
+    if supports('textDocument/definition') then
         map('n', 'gd', '<C-]>', 'goto definition') -- map to 'gd' for convenience
         map('n', '<2-LeftMouse>', vim.lsp.buf.definition, 'goto definition')
     end
-    if client.supports_method('textDocument/references', { bufnr = bufnr }) then
+    if supports('textDocument/references') then
         map('n', 'gr', function()
             fzf.lsp_references {
                 ignore_current_line = true,
@@ -55,15 +58,15 @@ function M.on_attach(client, bufnr)
             }
         end, 'goto references')
     end
-    if client.supports_method('textDocument/implementation', { bufnr = bufnr }) then
+    if supports('textDocument/implementation') then
         map('n', 'gI', vim.lsp.buf.implementation, 'goto implementation')
     end
-    if client.supports_method('textDocument/declaration', { bufnr = bufnr }) then
+    if supports('textDocument/declaration') then
         map('n', 'gD', vim.lsp.buf.declaration, 'goto declaration')
     end
 
     -- highlighting autocommands
-    if client.supports_method('textDocument/documentHighlight', { bufnr = bufnr }) then
+    if supports('textDocument/documentHighlight') then
         vim.api.nvim_clear_autocmds {
             group = highlight_group,
             buffer = bufnr,
