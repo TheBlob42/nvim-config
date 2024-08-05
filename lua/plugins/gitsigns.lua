@@ -25,6 +25,12 @@ my.repeat_map('<Plug>GitSignsPrevHunk', '<CMD>lua require("gitsigns").prev_hunk(
 vim.keymap.set('n', '<leader>gp', gitsigns.preview_hunk, { desc = 'preview git hunk' })
 vim.keymap.set('n', '<leader>gn', '<Plug>GitSignsNextHunk', { desc = 'next git hunk' })
 vim.keymap.set('n', '<leader>gN', '<Plug>GitSignsPrevHunk', { desc = 'previous git hunk' })
+vim.keymap.set('n', '<leader>gb', '<CMD>Gitsigns blame<CR>', { desc = 'git blame' })
 vim.keymap.set('n', '<leader>gs', gitsigns.stage_hunk, { desc = 'stage git hunk' })
 vim.keymap.set('n', '<leader>gr', gitsigns.reset_hunk, { desc = 'reset git hunk' })
-vim.keymap.set('n', '<leader>gb', '<CMD>Gitsigns blame<CR>', { desc = 'git blame' })
+vim.keymap.set('x', '<leader>gs', function()
+    gitsigns.stage_hunk { vim.fn.line('.'), vim.fn.line('v') }
+end, { desc = 'stage git hunk' })
+vim.keymap.set('x', '<leader>gr', function()
+    gitsigns.reset_hunk { vim.fn.line('.'), vim.fn.line('v') }
+end, { desc = 'reset git hunk' })
