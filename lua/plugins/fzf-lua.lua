@@ -227,6 +227,11 @@ local function files(dir, opts)
     })
 end
 
+---Save the current buffer in a selected file
+---Choosing an existing file in a directory will overwrite it
+---If the entered text does NOT match any file save the buffer with this new name
+---Asks for user confirmation in both cases
+---@param directory string
 local function save_as(directory)
     files(directory, {
         prompt = function(dir)
@@ -293,6 +298,8 @@ local function save_as(directory)
     })
 end
 
+---Navigate through the file system
+---@param directory string
 local function file_explorer(directory)
     files(directory, {
         actions = function(dir, entries)
@@ -350,6 +357,8 @@ local function file_explorer(directory)
     })
 end
 
+---Quickly switch to a project and open a file of it
+---The projects (directories) are defined in the 'local.lua' file
 local function switch_project()
     local projects = {}
 
