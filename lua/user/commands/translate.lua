@@ -116,3 +116,5 @@ vim.keymap.set('x', '<C-t>', function()
     end
     enter_translate_cmd(table.concat(text, ' '):gsub('%s%s+', ' '))
 end, { desc = 'translate selection' })
+
+vim.keymap.set('i', '<C-t>', '<ESC>:Translate ', { desc = 'translate' })
