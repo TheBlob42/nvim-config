@@ -1,5 +1,50 @@
 local fzf = require('fzf-lua')
 
+-- NOTE: This function is up here so it can be referenced in the default setup function call for fzf
+
+---Quickly select a file in the current working directory that has either been modified, staged or is not tracked by git yet
+---This function only works if the current working directory is managed by git (does nothing otherwise)
+local function files_changed_by_git(directory)
+    directory = directory or vim.loop.cwd()
+    local git_files = {}
+    local get_files = function(cmd, color, prefix)
+        local result = vim.system(cmd, { text = true, cwd = directory }):wait()
+        if result.code ~= 0 then
+            return
+        end
+
+        for file in vim.gsplit(result.stdout, '\n') do
+            if file ~= '' then
+                table.insert(git_files, fzf.utils.ansi_codes[color](prefix .. ' ') .. file)
+            end
+        end
+    end
+
+    get_files({ 'git', 'diff', '--name-only' }, 'red', '[Modified]')
+    get_files({ 'git', 'diff', '--name-only', '--cached' }, 'green', '[Staged]')
+    get_files({ 'git', 'ls-files', '--others', '--exclude-standard' }, 'cyan', '[Untracked]')
+
+    -- strip the colored prefix (modified/staged) from the selected entry
+    -- furthermore prepend the directory to create a valid absolute path
+    local strip_git_info = function(fn)
+        return function(selected, opts)
+            selected[1] = selected[1]:gsub('^[^ ]+ ', '')
+            selected[1] = vim.fs.joinpath(directory, selected[1])
+            fn(selected, opts)
+        end
+    end
+
+    fzf.fzf_exec(git_files, {
+        prompt = 'Files changed by GIT> ',
+        actions = {
+            ['default'] = strip_git_info(fzf.actions.file_edit_or_qf),
+            ['ctrl-s'] = strip_git_info(fzf.actions.file_split),
+            ['ctrl-v'] = strip_git_info(fzf.actions.file_vsplit),
+            ['ctrl-t'] = strip_git_info(fzf.actions.file_tabedit),
+        },
+    })
+end
+
 -- configuration to show the previewer (default: hidden)
 local winopts_preview_nohidden = {
     winopts = {
@@ -50,6 +95,11 @@ fzf.setup {
                     }
                 end,
             },
+            ['alt-g'] = {
+                function(_, opts)
+                    files_changed_by_git(opts.cwd)
+                end,
+            }
         },
     },
     winopts = {
@@ -407,6 +457,9 @@ local function switch_project()
                 vim.api.nvim_set_current_buf(buf)
                 vim.fn.termopen(vim.o.shell, { cwd = projects[selected[1]] })
             end,
+            ['alt-g'] = function(selected)
+                files_changed_by_git(projects[selected[1]])
+            end,
         }
     })
 end
@@ -420,6 +473,7 @@ local mappings = {
     { '<leader>bb', '<CMD>FzfLua buffers<CR>', 'switch buffer' },
     { '<leader>pp', switch_project, 'switch project' },
     { '<leader>pf', fzf.files, 'project files' },
+    { '<leader>pg', files_changed_by_git, 'git files' },
     { '<leader>pb', function() fzf.buffers { cwd_only = true } end, 'project buffers' },
     { '<leader>ss', '<CMD>FzfLua blines<CR>', 'search in current buffer' },
     { '<leader>sd', '<CMD>FzfLua live_grep_native<CR>', 'search in cwd' },
