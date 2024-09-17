@@ -95,6 +95,13 @@ fzf.setup {
                     }
                 end,
             },
+            ['alt-t'] = {
+                function(_, opts)
+                    local buf = vim.api.nvim_create_buf(true, false)
+                    vim.api.nvim_set_current_buf(buf)
+                    vim.fn.termopen(vim.o.shell, { cwd = opts.cwd })
+                end,
+            },
             ['alt-g'] = {
                 function(_, opts)
                     files_changed_by_git(opts.cwd)
