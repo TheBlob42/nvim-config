@@ -36,6 +36,14 @@ local function files_changed_by_git(directory)
 
     fzf.fzf_exec(git_files, {
         prompt = 'Files changed by GIT> ',
+        preview = {
+            type = 'cmd',
+            fn = function(items)
+                local file = items[1]:gsub('^[^ ]+ ', '')
+                local path = vim.fs.joinpath(directory, file)
+                return 'git diff --color ' .. path
+            end,
+        },
         actions = {
             ['default'] = strip_git_info(fzf.actions.file_edit_or_qf),
             ['ctrl-s'] = strip_git_info(fzf.actions.file_split),
