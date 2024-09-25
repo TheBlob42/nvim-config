@@ -41,7 +41,7 @@ local function files_changed_by_git(directory)
             fn = function(items)
                 local file = items[1]:gsub('^[^ ]+ ', '')
                 local path = vim.fs.joinpath(directory, file)
-                return 'git diff --color ' .. path
+                return 'git -C ' .. directory .. ' diff --color ' .. path
             end,
         },
         actions = {
