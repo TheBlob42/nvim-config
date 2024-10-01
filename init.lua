@@ -120,8 +120,8 @@ require('lazy').setup({
                 group = vim.api.nvim_create_augroup('FixShiftJForParinfer', {}),
                 pattern = my.lisps,
                 callback = function()
-                    vim.keymap.set('n', 'J', 'A<Space><Esc>J', { desc = 'fix J for parinfer' })
-                    vim.keymap.set('n', 'gJ', 'A<Space><Esc>gJ', { desc = 'fix gJ for parinfer' })
+                    vim.keymap.set('n', 'J', 'A<Space><Esc>J', { buffer = true, desc = 'fix J for parinfer' })
+                    vim.keymap.set('n', 'gJ', 'A<Space><Esc>gJ', { buffer = true, desc = 'fix gJ for parinfer' })
                 end,
             })
         end,
