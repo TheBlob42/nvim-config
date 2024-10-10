@@ -60,6 +60,11 @@ Using Neovim as Clojure editor.
 -----------------------------------------------------------------------------
 REPL                                                          *my-clojure-repl*
 
+NOTE: This section is about interaction with the `conjure` plugin
+(https://github.com/Olical/conjure) which is currently not installed anymore.
+Never the less the information about `nREPL` is still correct and might be
+useful in another context.
+
 When opening a Clojure file the `conjure` plugin automatically connects to an
 existing REPL. If none is found it tries to use `babashka` (if installed). To
 open an interactive REPL for the usage with Neovim use `nREPL`. Merge the

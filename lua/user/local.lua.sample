@@ -29,8 +29,12 @@ my.sys_local = {
     },
     -- clojure configuration for this computer
     clojure = {
-        -- this is the current default command for starting a clojure REPL with 'JackIn'
-        repl_cmd = [[clj -Sdeps '{:deps {nrepl/nrepl {:mvn/version "1.1.0"}}}' -M -m nrepl.cmdline]],
+        -- this is the command to start a Clojure REPL with simple-repl
+        -- a few tested alternatives that you might want to consider:
+        -- > 'clojure' for maximum performance (but terrible REPL experience)
+        -- > 'clj' for a good balance (rlwrap has issues on Mac)
+        -- > 'clojure -Sdeps "{:deps {com.bhauman/rebel-readline {:mvn/version \"0.1.4\"}}}" -m rebel-readline.main' for a very good REPL experience
+        repl_cmd = ''
     },
     -- java configuration for this computer
     java = {

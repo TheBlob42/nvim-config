@@ -127,15 +127,6 @@ function M.statusline()
     end
 
     -- ~~~~~~~~~~~~~
-    -- conjure state
-    -- ~~~~~~~~~~~~~
-
-    local conjure_state = ''
-    if vim.tbl_contains(my.lisps, ft) then
-        conjure_state = ' %#' .. get_custom_hl('Comment') .. '#[' .. require('conjure.client')['state-key']() .. ']%*'
-    end
-
-    -- ~~~~~~~~~~~~~
     -- filetype icon
     -- ~~~~~~~~~~~~~
 
@@ -176,7 +167,6 @@ function M.statusline()
 
     return active_indicator
         .. '%f%( %m%)' -- filename + modified status
-        .. conjure_state
         .. ' %<'       -- truncate from here if needed
         .. git_branch
         .. '%= '       -- start righ alignment from here

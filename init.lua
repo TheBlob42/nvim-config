@@ -99,14 +99,7 @@ require('lazy').setup({
 
     {
         -- interactive code evaluation
-        'Olical/conjure',
-        ft = my.lisps,
-        init = plugin_config('conjure'),
-        config = function()
-            require("conjure.main").main()
-            require("conjure.mapping")["on-filetype"]()
-        end,
-        dependencies = { 'PaterJason/cmp-conjure' }
+        'theblob42/simple-repl.nvim',
     },
 
     {
