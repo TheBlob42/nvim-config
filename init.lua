@@ -143,24 +143,6 @@ require('lazy').setup({
     },
 
     {
-        -- call 'lazygit' from within nvim
-        'kdheepak/lazygit.nvim',
-        branch = 'main',
-        cmd = 'LazyGit',
-        init = function()
-            if vim.fn.executable('nvr') then
-                -- use as git commit message editor
-                vim.env.GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
-            end
-
-            vim.keymap.set('n', '<leader>gg', function()
-                -- to also make it work inside of non-file buffers (e.g. file manager)
-                require('lazygit').lazygit(vim.fn.getcwd())
-            end, { desc = 'open lazygit'})
-        end,
-    },
-
-    {
         -- create shareable file permalinks
         'ruifm/gitlinker.nvim',
         dependencies = 'nvim-lua/plenary.nvim',
@@ -228,6 +210,22 @@ require('lazy').setup({
     },
 
     -- UTILITIES
+
+    {
+        'https://github.com/folke/snacks.nvim',
+        config = function()
+            require('snacks').setup {
+                bigfile = { enabled = true },
+            }
+            vim.keymap.set('n', '<leader>gB', Snacks.git.blame_line, { desc = "git blame line" })
+            vim.keymap.set('n', '<leader>gg', Snacks.lazygit.open, { desc = "open lazygit" })
+            vim.keymap.set('n', '<leader>bd', Snacks.bufdelete.delete, { desc = 'delete buffer' })
+            vim.keymap.set('n', '<leader>bD', function()
+                Snacks.bufdelete.delete { force = true }
+            end, { desc = 'force delete buffer' })
+        end
+    },
+
     {
         -- separate "cut" from "delete"
         'TheBlob42/vim-cutlass',
@@ -244,16 +242,6 @@ require('lazy').setup({
         init = function()
             vim.keymap.set('n', '<leader>fer', '<CMD>SudaRead<CR>', { desc = 'sudo read' })
             vim.keymap.set('n', '<leader>few', '<CMD>SudaWrite<CR>', { desc = 'sudo write' })
-        end,
-    },
-
-    {
-        -- delete buffers without messing up the window layout
-        'famiu/bufdelete.nvim',
-        cmd = { 'Bdelete', 'Bwipeout' },
-        init = function()
-            vim.keymap.set('n', '<leader>bd', '<CMD>Bdelete<CR>', { desc = 'delete buffer' })
-            vim.keymap.set('n', '<leader>bD', '<CMD>Bdelete!<CR>', { desc = 'force delete buffer' })
         end,
     },
 
