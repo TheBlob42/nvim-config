@@ -63,11 +63,11 @@ require('drex.config').configure {
             -- open with system default application
             ['x'] = function()
                 local element = utils.get_element(vim.api.nvim_get_current_line())
-                vim.fn.jobstart('xdg-open "' .. element .. '" &', { detach = true })
+                vim.ui.open(element)
             end,
             ['X'] = function()
                 local path = utils.get_path(vim.api.nvim_get_current_line())
-                vim.fn.jobstart('xdg-open "' .. path .. '" &', { detach = true })
+                vim.ui.open(path)
             end,
             -- expand every directory in the current buffer
             ['O'] = function()
