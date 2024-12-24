@@ -105,6 +105,7 @@ fzf.setup {
             },
             ['alt-t'] = function(_, opts)
                 local buf = vim.api.nvim_create_buf(true, false)
+                vim.fn.chdir(opts.cwd)
                 vim.api.nvim_set_current_buf(buf)
                 vim.fn.termopen(vim.o.shell, { cwd = opts.cwd })
             end,
