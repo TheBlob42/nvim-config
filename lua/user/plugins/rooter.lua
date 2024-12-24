@@ -22,6 +22,10 @@ local function set_root()
         return
     end
 
+    if not vim.loop.fs_stat(path) then
+        return
+    end
+
     if vim.fn.isdirectory(path) == 0 then
         path = assert(vim.fs.dirname(path))
     end
