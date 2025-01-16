@@ -1,25 +1,23 @@
+---@diagnostic disable-next-line: missing-fields
+require('modus-themes').setup {
+    on_highlights = function(hls, _)
+        -- see `:h lsp-highlight`
+        hls['LspReferenceText']  = { link = 'DiffAdd' }
+        hls['LspReferenceRead']  = { link = 'DiffAdd' }
+        hls['LspReferenceWrite'] = { link = 'DiffAdd' }
+        hls['LspSignatureActiveParameter'] = { link = 'CurSearch' }
+
+        -- makes gitsigns better visible (especially in light theme)
+        hls['GitSignsAdd']    = { link = '@diff.plus' }
+        hls['GitSignsChange'] = { link = '@diff.delta' }
+        hls['GitSignsDelete'] = { link = '@diff.minus' }
+
+        -- miscellaneous
+        hls['netrwMarkFile']    = { link = 'ErrorMsg' }
+        hls['LeapLabel'] = { link = 'Sneak' }
+        hls['@markdown.quote']  = { link = 'Comment' }
+        hls['@lsp.type.enumMember.markdown'] = { link = 'Keyword' } -- markdown tag
+    end,
+}
+
 vim.cmd.colorscheme('modus')
-
-local link = function(hl, target)
-    vim.api.nvim_set_hl(0, hl, { link = target })
-end
-
-local function update_highlights()
-    -- see `:h lsp-highlight`
-    link('LspReferenceText', 'DiffAdd')
-    link('LspReferenceRead', 'DiffAdd')
-    link('LspReferenceWrite', 'DiffAdd')
-    link('LspSignatureActiveParameter', 'CurSearch')
-
-    link('LeapLabelPrimary', 'Sneak')
-    link('@lsp.type.enumMember.markdown', 'Keyword') -- markdown tags
-    link('@markdown.quote', 'Comment') -- markdown quotes
-end
-
-update_highlights()
-
-vim.api.nvim_create_autocmd('ColorScheme', {
-    group = vim.api.nvim_create_augroup('HighlightAdaptions', {}),
-    pattern = 'modus*',
-    callback = update_highlights,
-})
