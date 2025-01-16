@@ -74,12 +74,6 @@ require('lazy').setup({
     },
 
     {
-        -- indent guides for all lines
-        'lukas-reineke/indent-blankline.nvim',
-        config = plugin_config('indent-blankline'),
-    },
-
-    {
         -- fancy notifications
         'rcarriga/nvim-notify',
         config = plugin_config('notify'),
@@ -216,6 +210,7 @@ require('lazy').setup({
         config = function()
             require('snacks').setup {
                 bigfile = { enabled = true },
+                indent = { enabled = true },
             }
             vim.keymap.set('n', '<leader>gB', Snacks.git.blame_line, { desc = "git blame line" })
             vim.keymap.set('n', '<leader>gg', Snacks.lazygit.open, { desc = "open lazygit" })
