@@ -62,6 +62,13 @@ local winopts_preview_nohidden = {
     }
 }
 
+---Return the parent dir of the selected file entry
+local function get_file_dir(selected, opts)
+    local entry = selected[1]:gsub('^%W*', '') -- remove prefixed icons etc.
+    local path = vim.fs.joinpath(opts.cwd, entry)
+    return vim.fs.dirname(path)
+end
+
 fzf.setup {
     fzf_colors = {
         ['gutter'] = { 'bg', 'Normal' },
@@ -81,39 +88,48 @@ fzf.setup {
             ['ctrl-t']  = fzf.actions.file_tabedit,
             ['alt-q']   = fzf.actions.file_sel_to_qf,
             ['alt-l']   = fzf.actions.file_sel_to_ll,
-            -- open a DREX buffer for the cwd
+            -- open a directory buffer for the cwd
             ['alt-d'] = function(_, opts)
                 vim.cmd.edit(opts.cwd)
             end,
+            -- open a directory buffer for the selected files directory
+            ['alt-D'] = function(selected, opts)
+                vim.cmd.edit(get_file_dir(selected, opts))
+            end,
             -- start a live grep search from the cwd
-            ['alt-s'] = {
-                function(_, opts)
-                    fzf.live_grep { cwd = opts.cwd }
-                end,
-            },
+            ['alt-s'] = function(_, opts)
+                fzf.live_grep { cwd = opts.cwd }
+            end,
+            -- start a live grep search from the selected files directory
+            ['alt-S'] = function(selected, opts)
+                fzf.live_grep { cwd = get_file_dir(selected, opts) }
+            end,
             -- select from buffers rooted in the cwd
-            ['alt-b'] = {
-                function(_, opts)
-                    fzf.buffers {
-                        cwd = opts.cwd,
-                        fzf_opts = {
-                            -- no header lines, make every entry selectable
-                            ["--header-lines"] = false
-                        },
-                    }
-                end,
-            },
+            ['alt-b'] = function(_, opts)
+                fzf.buffers {
+                    cwd = opts.cwd,
+                    fzf_opts = {
+                        -- no header lines, make every entry selectable
+                        ["--header-lines"] = false
+                    },
+                }
+            end,
             ['alt-t'] = function(_, opts)
                 local buf = vim.api.nvim_create_buf(true, false)
                 vim.fn.chdir(opts.cwd)
                 vim.api.nvim_set_current_buf(buf)
                 vim.fn.termopen(vim.o.shell, { cwd = opts.cwd })
             end,
-            ['alt-g'] = {
-                function(_, opts)
-                    files_changed_by_git(opts.cwd)
-                end,
-            }
+            ['alt-T'] = function(selected, opts)
+                local buf = vim.api.nvim_create_buf(true, false)
+                local dir = get_file_dir(selected, opts)
+                vim.fn.chdir(dir)
+                vim.api.nvim_set_current_buf(buf)
+                vim.fn.termopen(vim.o.shell, { cwd = dir })
+            end,
+            ['alt-g'] = function(_, opts)
+                files_changed_by_git(opts.cwd)
+            end,
         },
     },
     winopts = {
