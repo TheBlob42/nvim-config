@@ -158,6 +158,7 @@ local function task_list(gradlew_path)
             time = time + interval
             if time > timeout then
                 vim.notify('Loading the Gradle tasks timed out!', vim.log.levels.ERROR, {})
+                vim.api.nvim_win_close(spin_win, true)
                 return
             end
 
@@ -181,6 +182,10 @@ end
 -- ~~~~~~~~~~~~~~~~~
 -- ~ user commands ~
 -- ~~~~~~~~~~~~~~~~~
+
+require('which-key').add({
+    { '<localleader>g', group = 'Gradle' },
+})
 
 vim.api.nvim_create_user_command('GradlewClearCache', function(_)
     cached_task = {}
