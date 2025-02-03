@@ -50,12 +50,6 @@ end
 ---@param plug string Name for the <Plug> mapping. Needs to start with "<Plug>"
 ---@param rhs string|function Either a mapping string or a function that should be executed
 function my.repeat_map(plug, rhs)
-    local plugins = vim.tbl_map(function(p) return p[1] end, require('lazy').plugins())
-    if plugins and not vim.tbl_contains(plugins, 'tpope/vim-repeat') then
-        vim.api.nvim_echo({{ debug.getinfo(2).source .. ' --> `vim-repeat` is not loaded!', 'WarningMsg' }}, true, {})
-        return
-    end
-
     if not vim.startswith(plug, '<Plug>') then
         vim.api.nvim_echo({{ 'Invalid <Plug> mapping: `plug` needs to start with "<Plug>"!', 'WarningMsg' }}, true, {})
         return
