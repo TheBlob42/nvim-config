@@ -183,10 +183,6 @@ end
 -- ~ user commands ~
 -- ~~~~~~~~~~~~~~~~~
 
-require('which-key').add({
-    { '<localleader>g', group = 'Gradle' },
-})
-
 vim.api.nvim_create_user_command('GradlewClearCache', function(_)
     cached_task = {}
 end, { desc = 'clear the cached gradlew tasks' })

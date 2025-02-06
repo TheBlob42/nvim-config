@@ -77,6 +77,7 @@ vim.api.nvim_create_autocmd('BufEnter', {
                 once = true,
                 callback = function()
                     if require('user.commands.gradlew').get_gradlew_script_path() then
+                        require('which-key').add({{ '<localleader>g', group = 'Gradle', buffer = true }})
                         vim.keymap.set('n', '<localleader>gg', '<CMD>GradlewList<CR>', { buffer = true, desc = 'gradlew list tasks' })
                         vim.keymap.set('n', '<localleader>gc', '<CMD>GradlewClearCache<CR>', { buffer = true, desc = 'gradlew clear tasks cache' })
                         vim.keymap.set('n', '<localleader>gt', ':GradlewTask ', { buffer = true, desc = 'gradlew execute task'})
