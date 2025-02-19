@@ -20,7 +20,7 @@ function M:get(name)
         self.__index = self
         term.name = name
         term.buf = buf
-        term.job_id = vim.api.nvim_buf_get_var(assert(buf), 'terminal_job_id')
+        term.job_id = vim.bo[buf].channel
         return term
     end
 
@@ -48,8 +48,7 @@ function M:start(name, opts)
         cmd = '',
     })
 
-    term = {}
-    setmetatable(term, self)
+    term = setmetatable({}, self)
     self.__index = self
 
     local buf = vim.api.nvim_create_buf(true, false)

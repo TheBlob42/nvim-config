@@ -35,7 +35,7 @@ local function gradlew_exec(task, gradlew_path)
 
     Term:start('gw:'..task, {
         cwd = gradlew_path,
-        cmd = './gradlew ' .. task,
+        cmd = './gradlew ' .. task .. '\n',
     }):show({
         location = 'current',
         focus = true,
