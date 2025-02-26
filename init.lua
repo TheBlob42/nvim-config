@@ -16,19 +16,23 @@ end
 -- lazy.nvim config & utilities
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--- automatically install lazy.nvim
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system {
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git",
-        "--branch=stable", -- latest stable release
-        lazypath,
-    }
+-- automatically bootstrap alpacka.nvim
+local alpacka_path = vim.fn.stdpath('data') .. '/site/pack/alpacka/opt/alpacka.nvim'
+if not vim.uv.fs_stat(alpacka_path) then
+    local out = vim.system({
+        'git',
+        'clone',
+        '--filter=blob:none',
+        'https://github.com/theblob42/alpacka.nvim.git',
+        alpacka_path,
+    }):wait()
+
+    if out.code ~= 0 then
+      print('Error when cloning "alpacka.nvim":\n' .. out.stderr)
+    end
 end
-vim.opt.runtimepath:prepend(lazypath)
+
+vim.cmd.packadd('alpacka.nvim')
 
 ---Utility function which just returns a function requiring the specific plugin module
 ---@param module string The configuration module to require (must reside in the "plugin" folder)
@@ -39,16 +43,15 @@ local function plugin_config(module)
     end
 end
 
-require('lazy').setup({
+require('alpacka').setup {
+    'theblob42/alpacka.nvim',
+
     'tpope/vim-surround', -- easy "surroundings"
     'tpope/vim-repeat',   -- repeat plug mappings with '.'
     'tpope/vim-sleuth',   -- auto configure `shiftwidth`
 
-    {
-        -- provide icons and colors
-        'kyazdani42/nvim-web-devicons',
-        lazy = true,
-    },
+    'kyazdani42/nvim-web-devicons', -- provide icons and colors
+    'nvim-lua/plenary.nvim', -- dependency for gitlinker
 
     {
         -- fuzzy find stuff using `fzf`
@@ -65,7 +68,6 @@ require('lazy').setup({
     {
         -- two char escape sequence
         'TheBlob42/houdini.nvim',
-        branch = 'develop',
         config = function()
             require('houdini').setup {
                 mappings = { 'fd' }
@@ -80,12 +82,6 @@ require('lazy').setup({
     },
 
     {
-        -- insert parentheses, brackets & quotes in pairs
-        'windwp/nvim-autopairs',
-        config = plugin_config('autopairs'),
-    },
-
-    {
         -- display possible key bindings in a popup
         'folke/which-key.nvim',
         config = plugin_config('which-key'),
@@ -97,20 +93,9 @@ require('lazy').setup({
     },
 
     {
-        -- parinfer for Neovim
-        'gpanders/nvim-parinfer',
-        init = function()
-            vim.g.parinfer_filetypes = my.lisps
-
-            -- https://github.com/gpanders/nvim-parinfer/issues/12
-            vim.api.nvim_create_autocmd('FileType', {
-                group = vim.api.nvim_create_augroup('FixShiftJForParinfer', {}),
-                pattern = my.lisps,
-                callback = function()
-                    vim.keymap.set('n', 'J', 'A<Space><Esc>J', { buffer = true, desc = 'fix J for parinfer' })
-                    vim.keymap.set('n', 'gJ', 'A<Space><Esc>gJ', { buffer = true, desc = 'fix gJ for parinfer' })
-                end,
-            })
+        'eraserhd/parinfer-rust',
+        build = function()
+            vim.system({ 'cargo', 'build', '--release' }):wait()
         end,
     },
 
@@ -139,7 +124,6 @@ require('lazy').setup({
     {
         -- create shareable file permalinks
         'ruifm/gitlinker.nvim',
-        dependencies = 'nvim-lua/plenary.nvim',
         config = plugin_config('gitlinker'),
         init = function()
             vim.keymap.set('n', '<leader>gy', function()
@@ -157,7 +141,6 @@ require('lazy').setup({
         -- install external dependencies (LSP servers, DAP servers, etc.)
         'williamboman/mason.nvim',
         build = function()
-            -- the `:MasonUpdate` editor command is not ready for some reason
             require('mason-registry').refresh()
         end
     },
@@ -193,20 +176,24 @@ require('lazy').setup({
     },
 
     -- AUTO COMPLETION
+    {
+        'hrsh7th/nvim-cmp',
+        config = plugin_config('cmp'),
+    },
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
     'hrsh7th/cmp-cmdline',
     'saadparwaiz1/cmp_luasnip',
+
     {
-        'hrsh7th/nvim-cmp',
-        config = plugin_config('cmp'),
+        -- insert parentheses, brackets & quotes in pairs
+        'windwp/nvim-autopairs',
+        config = plugin_config('autopairs'),
     },
 
-    -- UTILITIES
-
     {
-        'https://github.com/folke/snacks.nvim',
+        'folke/snacks.nvim',
         config = function()
             require('snacks').setup {
                 bigfile = { enabled = true },
@@ -233,8 +220,7 @@ require('lazy').setup({
     {
         -- edit files with sudo privileges
         'lambdalisue/suda.vim',
-        cmd = { 'SudaRead', 'SudaWrite' },
-        init = function()
+        config = function()
             vim.keymap.set('n', '<leader>fer', '<CMD>SudaRead<CR>', { desc = 'sudo read' })
             vim.keymap.set('n', '<leader>few', '<CMD>SudaWrite<CR>', { desc = 'sudo write' })
         end,
@@ -243,47 +229,40 @@ require('lazy').setup({
     {
         -- preview markdown in your browser
         'iamcco/markdown-preview.nvim',
-        ft = 'markdown',
         build = function()
-            -- currently not working here see: https://github.com/iamcco/markdown-preview.nvim/issues/690
-            -- vim.fn['mkdp#util#install']()
+            vim.fn['mkdp#util#install']()
         end,
     },
 
     {
-        -- file/directory explorer
-        'TheBlob42/drex.nvim',
-        branch = 'develop', -- always testing the bleeding edge
-        config = plugin_config('drex'),
+        'stevearc/oil.nvim',
+        config = function()
+            local oil = require('oil')
+            oil.setup {
+                columns = {
+                    'size',
+                    'icon',
+                },
+                view_options = {
+                    show_hidden = true,
+                },
+            }
+            vim.keymap.set('n', '-', oil.open, { desc = 'Open parent directory' })
+            vim.keymap.set('n', '_', function()
+                oil.open(vim.loop.cwd())
+            end, { desc = 'Open current working directory' })
+        end,
     },
 
-    {
-        -- handle groovy indent correctly
-        'modille/groovy.vim',
-        ft = 'groovy',
-    },
-
-    {
-        -- since there is no default syntax highlighting
-        "kongo2002/fsharp-vim",
-        ft = 'fsharp'
-    },
-
-    {
-        -- perform diffs only on parts of a buffer
-        'AndrewRadev/linediff.vim',
-        cmd = 'Linediff',
-    },
-}, {
-    ui = { border = 'single' }
-})
+    'modille/groovy.vim', -- handle groovy indent correctly
+    "kongo2002/fsharp-vim", -- since there is no default syntax highlighting
+    'AndrewRadev/linediff.vim', -- perform diffs only on parts of a buffer
+}
 
 -- load all custom user commands from "lua/user/commands"
 for name, _ in vim.fs.dir(vim.fn.fnamemodify(vim.env.MYVIMRC, ':h') .. '/lua/user/commands') do
     local cmd = string.match(name, '(.*)%.lua')
-    if cmd ~= 'init' then
-        require('user.commands.'..cmd)
-    end
+    require('user.commands.'..cmd)
 end
 
 require('user.keymaps')
