@@ -205,6 +205,10 @@ require('alpacka').setup {
             vim.keymap.set('n', '<leader>bD', function()
                 Snacks.bufdelete.delete { force = true }
             end, { desc = 'force delete buffer' })
+
+            if vim.fn.executable('nvr') then
+                vim.env.GIT_EDITOR = 'nvr -cc split --remote-wait +"CloseFloats" +"set bufhidden=wipe"'
+            end
         end
     },
 
