@@ -36,8 +36,19 @@ function M.tabline()
     return s
 end
 
-function M.rename_tab()
+---Rename the current tabpage
+---If a `name` is provided use this one
+---Otherwise prompt the user via `vim.ui.input` for a new name
+---@param name string?
+function M.rename_tab(name)
     local current_tab = api.nvim_get_current_tabpage()
+
+    if name and not name:find('^ +$') then
+        tab_labels[current_tab] = name
+        vim.cmd.redrawtabline()
+        return
+    end
+
     vim.ui.input({
         prompt = 'Enter custom tab name: ',
     }, function(input)
