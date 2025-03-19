@@ -16,12 +16,10 @@ Requires Neovim version `0.10.0`
 
 - [curl](https://curl.se/)
 - [NerdFont](https://www.nerdfonts.com/)¹
-- [fzf](https://github.com/junegunn/fzf)²
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
 - [xclip](https://github.com/astrand/xclip) or [xsel](https://github.com/kfish/xsel) 
 
 ¹At least version `2.2.2` to include [codicons](https://github.com/microsoft/vscode-codicons) for [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui)  
-²At least version `0.35.0` (to include the `--no-separator` option)
 
 ### Optional Dependencies 
 
@@ -30,7 +28,6 @@ Requires Neovim version `0.10.0`
 - [neovim-remote](https://github.com/mhinz/neovim-remote) 
   - for using the commit editor of `lazygit` (see [here](https://github.com/kdheepak/lazygit.nvim#usage))
 - for validating Jenkinsfiles see the template script in `./lua/user/commands/jenkins.lua`
-- [trash-cli](https://github.com/andreafrancia/trash-cli) (used with [drex.nvim](https://github.com/TheBlob42/drex.nvim))
 
 ## System Configuration
 
@@ -40,7 +37,7 @@ There is some preconfigured configuration which is expected by other parts of th
 
 ## Plugins
 
-In order to install & update plugins [lazy.nvim](https://github.com/folke/lazy.nvim) is being used, check the `init.lua` file for more details
+In order to install & update plugins [alpacka.nvim](https://github.com/TheBlob42/alpacka.nvim) is being used, check the `init.lua` file for more details
 
 ## LSP
 
