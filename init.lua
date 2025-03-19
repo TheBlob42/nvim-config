@@ -54,12 +54,6 @@ require('alpacka').setup {
     'nvim-lua/plenary.nvim', -- dependency for gitlinker
 
     {
-        -- fuzzy find stuff using `fzf`
-        'ibhagwan/fzf-lua',
-        config = plugin_config('fzf-lua'),
-    },
-
-    {
         -- sneak like motion plugin
         'ggandor/leap.nvim',
         config = plugin_config('leap'),
@@ -194,22 +188,7 @@ require('alpacka').setup {
 
     {
         'folke/snacks.nvim',
-        config = function()
-            require('snacks').setup {
-                bigfile = { enabled = true },
-                indent = { enabled = true },
-            }
-            vim.keymap.set('n', '<leader>gB', Snacks.git.blame_line, { desc = "git blame line" })
-            vim.keymap.set('n', '<leader>gg', Snacks.lazygit.open, { desc = "open lazygit" })
-            vim.keymap.set('n', '<leader>bd', Snacks.bufdelete.delete, { desc = 'delete buffer' })
-            vim.keymap.set('n', '<leader>bD', function()
-                Snacks.bufdelete.delete { force = true }
-            end, { desc = 'force delete buffer' })
-
-            if vim.fn.executable('nvr') then
-                vim.env.GIT_EDITOR = 'nvr -cc split --remote-wait +"CloseFloats" +"set bufhidden=wipe"'
-            end
-        end
+        config = plugin_config('snacks'),
     },
 
     {

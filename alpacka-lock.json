@@ -8,7 +8,6 @@
   "cmp_luasnip": { "commit": "98d9cb5c2c38532bd9bdb481067b20fea8f32e90" },
   "fidget.nvim": { "commit": "a0abbf18084b77d28bc70e24752e4f4fd54aea17" },
   "fsharp-vim": { "commit": "64aec6089558ec290287a9c935b53feeedd0c974" },
-  "fzf-lua": { "commit": "3d7e5db8fa56cfc2b92a38999016a51abe9e1d23" },
   "gitlinker.nvim": { "commit": "cc59f732f3d043b626c8702cb725c82e54d35c25" },
   "gitsigns.nvim": { "commit": "6668f379ca634c36b8e11453118590b91bf8b295" },
   "groovy.vim": { "commit": "392419dafb8a2f0a93f605ba5b1e90ba48f1644d" },

@@ -197,7 +197,6 @@ local mappings = {
     { '<leader>ct', '<CMD>setlocal spell!<CR>', 'toggle spell checking' },
     { '<leader>cn', '<CMD>setlocal spell<CR><Plug>SpellCheckNext', 'next spelling error' },
     { '<leader>cN', '<CMD>setlocal spell<CR><Plug>SpellCheckPrev', 'prev spelling error' },
-    { '<leader>cc', '<CMD>setlocal spell<CR><CMD>FzfLua spell_suggest<CR>', 'correct spelling error' },
 
     -- tabs
     { '<leader>tn', '<CMD>TabNew<CR>', 'new tab' },

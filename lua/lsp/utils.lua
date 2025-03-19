@@ -14,7 +14,6 @@ M.capabilities = vim.tbl_deep_extend(
 ---@param client table
 ---@param bufnr number
 function M.on_attach(client, bufnr)
-    local fzf = require('fzf-lua')
     local supports = function(method)
         return client.supports_method(method, { bufnr = bufnr })
     end
@@ -39,10 +38,10 @@ function M.on_attach(client, bufnr)
         map('n', '<localleader>a', vim.lsp.buf.code_action, 'code action')
     end
     if supports('textDocument/documentSymbol') then
-        map('n', '<localleader>s', fzf.lsp_document_symbols, 'document symbols')
+        map('n', '<localleader>s', Snacks.picker.lsp_symbols, 'document symbols')
     end
     if supports('workspace/symbol') then
-        map('n', '<localleader>S', fzf.lsp_live_workspace_symbols, 'workspace symbols')
+        map('n', '<localleader>S', Snacks.picker.lsp_workspace_symbols, 'workspace symbols')
     end
 
     -- navigational keybindings ('g')
@@ -52,10 +51,7 @@ function M.on_attach(client, bufnr)
     end
     if supports('textDocument/references') then
         map('n', 'gr', function()
-            fzf.lsp_references {
-                ignore_current_line = true,
-                jump_to_single_result = true,
-            }
+            Snacks.picker.lsp_references()
         end, 'goto references')
     end
     if supports('textDocument/implementation') then

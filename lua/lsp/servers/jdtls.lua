@@ -7,9 +7,6 @@ local mason_pkg_path = require('mason.settings').current.install_root_dir .. '/p
 local lombok_jar = mason_pkg_path .. '/jdtls/lombok.jar'
 
 local function jdtls_on_attach(client, bufnr)
-    -- https://github.com/ibhagwan/fzf-lua/issues/310#issuecomment-1013950684
-    if vim.api.nvim_get_option_value('bufhidden', { buf = bufnr }) == 'wipe' then return end
-
     require('lsp.utils').on_attach(client, bufnr)
 
     -- initialize dap for jdtls (only if 'java-debug' is installed)
