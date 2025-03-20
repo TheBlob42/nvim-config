@@ -271,7 +271,6 @@ require('snacks').setup {
                     layout = {
                         backdrop = false,
                         box = 'vertical',
-                        position = 'bottom',
                         row = -1,
                         width = 0,
                         height = 0.5,
@@ -293,7 +292,6 @@ require('snacks').setup {
                 layout = {
                     backdrop = false,
                     box = 'vertical',
-                    position = 'bottom',
                     row = -1,
                     width = 0,
                     height = 0.5,
