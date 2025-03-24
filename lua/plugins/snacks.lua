@@ -73,6 +73,17 @@ local function files(dir)
                     }
                 end)
             end,
+            open_dir = function(picker)
+                picker:close()
+                vim.cmd.edit(dir)
+            end,
+            open_terminal = function(picker)
+                picker:close()
+                local buf = vim.api.nvim_create_buf(true, false)
+                vim.fn.chdir(dir)
+                vim.api.nvim_set_current_buf(buf)
+                vim.fn.termopen(vim.o.shell, { cwd = dir })
+            end,
             save_as = function(picker)
                 picker:close()
                 local item = picker:current()
@@ -103,6 +114,8 @@ local function files(dir)
                     ['<C-h>'] = { 'go_home', mode = { 'n', 'i' }},
                     ['<A-w>'] = { 'save_as', mode = { 'n', 'i' }},
                     ['<A-s>'] = { 'search', mode = { 'n', 'i' }},
+                    ['<A-d>'] = { 'open_dir', mode = { 'n', 'i' }},
+                    ['<A-t>'] = { 'open_terminal', mode = { 'n', 'i' }},
                 }
             },
             list = {
@@ -110,6 +123,8 @@ local function files(dir)
                     ['<C-h>'] = { 'go_home', mode = { 'n', 'i' }},
                     ['<A-w>'] = { 'save_as', mode = { 'n', 'i' }},
                     ['<A-s>'] = { 'search', mode = { 'n', 'i' }},
+                    ['<A-d>'] = { 'open_dir', mode = { 'n', 'i' }},
+                    ['<A-t>'] = { 'open_terminal', mode = { 'n', 'i' }},
                 }
             },
         },
