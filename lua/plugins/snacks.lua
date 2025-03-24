@@ -8,11 +8,16 @@ local function files(dir)
     dir = dir or vim.uv.cwd()
     local entries = {}
 
+    -- "file" is needed for preview
+    -- "_path" is needed for the search action
+    -- "is_file" is needed for the confirm action
+
     if dir ~= '/' then
         table.insert(entries, {
             text = '..',
             icon = { ' ', 'Label' },
             name = '..',
+            file = vim.fn.fnamemodify(dir, ':p:h:h'),
             _path = vim.fn.fnamemodify(dir, ':p:h:h'),
         })
     end
@@ -23,6 +28,7 @@ local function files(dir)
                 text = name,
                 icon = { ' ', 'Label' },
                 name = name,
+                file = vim.fs.joinpath(dir, name),
                 _path = vim.fs.joinpath(dir, name),
             })
         else
@@ -34,6 +40,7 @@ local function files(dir)
                 text = name,
                 icon = { icon .. ' ', hl },
                 name = name,
+                is_file = true, -- separate files from directory entries on confirm
                 file = vim.fs.joinpath(dir, name),
                 _path = vim.fs.joinpath(dir, name),
             })
@@ -108,7 +115,7 @@ local function files(dir)
         },
         confirm = function(picker, item, action)
             picker:close()
-            if item.file then
+            if item.is_file then
                 require('snacks.picker.actions').confirm(picker, item, action)
             else
                 vim.schedule(function()
@@ -320,9 +327,6 @@ vim.keymap.set('n', '<leader>cc', Snacks.picker.spelling, { desc = 'correct spel
 vim.keymap.set('n', '<leader>el', Snacks.picker.diagnostics_buffer, { desc = 'List errors' })
 vim.keymap.set('n', '<leader>fr', Snacks.picker.recent, { desc = 'Open recent file' })
 vim.keymap.set('n', '<leader>ff', files, { desc = 'File explorer' })
-vim.keymap.set('n', '<leader>fF', function()
-    files(vim.fn.expand('%:h'))
-end, { desc = 'File explorer (current)' })
 vim.keymap.set('n', '<leader>h',  Snacks.picker.help, { desc = 'Search help tags' })
 vim.keymap.set('n', '<leader>pb', function()
     Snacks.picker.buffers { filter = { cwd = vim.uv.cwd() }}
@@ -330,6 +334,15 @@ end, { desc = 'Switch project buffers' })
 vim.keymap.set('n', '<leader>pf', Snacks.picker.files, { desc = 'Open project file' })
 vim.keymap.set('n', '<leader>pg', pick_git_files, { desc = 'Modified GIT files' })
 vim.keymap.set('n', '<leader>sd', Snacks.picker.grep, { desc = 'Search project files' })
+
+-- file explorer from the directory of the current file (+ oil special case)
+vim.keymap.set('n', '<leader>fF', function()
+    local path = vim.fn.expand('%:h')
+    if vim.startswith(path, 'oil:') then
+        path = path:match('^oil://(.*)')
+    end
+    files(path)
+end, { desc = 'File explorer (current)' })
 
 -- search current buffer lines in separate tab for maximum preview space
 vim.keymap.set('n', '<leader>ss', function()
