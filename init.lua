@@ -229,6 +229,9 @@ require('alpacka').setup {
                 view_options = {
                     show_hidden = true,
                 },
+                keymaps = {
+                    ['<C-y>'] = { 'actions.yank_entry', mode = 'n' }
+                }
             }
             vim.keymap.set('n', '-', oil.open, { desc = 'Open parent directory' })
             vim.keymap.set('n', '_', function()
