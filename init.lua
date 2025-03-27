@@ -87,6 +87,9 @@ require('alpacka').setup {
     },
 
     {
+        load = function()
+            return vim.fn.executable('cargo') == 1
+        end,
         'eraserhd/parinfer-rust',
         build = function()
             vim.system({ 'cargo', 'build', '--release' }):wait()

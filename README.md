@@ -25,6 +25,8 @@ Requires Neovim version `0.10.0`
 
 - [translate-shell](https://github.com/soimort/translate-shell)
 - [lazygit](https://github.com/jesseduffield/lazygit)
+- [cargo](https://doc.rust-lang.org/cargo/)
+  - for the [parinfer-rust](https://github.com/eraserhd/parinfer-rust) plugin, if not present it will note be loaded
 - [neovim-remote](https://github.com/mhinz/neovim-remote) 
   - for using the commit editor of `lazygit` (see [here](https://github.com/kdheepak/lazygit.nvim#usage))
 - for validating Jenkinsfiles see the template script in `./lua/user/commands/jenkins.lua`
