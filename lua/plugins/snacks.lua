@@ -129,13 +129,15 @@ local function files(dir)
             },
         },
         confirm = function(picker, item, action)
-            picker:close()
-            if item.is_file then
-                require('snacks.picker.actions').confirm(picker, item, action)
-            else
-                vim.schedule(function()
-                    files(item._path)
-                end)
+            if item then
+                picker:close()
+                if item.is_file then
+                    require('snacks.picker.actions').confirm(picker, item, action)
+                else
+                    vim.schedule(function()
+                        files(item._path)
+                    end)
+                end
             end
         end,
     }
