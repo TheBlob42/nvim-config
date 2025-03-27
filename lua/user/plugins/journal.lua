@@ -2,8 +2,18 @@ local M = {}
 
 local query = vim.treesitter.query.parse('markdown', '((list_item (task_list_marker_unchecked)) @todo-item)')
 
-local date_fmt = '%Y-%m-%d'
-local date_rgx = '%d%d%d%d%-%d%d%-%d%d'
+---@class JournalOptions
+---@field date_format string? The date format used for the journal files
+
+local options = {
+    date_format = '%Y-%V'
+}
+
+---Configure the journal plugin
+---@param opts JournalOptions?
+function M.configure(opts)
+    options = vim.tbl_extend('force', options, opts or {})
+end
 
 ---@diagnostic disable-next-line: param-type-mismatch
 local journal_folder = vim.fs.joinpath(vim.fn.stdpath('data'), 'journal')
@@ -43,11 +53,11 @@ end
 local function extract_todo_text()
     local items = {}
 
-    for _, match, _ in query:iter_matches(vim.treesitter.get_node({}):root(), 0, 0, -1) do
+    for _, match, _ in query:iter_matches(vim.treesitter.get_node():tree():root(), 0, 0, -1) do
         for _, node in pairs(match) do
             local context = get_context(node)
             if not context then
-                print("No context found for node: '" .. vim.treeitter.get_node_text(node, 0) .. "'")
+                print("No context found for node: '" .. vim.treesitter.get_node_text(node, 0) .. "'")
             else
                 local row = context:range() -- ignore the other range return values
                 local text = vim.treesitter.get_node_text(context, 0)
@@ -81,14 +91,10 @@ end
 ---@param opts FindEntryOptions? Further options to specify the behavior
 ---@return string? path The path to the journal entry or nil if none was found
 function M.find_entry(date, opts)
-    date = date or os.date(date_fmt) .. '' -- defaults to today
-    if not date:match(date_rgx) then
-        return print("Invalid date format: '" .. date .. "'")
-    end
+    date = date or os.date(options.date_format) .. ''
 
     opts = vim.tbl_extend('keep', opts or {}, {
-        -- match, before & after
-        behavior = 'match'
+        behavior = 'match' -- match, before & after
     })
 
     local tmp_before
@@ -96,7 +102,7 @@ function M.find_entry(date, opts)
 
     -- vim.fs.dir streams through the folder in ascending order
     for name, type in vim.fs.dir(journal_folder) do
-        if type == 'file' and name:match(date_rgx .. '.md') then
+        if type == 'file' then
             if opts.behavior == 'match' and name == date then
                 return vim.fs.joinpath(journal_folder, name)
             elseif opts.behavior == 'before' then
@@ -120,11 +126,11 @@ local function setup_journal_buffer(buf)
     buf = buf or vim.api.nvim_get_current_buf()
 
     vim.keymap.set('n', 'gl', function()
-        local date = vim.fn.expand('%:t'):match('[^.]+')
+        local date = vim.fn.expand('%:t:r')
         M.open_next_entry(date)
     end, { buffer = buf, desc = 'jump to next journal entry' })
     vim.keymap.set('n', 'gh', function()
-        local date = vim.fn.expand('%:t'):match('[^.]+')
+        local date = vim.fn.expand('%:t:r')
         M.open_latest_entry(date)
     end, { buffer = buf, desc = 'jump to previous journal entry' })
 end
@@ -153,8 +159,8 @@ function M.open_next_entry(from)
     return false
 end
 
-function M.open_today()
-    local today = os.date(date_fmt) .. ''
+function M.open()
+    local today = os.date(options.date_format) .. ''
     local path = M.find_entry(today, { behavior = 'match'})
     if path then
         vim.cmd.e(path)
@@ -178,6 +184,6 @@ function M.open_today()
     setup_journal_buffer(buf)
 end
 
-vim.keymap.set('n', '<leader>J', M.open_today, { desc = "open today's journal entry" })
+vim.keymap.set('n', '<leader>J', M.open, { desc = "open today's journal entry" })
 
 return M
