@@ -143,9 +143,20 @@ require('alpacka').setup {
     },
     'williamboman/mason-lspconfig.nvim',    -- make integration of mason.nvim and lspconfig easier
 
-    'folke/neodev.nvim',                    -- special configuration for Lua (NVIM development)
-    'mfussenegger/nvim-jdtls',              -- special LSP configuration for Java
-    'neovim/nvim-lspconfig',                -- "general" LSP configuration
+    {
+        -- special configuration for Lua (NVIM development)
+        'folke/lazydev.nvim',
+        config = function()
+            ---@diagnostic disable-next-line: missing-fields
+            require('lazydev').setup {
+                library = {
+                  { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+                },
+            }
+        end
+    },
+    'mfussenegger/nvim-jdtls', -- special LSP configuration for Java
+    'neovim/nvim-lspconfig',   -- "general" LSP configuration
 
     {
         -- show lsp progress

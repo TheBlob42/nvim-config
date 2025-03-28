@@ -43,7 +43,6 @@ require('mason-lspconfig').setup_handlers {
         lspconfig[server_name].setup(default_config)
     end,
     ['lua_ls'] = function()
-        require('neodev').setup() -- needs to be before lspconfig
         lspconfig['lua_ls'].setup(
             require('lsp.servers.lua_ls')
         )
