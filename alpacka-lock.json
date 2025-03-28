@@ -1,6 +1,6 @@
 {
   "LuaSnip": { "commit": "c9b9a22904c97d0eb69ccb9bab76037838326817" },
-  "alpacka.nvim": { "commit": "14ca2d81f100d1b9c6d06236349006b8f7561ed3" },
+  "alpacka.nvim": { "commit": "9623f0ab1be4a68249b3c46ce17e40a4769b4fb6" },
   "cmp-buffer": { "commit": "3022dbc9166796b644a841a02de8dd1cc1d311fa" },
   "cmp-cmdline": { "commit": "d250c63aa13ead745e3a40f61fdd3470efde3923" },
   "cmp-nvim-lsp": { "commit": "99290b3ec1322070bcfb9e846450a46f6efa50f0" },
