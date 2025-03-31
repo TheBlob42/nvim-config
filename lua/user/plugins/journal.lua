@@ -17,7 +17,7 @@ end
 
 ---@diagnostic disable-next-line: param-type-mismatch
 local journal_folder = vim.fs.joinpath(vim.fn.stdpath('data'), 'journal')
-if not vim.loop.fs_stat(journal_folder) then
+if not vim.uv.fs_stat(journal_folder) then
     vim.fn.mkdir(journal_folder, 'p')
 end
 
@@ -53,16 +53,15 @@ end
 local function extract_todo_text()
     local items = {}
 
-    for _, match, _ in query:iter_matches(vim.treesitter.get_node():tree():root(), 0, 0, -1) do
-        for _, node in pairs(match) do
-            local context = get_context(node)
-            if not context then
-                print("No context found for node: '" .. vim.treesitter.get_node_text(node, 0) .. "'")
-            else
-                local row = context:range() -- ignore the other range return values
-                local text = vim.treesitter.get_node_text(context, 0)
-                items[row] = text
-            end
+    -- we don't need to check the capture names as there is only one available
+    for _, node, _, _ in query:iter_captures(vim.treesitter.get_node():tree():root(), 0, 0, -1, {}) do
+        local context = get_context(node)
+        if not context then
+            print("No context found for node: '" .. vim.treesitter.get_node_text(node, 0) .. "'")
+        else
+            local row = context:range() -- ignore the other range return values
+            local text = vim.treesitter.get_node_text(context, 0)
+            items[row] = text
         end
     end
 
