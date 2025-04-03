@@ -125,6 +125,7 @@ local function task_list(gradlew_path)
             height = 1,
             focusable = false,
             noautocmd = true,
+            border = 'none',
             style = 'minimal',
         })
         vim.api.nvim_set_option_value('winhighlight', 'Normal:NonText', { win = spin_win })

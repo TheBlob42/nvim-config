@@ -95,10 +95,10 @@ vim.api.nvim_create_autocmd('BufEnter', {
 -- create repeatable diagnostics mappings (with `vim-repeat`)
 -- unfortunately repeating with the floating diagnostics window does not work correctly
 my.repeat_map('<Plug>NextError', function()
-    vim.diagnostic.goto_next { float = false }
+    vim.diagnostic.jump { count = 1, float = true }
 end)
 my.repeat_map('<Plug>PrevError', function()
-    vim.diagnostic.goto_prev { float = false }
+    vim.diagnostic.jump { count = -1, float = true }
 end)
 
 -- create repeatable spell mappings
@@ -174,7 +174,7 @@ local mappings = {
     { '<leader>eN', '<Plug>PrevError', 'previous error' },
     {
         '<leader>ei',
-        function() vim.diagnostic.open_float { border = 'rounded' } end,
+        function() vim.diagnostic.open_float {} end,
         'error details'
     },
 
@@ -184,8 +184,8 @@ local mappings = {
 
     -- insert
     { '<leader>iu', '<CMD>InsertUUIDv4<CR>', 'insert uuid' },
-    { '<leader>ij', ":<C-U>call append(line('.'), repeat([''], v:count1))<CR>", 'insert lines below' },
-    { '<leader>ik', ":<C-U>call append(line('.')-1, repeat([''], v:count1))<CR>", 'insert lines above' },
+    { '<leader>ik', "[ ", 'insert lines above', { remap = true } },
+    { '<leader>ij', "] ", 'insert lines below', { remap = true } },
 
     -- quit
     { '<leader>qq', '<CMD>confirm qall<CR>', 'quit NVIM' },

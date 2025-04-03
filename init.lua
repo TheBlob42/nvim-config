@@ -9,7 +9,7 @@ require('user.plugins.journal')    -- simple journal functionality
 
 -- local user configuration (if present)
 if not pcall(require, 'user.local') then
-    vim.api.nvim_err_writeln('No system local configuration found! Check "lua/user/local.lua.sample" for more information...')
+    vim.api.nvim_echo({ 'No system local configuration found! Check "lua/user/local.lua.sample" for more information...' }, true, { err = true })
 end
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -151,6 +151,7 @@ require('alpacka').setup {
             require('lazydev').setup {
                 library = {
                   { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+                  { path = 'snacks.nvim', words = { 'Snacks' } },
                 },
             }
         end

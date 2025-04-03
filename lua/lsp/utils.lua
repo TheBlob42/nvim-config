@@ -21,44 +21,30 @@ function M.on_attach(client, bufnr)
         vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
     end
 
-    -- "generic" keybindings
-    if supports('textDocument/hover') then
-        map('n', '<RightMouse>', vim.lsp.buf.hover, 'hover')
-    end
-    if supports('textDocument/signatureHelp') then
-        map('n', '<C-s>', vim.lsp.buf.signature_help, 'signature help')
-        map('i', '<C-s>', vim.lsp.buf.signature_help, 'signature help')
-    end
-
-    -- localleader keybindings
-    if supports('textDocument/rename') then
-        map('n', '<localleader>r', vim.lsp.buf.rename, 'rename')
-    end
-    if supports('textDocument/codeAction') then
-        map('n', '<localleader>a', vim.lsp.buf.code_action, 'code action')
-    end
+    -- override default mappings with "upgraded" functions
     if supports('textDocument/documentSymbol') then
-        map('n', '<localleader>s', Snacks.picker.lsp_symbols, 'document symbols')
-    end
-    if supports('workspace/symbol') then
-        map('n', '<localleader>S', Snacks.picker.lsp_workspace_symbols, 'workspace symbols')
-    end
-
-    -- navigational keybindings ('g')
-    if supports('textDocument/definition') then
-        map('n', 'gd', '<C-]>', 'goto definition') -- map to 'gd' for convenience
-        map('n', '<2-LeftMouse>', vim.lsp.buf.definition, 'goto definition')
+        map('n', 'gO', Snacks.picker.lsp_symbols, 'document symbols')
     end
     if supports('textDocument/references') then
-        map('n', 'gr', function()
-            Snacks.picker.lsp_references()
+        map('n', 'grr', function()
+            Snacks.picker.lsp_references {
+                jump = {
+                    tagstack = true,
+                    reuse_win = false,
+                }
+            }
         end, 'goto references')
     end
-    if supports('textDocument/implementation') then
-        map('n', 'gI', vim.lsp.buf.implementation, 'goto implementation')
-    end
+
+    -- additional mappings
     if supports('textDocument/declaration') then
         map('n', 'gD', vim.lsp.buf.declaration, 'goto declaration')
+    end
+    if supports('workspace/symbol') then
+        map('n', 'g<C-o>', Snacks.picker.lsp_workspace_symbols, 'workspace symbols')
+    end
+    if supports('textDocument/definition') then
+        map('n', 'gd', '<C-]>', 'goto definition')
     end
 
     -- highlighting autocommands

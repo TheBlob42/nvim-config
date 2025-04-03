@@ -1,7 +1,6 @@
 local wk = require('which-key')
 
 wk.setup {
-    preset = 'modern',
     plugins = {
         marks = false,
         registers = false,

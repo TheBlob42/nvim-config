@@ -11,6 +11,8 @@ vim.opt.splitkeep = 'screen'
 vim.opt.number = true
 vim.opt.signcolumn = 'number'
 
+vim.opt.winborder = 'single'
+
 -- sync with system clipboard
 vim.opt.clipboard = { 'unnamed', 'unnamedplus' }
 
@@ -43,7 +45,7 @@ vim.opt.updatetime = 400 -- speed up 'cursorhold' events
 
 vim.g.markdown_folding = 1 -- see 'ft-markdown-plugin'
 
--- to preserve the highlighting of the underlying text (needs 0.10)
+-- to preserve the highlighting of the underlying text
 vim.opt.foldtext = ''
 
 vim.opt.cursorline = true
@@ -57,11 +59,11 @@ else
     vim.opt.background = "light"
 end
 
--- disable cursorline and signcolumn for terminal buffers
+-- disable cursorline for terminal buffers
 vim.api.nvim_create_autocmd('TermOpen', {
     group = vim.api.nvim_create_augroup('NoCursorline', {}),
     pattern = '*',
-    command = 'setlocal nocursorline signcolumn=no',
+    command = 'setlocal nocursorline',
     desc = 'disable cursorline and signcolumn for terminal buffers',
 })
 
@@ -77,13 +79,13 @@ vim.opt.numberwidth = 2
 vim.opt.signcolumn = 'auto:1-2'
 
 -- mark diagnostics with the little "default squares"
-vim.diagnostic.config({
+vim.diagnostic.config {
     virtual_text = {
         format = function() return '' end,
         spacing = 0,
     },
     signs = false,
-})
+}
 
 -- custom filetype detection
 vim.filetype.add {
