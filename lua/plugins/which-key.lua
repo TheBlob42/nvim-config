@@ -1,5 +1,6 @@
 local wk = require('which-key')
 
+---@diagnostic disable-next-line: missing-fields
 wk.setup {
     plugins = {
         marks = false,
@@ -15,6 +16,10 @@ wk.setup {
             z = true,
         }
     },
+    defer = function(ctx)
+        -- don't trigger when switching to visual mode
+        return ctx.mode == 'v' or ctx.mode == 'V' or ctx.mode == '<C-v>'
+    end,
     icons = {
         rules = false
     }
