@@ -5,7 +5,7 @@
     - filetype icon + string
     - modified status
     - correctly reset highlights on colorscheme change
-    - special cases for drex.nvim and terminal buffers
+    - special cases for oil, git-blame and terminal buffers
 
     Requires the following dependencies:
 
@@ -16,11 +16,23 @@ local M = {}
 
 -- diagnostic names + corresponding icon and highlight
 local diagnostics_attrs = {
-    { vim.diagnostic.severity.ERROR, '', 'DiagnosticError' },
-    { vim.diagnostic.severity.WARN,  '', 'DiagnosticWarn' },
-    { vim.diagnostic.severity.HINT,  '', 'DiagnosticHint' },
-    { vim.diagnostic.severity.INFO,  '', 'DiagnosticInfo' },
+    { vim.diagnostic.severity.ERROR, '', 'DiagnosticError' },
+    { vim.diagnostic.severity.WARN,  '', 'DiagnosticWarn' },
+    { vim.diagnostic.severity.HINT,  '', 'DiagnosticHint' },
+    { vim.diagnostic.severity.INFO,  '', 'DiagnosticInfo' },
 }
+
+---If in visual mode return the count of lines, words and characters to be displayed
+---@return string result The string to present in the statusline
+local function get_visual_counts()
+    local wc = vim.fn.wordcount()
+    if wc.visual_chars then
+        local line_count = math.abs(vim.fn.line('.') - vim.fn.line('v')) + 1
+        return ('  %d lines %d words %d chars'):format(line_count, wc.visual_words, wc.visual_chars)
+    else
+        return ''
+    end
+end
 
 -- in order for our icon highlights to have the correct background color ('StatusLine')
 -- we need to create custom highlights by manually combining foreground and background color
@@ -33,7 +45,7 @@ local function get_custom_hl(highlight)
     end
 
     -- check for default NVIM colorscheme
-    local colorscheme = vim.g.colors_name or ('default_' .. vim.opt.background:get())
+    local colorscheme = vim.g.colors_name or ('default_' .. vim.o.background)
     local key = colorscheme .. '_' .. fg
 
     if not hl_cache[key] then
@@ -63,22 +75,21 @@ function M.statusline()
     local buf = vim.api.nvim_win_get_buf(win)
     local active_win = win == vim.api.nvim_get_current_win()
 
-    -- active window marker (color change based on current mode)
     local active_indicator = ''
-
     if active_win then
         local mode = vim.api.nvim_get_mode().mode
-        local mode_hl = 'Title'
+        local mode_hl = 'StatusLine'
 
         if vim.startswith(mode, 'R') then
-            mode_hl = 'WarningMsg'
+            mode_hl = 'TSRainbowOrange'
         elseif vim.startswith(mode, 'i') or vim.startswith(mode, 't') then
-            mode_hl = 'String'
+            mode_hl = 'TSRainbowGreen'
         elseif vim.startswith(mode:lower(), 'v') or vim.startswith(mode:lower(), 's') or vim.startswith(mode, '') then
-            mode_hl = 'Keyword'
+            mode_hl = 'TSRainbowViolet'
         end
 
-        active_indicator = '%#' .. mode_hl .. '#█%* '
+        -- active window marker (color change based on the current mode)
+        active_indicator = '%#' .. mode_hl .. '#  '
     end
 
     -- ~~~~~~~~~~~~~~~
@@ -86,20 +97,17 @@ function M.statusline()
     -- ~~~~~~~~~~~~~~~
 
     if vim.api.nvim_get_option_value('buftype', { buf = buf }) == 'terminal' then
-        return active_indicator .. vim.api.nvim_buf_get_name(buf) .. '%=%P '
+        return active_indicator .. vim.api.nvim_buf_get_name(buf) .. '%*%=%P '
     end
 
     local ft = vim.api.nvim_get_option_value('filetype', { buf = buf })
 
-    if ft == 'drex' then
-        local utils = require('drex.utils')
-        local width = vim.api.nvim_win_get_width(win)
-        local clipboard_count = vim.tbl_count(require('drex.clipboard').clipboard)
-        return active_indicator .. ' ' .. utils.shorten_path(utils.get_root_path(buf), width - 4) .. '%=' .. clipboard_count .. ' '
+    if ft == 'oil' then
+        return active_indicator .. ' ' .. vim.api.nvim_buf_get_name(buf):sub(7)
     end
 
-    if ft == 'gitsigns.blame' then
-        return active_indicator .. 'Blame'
+    if ft == 'gitsigns-blame' then
+        return active_indicator .. ' Git Blame'
     end
 
     -- for non-special inactive windows only show the file-/buffername
@@ -111,19 +119,20 @@ function M.statusline()
     -- diagnostic counter
     -- ~~~~~~~~~~~~~~~~~~
 
-    local diagnostics = {}
+    local diagnostic_counts = {}
 
     if vim.diagnostic.is_enabled({ bufnr = buf }) then
         for _, attr in pairs(diagnostics_attrs) do
             local n = vim.diagnostic.get(buf, { severity = attr[1] })
             if vim.tbl_count(n) > 0 then
-                table.insert(diagnostics, string.format(' %%#%s#%d%s', get_custom_hl(attr[3]), vim.tbl_count(n), attr[2]))
+                table.insert(diagnostic_counts, string.format(' %%#%s#%s %d', get_custom_hl(attr[3]), attr[2], vim.tbl_count(n)))
             end
         end
     end
 
-    if vim.tbl_count(diagnostics) > 0 then
-        table.insert(diagnostics, '%*')
+    local diagnostics = ''
+    if vim.tbl_count(diagnostic_counts) > 0 then
+        diagnostics = ' ' .. table.concat(diagnostic_counts) .. '%*'
     end
 
     -- ~~~~~~~~~~~~~
@@ -141,7 +150,7 @@ function M.statusline()
             hl = get_custom_hl(hl)
         end
 
-        filetype = ft .. ' %#' .. hl .. '#' .. icon .. '%*'
+        filetype = '  %#' .. hl .. '#' .. icon .. '%* ' .. ft
     end
 
     -- ~~~~~~~~~~~~~~~~~~
@@ -150,7 +159,7 @@ function M.statusline()
 
     local git_branch = vim.b[buf].gitsigns_head
     if git_branch then
-        git_branch = '%#' .. get_custom_hl('Comment') .. '#' .. git_branch .. '%*'
+        git_branch = '  %#Comment# ' .. git_branch .. '%*'
     else
         git_branch = ''
     end
@@ -162,19 +171,23 @@ function M.statusline()
     local indicators = ''
 
     if vim.api.nvim_get_option_value('spell', { win = win }) then
-        indicators = indicators .. '🔍 '
-     end
+        indicators = indicators .. '  🔍'
+    end
+
+    -- ~~~~~~~~~~~~~~~~
+    -- final statusline
+    -- ~~~~~~~~~~~~~~~~
 
     return active_indicator
-        .. '%f%( %m%)' -- filename + modified status
-        .. ' %<'       -- truncate from here if needed
+        .. ' %t%( %m%)%*%<'
         .. git_branch
-        .. '%= '       -- start righ alignment from here
-        .. table.concat(diagnostics)
-        .. ' '
+        .. diagnostics
+        .. '%='
+        .. get_visual_counts()
         .. filetype
-        .. ' %c %P '   -- column count (c) and percentage through file (P)
+        .. '  %02c%#NonText#:%*%P'
         .. indicators
+        .. '  '
 end
 
 vim.opt.statusline = '%!v:lua.require("user.plugins.statusline").statusline()'

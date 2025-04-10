@@ -13,6 +13,9 @@ vim.opt.signcolumn = 'number'
 
 vim.opt.winborder = 'single'
 
+vim.opt.title = true
+vim.opt.titlestring = '%F'
+
 -- sync with system clipboard
 vim.opt.clipboard = { 'unnamed', 'unnamedplus' }
 
