@@ -53,6 +53,9 @@ end
 local function extract_todo_text()
     local items = {}
 
+    -- ensure that the tree is parse already
+    vim.treesitter.get_parser(0):parse(true)
+
     -- we don't need to check the capture names as there is only one available
     for _, node, _, _ in query:iter_captures(vim.treesitter.get_node():tree():root(), 0, 0, -1, {}) do
         local context = get_context(node)
