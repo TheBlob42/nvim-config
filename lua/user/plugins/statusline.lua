@@ -25,8 +25,9 @@ local diagnostics_attrs = {
 ---If in visual mode return the count of lines, words and characters to be displayed
 ---@return string result The string to present in the statusline
 local function get_visual_counts()
-    local wc = vim.fn.wordcount()
-    if wc.visual_chars then
+    -- it can fail (no idea why though) which breaks the whole statusline implementation
+    local success, wc = pcall(vim.fn.wordcount)
+    if success and wc.visual_chars then
         local line_count = math.abs(vim.fn.line('.') - vim.fn.line('v')) + 1
         return ('  %d lines %d words %d chars'):format(line_count, wc.visual_words, wc.visual_chars)
     else
