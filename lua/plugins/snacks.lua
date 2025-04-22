@@ -82,7 +82,7 @@ local function files(dir)
                 local buf = vim.api.nvim_create_buf(true, false)
                 vim.fn.chdir(dir)
                 vim.api.nvim_set_current_buf(buf)
-                vim.fn.termopen(vim.o.shell, { cwd = dir })
+                vim.fn.jobstart(vim.o.shell, { term = true, cwd = dir })
             end,
             save_as = function(picker)
                 picker:close()
@@ -251,7 +251,7 @@ require('snacks').setup {
                     local buf = vim.api.nvim_create_buf(true, false)
                     vim.fn.chdir(cwd)
                     vim.api.nvim_set_current_buf(buf)
-                    vim.fn.termopen(vim.o.shell, { cwd = cwd })
+                    vim.fn.jobstart(vim.o.shell, { term = true, cwd = cwd })
                 end
             end,
             open_terminal_file_path = function(picker)
@@ -262,7 +262,7 @@ require('snacks').setup {
                     local buf = vim.api.nvim_create_buf(true, false)
                     vim.fn.chdir(dir)
                     vim.api.nvim_set_current_buf(buf)
-                    vim.fn.termopen(vim.o.shell, { cwd = dir })
+                    vim.fn.jobstart(vim.o.shell, { term = true, cwd = dir })
                 end
             end,
             git_modified_files = function(picker)
@@ -355,6 +355,10 @@ vim.keymap.set('n', '<leader>sd', Snacks.picker.grep, { desc = 'Search project f
 -- file explorer from the directory of the current file (+ oil special case)
 vim.keymap.set('n', '<leader>fF', function()
     local path = vim.fn.expand('%:h')
+    -- in case the buffer is not connected to any file
+    if not vim.uv.fs_stat(path) then
+        path = assert(vim.uv.cwd())
+    end
     if vim.startswith(path, 'oil:') then
         path = path:match('^oil://(.*)')
     end
