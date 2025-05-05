@@ -17,9 +17,10 @@ Requires Neovim version `0.11.0`
 - [curl](https://curl.se/)
 - [NerdFont](https://www.nerdfonts.com/)¹
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
-- [xclip](https://github.com/astrand/xclip) or [xsel](https://github.com/kfish/xsel) 
+- [xclip](https://github.com/astrand/xclip)² or [xsel](https://github.com/kfish/xsel)²
 
 ¹At least version `2.2.2` to include [codicons](https://github.com/microsoft/vscode-codicons) for [nvim-dap-ui](https://github.com/rcarriga/nvim-dap-ui)  
+²Only relevant on Linux
 
 ### Optional Dependencies 
 
