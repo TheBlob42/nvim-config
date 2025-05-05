@@ -1,12 +1,6 @@
 require('user.settings') -- general non plugin related settings
 require('user.config')   -- general configuration stuff
 
-require('user.plugins.statusline') -- custom statusline
-require('user.plugins.tabline')    -- custom tabline
-require('user.plugins.clever-f')   -- "clever-f" like functionality
-require('user.plugins.rooter')     -- set cwd to "project" root automatically
-require('user.plugins.journal')    -- simple journal functionality
-
 -- local user configuration (if present)
 if not pcall(require, 'user.local') then
     vim.api.nvim_echo({ 'No system local configuration found! Check "lua/user/local.lua.sample" for more information...' }, true, { err = true })
@@ -266,5 +260,6 @@ for name, _ in vim.fs.dir(vim.fn.fnamemodify(vim.env.MYVIMRC, ':h') .. '/lua/use
     require('user.commands.'..cmd)
 end
 
-require('user.keymaps')
-require('lsp')
+require('user.plugins') -- load custom user plugins
+require('user.keymaps') -- general key mappings
+require('lsp')          -- LSP setup

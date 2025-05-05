@@ -1,24 +1,30 @@
+--[[
+    Simple journal plugin to create a markdown file for each day/week
+    This will automatically migrate unchecked todo items (+ all of the surrounding context) from the last file when creating a new one
+--]]
+
 local M = {}
 
 local query = vim.treesitter.query.parse('markdown', '((list_item (task_list_marker_unchecked)) @todo-item)')
 
 ---@class JournalOptions
 ---@field date_format string? The date format used for the journal files
+---@field folder string? Path to where the journal files should be stored (defaults to "<user_data_directory>/journal")
 
 local options = {
-    date_format = '%Y-%V'
+    date_format = '%Y-%V',
+    folder = vim.fs.joinpath(vim.fn.stdpath('data'), 'journal'),
 }
 
----Configure the journal plugin
+---Setup the journal plugin and overwrite the default options if desired
 ---@param opts JournalOptions?
-function M.configure(opts)
+function M.setup(opts)
     options = vim.tbl_extend('force', options, opts or {})
-end
 
----@diagnostic disable-next-line: param-type-mismatch
-local journal_folder = vim.fs.joinpath(vim.fn.stdpath('data'), 'journal')
-if not vim.uv.fs_stat(journal_folder) then
-    vim.fn.mkdir(journal_folder, 'p')
+    -- make sure the journal folder exists
+    if not vim.uv.fs_stat(options.folder) then
+        vim.fn.mkdir(options.folder, 'p')
+    end
 end
 
 ---Return the relevant context for the given todo-list-item
@@ -103,24 +109,24 @@ function M.find_entry(date, opts)
     date = date .. '.md'
 
     -- vim.fs.dir streams through the folder in ascending order
-    for name, type in vim.fs.dir(journal_folder) do
+    for name, type in vim.fs.dir(options.folder) do
         if type == 'file' then
             if opts.behavior == 'match' and name == date then
-                return vim.fs.joinpath(journal_folder, name)
+                return vim.fs.joinpath(options.folder, name)
             elseif opts.behavior == 'before' then
                 if name < date then
                     tmp_before = name
                 else
-                    return vim.fs.joinpath(journal_folder, tmp_before)
+                    return vim.fs.joinpath(options.folder, tmp_before)
                 end
             elseif opts.behavior == 'after' and name > date then
-                return vim.fs.joinpath(journal_folder, name)
+                return vim.fs.joinpath(options.folder, name)
             end
         end
     end
 
     if tmp_before then
-        return vim.fs.joinpath(journal_folder, tmp_before)
+        return vim.fs.joinpath(options.folder, tmp_before)
     end
 end
 
@@ -172,7 +178,7 @@ function M.open()
 
     local buf = vim.api.nvim_create_buf(true, false)
     vim.api.nvim_buf_set_lines(buf, 0, -1, false, { '# Notes for ' .. today, '' })
-    vim.api.nvim_buf_set_name(buf, vim.fs.joinpath(journal_folder, today .. '.md'))
+    vim.api.nvim_buf_set_name(buf, vim.fs.joinpath(options.folder, today .. '.md'))
 
     if M.open_latest_entry(today) then
         local lines = extract_todo_text()
@@ -185,7 +191,5 @@ function M.open()
 
     setup_journal_buffer(buf)
 end
-
-vim.keymap.set('n', '<leader>J', M.open, { desc = "open today's journal entry" })
 
 return M

@@ -1,3 +1,12 @@
+--[[
+    Custom tabline configuration that enables setting custom names for tabs
+    Call the `setup` function to set the 'tabline' option accordingly
+
+    Exposes the following functions:
+    - `rename_tab` will accept a custom name (or prompt the user) for the current tabpage
+    - `switch_tab` will switch the current tabpage using `vim.ui.select`
+--]]
+
 local M = {}
 
 local api = vim.api
@@ -59,6 +68,7 @@ function M.rename_tab(name)
     end)
 end
 
+---Switch to another tab by using `vim.ui.select` and the tabname labels
 function M.switch_tab()
     local tabs = vim.tbl_map(function(tabpage)
         return { tabpage, get_tab_name(tabpage) }
@@ -76,6 +86,9 @@ function M.switch_tab()
     end)
 end
 
-vim.opt.tabline = '%!v:lua.require("user.plugins.tabline").tabline()'
+---There are no options to overwrite, this will simply set the `tabline` option accordingly
+function M.setup()
+    vim.opt.tabline = '%!v:lua.require("user.plugins.tabline").tabline()'
+end
 
 return M

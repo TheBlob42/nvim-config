@@ -31,15 +31,17 @@ Requires Neovim version `0.11.0`
   - for using the commit editor of `lazygit` (see [here](https://github.com/kdheepak/lazygit.nvim#usage))
 - for validating Jenkinsfiles see the template script in `./lua/user/commands/jenkins.lua`
 
+## Plugins
+
+In order to install & update plugins [alpacka.nvim](https://github.com/TheBlob42/alpacka.nvim) is being used, check the `init.lua` file for more details
+
+> You can find a collection of very simple custom plugins within the `./lua/user/plugins/` directory. Each file solves one simple problem and can easily be copied over to your own Neovim configuration. Check the `./lua/user/plugins.lua` file to see my setup
+
 ## System Configuration
 
 For local system specific configuration check `lua/user/local.lua.sample`
 
 There is some preconfigured configuration which is expected by other parts of the configuration (for example the path to your project directory). But you can also add any custom Lua code in their which you consider system specific. The `local.lua` file is on `.gitignore` so the system specific settings will not be checked into version control
-
-## Plugins
-
-In order to install & update plugins [alpacka.nvim](https://github.com/TheBlob42/alpacka.nvim) is being used, check the `init.lua` file for more details
 
 ## LSP
 

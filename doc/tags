@@ -18,6 +18,7 @@ my-jdtls	my_help.txt	/*my-jdtls*
 my-jdtls-classpath	my_help.txt	/*my-jdtls-classpath*
 my-jdtls-compiler	my_help.txt	/*my-jdtls-compiler*
 my-jdtls-versions	my_help.txt	/*my-jdtls-versions*
+my-line-differences	my_help.txt	/*my-line-differences*
 my-macros	my_help.txt	/*my-macros*
 my-macros-speed	my_help.txt	/*my-macros-speed*
 my-macros-submacros	my_help.txt	/*my-macros-submacros*

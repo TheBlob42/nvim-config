@@ -191,6 +191,9 @@ function M.statusline()
         .. '  '
 end
 
-vim.opt.statusline = '%!v:lua.require("user.plugins.statusline").statusline()'
+---There are no options to overwrite, this will simply set the `statusline` option accordingly
+function M.setup()
+    vim.opt.statusline = '%!v:lua.require("user.plugins.statusline").statusline()'
+end
 
 return M

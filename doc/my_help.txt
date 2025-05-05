@@ -23,6 +23,21 @@ You can remove dupliate lines from a buffer using:
 	:sort u
 <
 =============================================================================
+FIND LINE DIFFERENCES                                     *my-line-differences*
+
+- Buffer A contains `n` lines of data
+- Buffer B contains `n + x` lines of data
+
+The goal is to extract all the additional lines from buffer B which are not
+part of buffer A. There are multiple ways to achieve this. This is one of
+them:
+
+- Wrap all lines in buffer A with `:g/<line>/d` (use a macro for this)
+- Copy all of buffer A
+- Navigate into buffer B
+- Execute the unnamed register via `@"`
+
+=============================================================================
 COPY MESSAGES OUTPUT                                  *my-copy-messages-output*
 
 To copy the output from |:messages| one can use the following:

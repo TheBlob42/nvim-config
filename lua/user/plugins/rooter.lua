@@ -1,8 +1,20 @@
--- source: https://www.reddit.com/r/neovim/comments/zy5s0l/you_dont_need_vimrooter_usually_or_how_to_set_up/
+--[[
+    Automatically switch the cwd depending on the current file/buffer
+    You need to call the `setup` function to enable this functionality
 
-vim.opt.autochdir = false
+    See also this thread on reddit:
+    https://www.reddit.com/r/neovim/comments/zy5s0l/you_dont_need_vimrooter_usually_or_how_to_set_up/
+--]]
 
-local root_names = { '.git', 'Makefile', '.marksman.toml' }
+local M = {}
+
+---@class RooterOptions
+---@field root_markers string[]? Directory markers to identify the current root folder (default: `{ '.git', 'Makefile', '.marksman.toml' }`)
+
+local options = {
+    root_markers = { '.git', 'Makefile', '.marksman.toml' }
+}
+
 local root_cache = {}
 
 local function set_root()
@@ -34,7 +46,7 @@ local function set_root()
     if root == nil then
         root = path -- defaults to the parent directory of the current file
 
-        local root_file = vim.fs.find(root_names, {
+        local root_file = vim.fs.find(options.root_markers, {
             path = path,
             upward = true,
             stop = vim.env.HOME,
@@ -50,7 +62,16 @@ local function set_root()
     vim.fn.chdir(root)
 end
 
-vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost' }, {
-    group = vim.api.nvim_create_augroup('AutoRoot', {}),
-    callback = set_root,
-})
+---Setup the `rooter` plugin
+---@param opts RooterOptions? Plugin options to overwrite the defaults
+function M.setup(opts)
+    options = vim.tbl_extend('force', options, opts or {})
+
+    vim.opt.autochdir = false
+    vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost' }, {
+        group = vim.api.nvim_create_augroup('AutoRoot', { clear = true }),
+        callback = set_root,
+    })
+end
+
+return M
