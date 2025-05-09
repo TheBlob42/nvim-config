@@ -209,6 +209,51 @@ require('snacks').setup {
             -- https://github.com/folke/snacks.nvim/issues/1155
             file = false,
         },
+        sources = {
+            --[[
+                The "lines" picker should NOT use the main window for preview as this interferes with split windows
+                (especially horizontally) and might end up in a situation where we can't see the preview at all, since
+                the "ivy" input & list windows will overlap it
+
+                Instead we use a full screen floating window to have maximum space for previewing which does not
+                interfere with the current window layout
+            ]]
+            lines = {
+                layout = {
+                    -- we need another value than "main"
+                    -- if we use `nil` the default config will overwrite this
+                    ---@diagnostic disable-next-line: assign-type-mismatch
+                    preview = '',
+                    layout = {
+                        backdrop = false,
+                        box = 'vertical',
+                        row = 1,
+                        width = 0,
+                        height = 0.99, -- https://github.com/folke/snacks.nvim/issues/1867
+                        {
+                            win = 'preview',
+                            title = '{preview}',
+                            title_pos = 'left',
+                            border = 'top',
+                            height = 0.6,
+                            -- should look like its previewing the actual buffer in an non-floating window
+                            wo = { winhighlight = { NormalFloat = 'Normal' } },
+                        },
+                        {
+                            win = 'input',
+                            title = '{title} {live} {flags}',
+                            title_pos = 'left',
+                            height = 1,
+                            border = 'top',
+                        },
+                        {
+                            win = 'list',
+                            border = 'top',
+                        },
+                    }
+                }
+            }
+        },
         actions = {
             search_cwd = function(picker)
                 local cwd = picker:current().cwd
@@ -351,6 +396,7 @@ end, { desc = 'Switch project buffers' })
 vim.keymap.set('n', '<leader>pf', Snacks.picker.files, { desc = 'Open project file' })
 vim.keymap.set('n', '<leader>pg', pick_git_files, { desc = 'Modified GIT files' })
 vim.keymap.set('n', '<leader>sd', Snacks.picker.grep, { desc = 'Search project files' })
+vim.keymap.set('n', '<leader>ss', Snacks.picker.lines, { desc = 'Search buffer lines' })
 
 -- file explorer from the directory of the current file (+ oil special case)
 vim.keymap.set('n', '<leader>fF', function()
@@ -364,26 +410,6 @@ vim.keymap.set('n', '<leader>fF', function()
     end
     files(path)
 end, { desc = 'File explorer (current)' })
-
--- search current buffer lines in separate tab for maximum preview space
-vim.keymap.set('n', '<leader>ss', function()
-    local tab = vim.api.nvim_get_current_tabpage()
-    local buf = vim.api.nvim_get_current_buf()
-
-    vim.cmd.tabnew()
-    require('user.plugins.tabline').rename_tab('Search...')
-
-    local new_buf = vim.api.nvim_get_current_buf()
-    vim.api.nvim_set_current_buf(buf)
-    vim.api.nvim_buf_delete(new_buf, { force = true })
-
-    Snacks.picker.lines {
-        on_close = function()
-            vim.cmd.tabclose()
-            vim.api.nvim_set_current_tabpage(tab)
-        end
-    }
-end, { desc = 'Search buffer lines' })
 
 -- custom project picker
 vim.keymap.set('n', '<leader>pp', function()
