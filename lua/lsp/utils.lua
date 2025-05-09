@@ -23,7 +23,7 @@ function M.on_attach(client, bufnr)
 
     -- override default mappings with "upgraded" functions
     if supports('textDocument/documentSymbol') then
-        map('n', 'gO', Snacks.picker.lsp_symbols, 'document symbols')
+        map('n', 'gO', require('user.plugins.lsp-symbols').lsp_symbols, 'document symbols')
     end
     if supports('textDocument/references') then
         map('n', 'grr', function()
