@@ -18,7 +18,7 @@
   "markdown-preview.nvim": { "commit": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee" },
   "mason-lspconfig.nvim": { "commit": "e942edf5c85b6a2ab74059ea566cac5b3e1514a4" },
   "mason.nvim": { "commit": "e2f7f9044ec30067bc11800a9e266664b88cda22" },
-  "modus-themes.nvim": { "commit": "417a482a7691ba4093f90f215e846fe2fb498ccf" },
+  "modus-themes.nvim": { "commit": "b6c46f8066b2d96cb75d5bc7202a9a4c097b5e9f" },
   "nvim-autopairs": { "commit": "3d02855468f94bf435db41b661b58ec4f48a06b7" },
   "nvim-cmp": { "commit": "12509903a5723a876abd65953109f926f4634c30" },
   "nvim-dap": { "commit": "ead0de6eac91a555b714bfd7d28959eeecfb96f9" },
