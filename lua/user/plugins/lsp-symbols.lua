@@ -131,7 +131,7 @@ function M.lsp_symbols()
     end
 
     for _, client in ipairs(clients) do
-        local res, err = client:request_sync('textDocument/documentSymbol', { textDocument = text_doc_params })
+        local res, err = client:request_sync('textDocument/documentSymbol', { textDocument = text_doc_params }, 3000)
         if err then
             vim.notify('Something went wrong when requesting LSP symbols:\n'..err, vim.log.levels.ERROR, {})
         end
