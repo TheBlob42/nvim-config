@@ -249,6 +249,14 @@ require('alpacka').setup {
         end,
     },
 
+    {
+        -- make whitespace characters visible in visual mode
+        'mcauley-penney/visual-whitespace.nvim',
+        config = function()
+            require('visual-whitespace').setup()
+        end,
+    },
+
     'modille/groovy.vim', -- handle groovy indent correctly
     "kongo2002/fsharp-vim", -- since there is no default syntax highlighting
     'AndrewRadev/linediff.vim', -- perform diffs only on parts of a buffer
