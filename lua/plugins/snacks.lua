@@ -160,11 +160,24 @@ local pick_git_files = function(dir)
 
         for file in vim.gsplit(result.stdout, '\n') do
             if file ~= '' then
+                local preview
+                if prefix == '[Untracked]' then
+                    -- use the builtin "file" previewer for untracked files
+                    preview = 'file'
+                else
+                    -- show the "git diff" output for modified files
+                    preview = {
+                        text = vim.system({ 'git', 'diff', vim.fs.joinpath(git_root, file) }, { cwd = git_root }):wait().stdout,
+                        ft = 'diff',
+                    }
+                end
+
                 table.insert(git_files, {
                     text = prefix .. ' ' .. file,
                     prefix = prefix,
                     name = file,
-                    file = vim.fs.joinpath(git_root, file)
+                    file = vim.fs.joinpath(git_root, file),
+                    preview = preview,
                 })
             end
         end
@@ -189,6 +202,7 @@ local pick_git_files = function(dir)
                 { item.name, 'SnacksPickerFile' }
             }
         end,
+        preview = 'preview'
     }
 end
 
