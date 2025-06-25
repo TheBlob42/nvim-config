@@ -194,6 +194,26 @@ There is a dedicated keybinding for this task:
 	<localleader>dG
 <
 -----------------------------------------------------------------------------
+RERUNNING A TASK                                         *my-gradle-rerun-task*
+
+To force a rerun of a gradle task and *all* task dependencies of it use the
+`--rerun-tasks` flag:
+>
+	./gradlew test --rerun-tasks
+<
+This will ignore all "up to date" checks and also not delete the generated
+output of previous runs. For rerunning a single task (without any of its
+dependencies) you can use the `--rerun` flag instead.
+
+NOTE: Tasks that are only "composing" other tasks and have no own logic (i.e.
+`build`) will only work with the `--rerun-tasks` option.
+
+SOURCES~
+
+- https://docs.gradle.org/current/userguide/command_line_interface.html#sec:rerun_tasks
+- https://docs.gradle.org/current/userguide/command_line_interface.html#sec:task_options
+
+-----------------------------------------------------------------------------
 COMPILER DEBUGGING                               *my-gradle-compiler-debugging*
 
 Sometimes it is necessary to debug the Java compiler. For example when dealing
