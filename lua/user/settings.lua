@@ -50,6 +50,10 @@ vim.g.markdown_folding = 1 -- see 'ft-markdown-plugin'
 
 -- to preserve the highlighting of the underlying text
 vim.opt.foldtext = ''
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldcolumn = '0'
+vim.opt.foldlevel = 99
 
 vim.opt.cursorline = true
 

@@ -17,3 +17,6 @@ vim.keymap.set('n', '<leader>tr', tabline.rename_tab, { desc = 'Rename the curre
 
 -- statusline
 require('user.plugins.statusline').setup()
+
+-- folds
+require('user.plugins.folds').setup()
