@@ -71,32 +71,51 @@ end
 vim.keymap.set('x', '<localleader>l', create_link(), { buffer = true, desc = 'create link from selection' })
 vim.keymap.set('n', '<localleader>l', create_link('viW'), { buffer = true, desc = 'create link from WORD' })
 
----Paste image data directly from the system clipboard
----Create a new image file from the data using `xclip`
+---Paste image data (PNG) directly from the system clipboard
+---Create a new image file from the data using `xclip` (Linux) or `osascript` (Mac)
 ---Then insert an image link to this newly created file
 ---
 ---Inspired from `ekickx/clipboard-image.nvim`
+---
+---NOTE: No Windows support at this point
 ---
 ---@param paste_before_cursor boolean Paste before (`P`) or after (`p`) the cursor (default)
 ---@return function
 local function md_paste(paste_before_cursor)
     return function()
-        -- only check for the `unnamed` and `unnamedplus` registers
-        if vim.v.register == '*' or vim.v.register == '+' then
-            local out = io.popen('xclip -selection clipboard -o -t TARGETS')
-            assert(out)
-            for line in out:lines() do
-                if line == 'image/png' then
-                    local img_path = string.format('%s/pasted-%s.png',
-                    vim.fn.fnamemodify(vim.fn.expand('%'), ':p:h'),
+        if vim.uv.os_uname().sysname == 'Darwin' then
+            -- https://apple.stackexchange.com/a/375353
+            local png = vim.system({ 'osascript', '-e', 'get the clipboard as «class PNGf»' }):wait()
+            if png.code == 0 then
+                local img_path = ('%s/pasted-%s.png'):format(
+                    vim.fn.expand('%:.:h'),
                     os.date('%Y-%m-%d-%H-%M-%S'))
 
-                    io.popen('xclip -selection clipboard -t image/png -o > "' .. img_path .. '"')
+                local data = png.stdout:match('^«data PNGf(.*)»\n$')
+                vim.cmd('silent ! echo '..data..' | xxd -r -p > '..img_path)
 
-                    return string.format('%s![](%s)<ESC>%si',
+                return string.format('%s![](%s)<ESC>%si',
                     (paste_before_cursor and 'i' or 'a'),
                     img_path,
-                    string.rep('h', vim.str_utfindex(img_path) + 2))
+                    string.rep('h', vim.str_utfindex(img_path, 'utf-8') + 2))
+            end
+        else
+            -- only check for the `unnamed` and `unnamedplus` registers
+            if vim.v.register == '*' or vim.v.register == '+' then
+                local out = assert(io.popen('xclip -selection clipboard -o -t TARGETS'))
+                for line in out:lines() do
+                    if line == 'image/png' then
+                        local img_path = string.format('%s/pasted-%s.png',
+                            vim.fn.fnamemodify(vim.fn.expand('%'), ':.:h'),
+                            os.date('%Y-%m-%d-%H-%M-%S'))
+
+                        io.popen('xclip -selection clipboard -t image/png -o > "' .. img_path .. '"')
+
+                        return string.format('%s![](%s)<ESC>%si',
+                            (paste_before_cursor and 'i' or 'a'),
+                            img_path,
+                            string.rep('h', vim.str_utfindex(img_path, 'utf-8') + 2))
+                    end
                 end
             end
         end
