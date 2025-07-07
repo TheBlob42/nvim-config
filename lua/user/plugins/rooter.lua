@@ -34,7 +34,7 @@ local function set_root()
         return
     end
 
-    if not vim.loop.fs_stat(path) then
+    if not vim.uv.fs_stat(path) then
         return
     end
 

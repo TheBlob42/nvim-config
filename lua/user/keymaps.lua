@@ -128,7 +128,7 @@ end
 ---Like `:wa` but only for a certain directory (including all sub-directories)
 ---@param dir string? Directory to save all buffers (default: current working directory)
 local function save_all_files_in_dir(dir)
-    dir = dir or vim.loop.cwd()
+    dir = dir or vim.uv.cwd()
     assert(dir, 'something went wrong')
     dir = vim.fn.fnamemodify(vim.fn.expand(dir), ':p')
 
@@ -137,7 +137,7 @@ local function save_all_files_in_dir(dir)
         local name = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf), ':p')
         if vim.startswith(name, dir) then
             -- check for element type (file or directory) and modified status
-            local file_info = vim.loop.fs_stat(name)
+            local file_info = vim.uv.fs_stat(name)
             local modified = vim.api.nvim_get_option_value('modified', { buf = buf })
 
             if file_info and file_info.type == 'file' and modified then

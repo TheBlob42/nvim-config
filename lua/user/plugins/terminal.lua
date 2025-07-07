@@ -44,7 +44,7 @@ function M:start(name, opts)
     end
 
     opts = vim.tbl_extend('keep', opts or {}, {
-        cwd = vim.loop.cwd(),
+        cwd = vim.uv.cwd(),
         cmd = '',
     })
 

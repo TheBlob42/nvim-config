@@ -12,7 +12,7 @@ vim.keymap.set('n', '-', function()
     else
         require('drex').open_directory_buffer(vim.fn.fnamemodify(path, ':h'))
         -- check if the file actually exists or if the buffer just has a name
-        if vim.loop.fs_stat(path) then
+        if vim.uv.fs_stat(path) then
             require('drex.elements').focus_element(0, path)
         end
     end

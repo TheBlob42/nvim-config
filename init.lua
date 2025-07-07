@@ -244,7 +244,7 @@ require('alpacka').setup {
             }
             vim.keymap.set('n', '-', oil.open, { desc = 'Open parent directory' })
             vim.keymap.set('n', '_', function()
-                oil.open(vim.loop.cwd())
+                oil.open(vim.uv.cwd())
             end, { desc = 'Open current working directory' })
         end,
     },
