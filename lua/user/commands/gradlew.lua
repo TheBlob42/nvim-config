@@ -1,4 +1,4 @@
-local Term = require('user.plugins.terminal')
+local terminal = require('user.plugins.terminal')
 
 ---Search upwards from the current path for the 'gradlew' script
 ---@return string? Absolute path of the corresponding 'gradlew' script or `nil` if not found
@@ -33,7 +33,7 @@ local function gradlew_exec(task, gradlew_path)
         return
     end
 
-    Term:start('gw:'..task, {
+    terminal.start('gw:'..task, {
         cwd = gradlew_path,
         cmd = './gradlew ' .. task .. '\n',
     }):show({
