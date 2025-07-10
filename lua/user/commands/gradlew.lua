@@ -1,15 +1,14 @@
 local terminal = require('user.plugins.terminal')
 
 ---Search upwards from the current path for the 'gradlew' script
----@return string? Absolute path of the corresponding 'gradlew' script or `nil` if not found
+---@return string? path Absolute path of the corresponding 'gradlew' script if found
 local function get_gradlew_script_path()
     local path
     local buf_name = vim.api.nvim_buf_get_name(0)
     if buf_name:find('^term://') then
         -- in terminal buffer extract cwd from the bufname
-        path = vim.fn.expand(buf_name:match('^term://(.-)//'))
+        path = vim.fn.expand(buf_name:match('^term://(.-)//'), false, false)
     else
-        ---@diagnostic disable-next-line: param-type-mismatch
         path = vim.fn.fnameescape(vim.fn.expand('%:p:h'))
     end
 
@@ -72,11 +71,12 @@ local function task_list(gradlew_path)
         local status = 'progress'
         local result = ''
         local error_msg = ''
-        local stdout = assert(vim.loop.new_pipe())
-        local stderr = assert(vim.loop.new_pipe())
+        local stdout = assert(vim.uv.new_pipe())
+        local stderr = assert(vim.uv.new_pipe())
 
         local handle
-        handle = vim.loop.spawn('./gradlew', {
+        ---@diagnostic disable-next-line: missing-fields
+        handle = vim.uv.spawn('./gradlew', {
             cwd = gradlew_path,
             args = { 'tasks', '--all' },
             stdio = { nil, stdout, stderr },
@@ -86,20 +86,20 @@ local function task_list(gradlew_path)
             else
                 status = 'done'
             end
-            vim.loop.close(stdout)
-            vim.loop.close(stderr)
+            vim.uv.close(stdout)
+            vim.uv.close(stderr)
             if handle then
                 handle:close()
             end
         end)
 
-        vim.loop.read_start(stdout, function(_, data)
+        vim.uv.read_start(stdout, function(_, data)
             if data then
                 result = result .. data
             end
         end)
 
-        vim.loop.read_start(stderr, function(_, data)
+        vim.uv.read_start(stderr, function(_, data)
             if data then
                 error_msg = error_msg .. data
             end
