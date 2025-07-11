@@ -134,7 +134,7 @@ local function task_list(gradlew_path)
             if status ~= 'progress' then
                 vim.api.nvim_win_close(spin_win, true)
                 if error_msg ~= '' then
-                    vim.notify('An error occurred while loading the Gradle tasks:\n' .. error_msg, vim.log.levels.WARN, {})
+                    return vim.notify('An error occurred while loading the Gradle tasks:\n' .. error_msg, vim.log.levels.WARN, {})
                 end
 
                 local tasks = {}
