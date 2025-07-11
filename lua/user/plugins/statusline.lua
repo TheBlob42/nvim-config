@@ -186,7 +186,7 @@ function M.statusline()
         .. '%='
         .. get_visual_counts()
         .. filetype
-        .. '  %02c%#NonText#:%*%P'
+        .. '  %02l/%02L:%02c'
         .. indicators
         .. '  '
 end

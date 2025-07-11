@@ -8,8 +8,8 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.splitkeep = 'screen'
 
-vim.opt.number = true
-vim.opt.signcolumn = 'number'
+vim.opt.number = false
+vim.opt.signcolumn = 'auto'
 
 vim.opt.winborder = 'single'
 
