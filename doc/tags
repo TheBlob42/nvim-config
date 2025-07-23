@@ -1,3 +1,4 @@
+all	my_help.txt	/*all*
 my-clojure	my_help.txt	/*my-clojure*
 my-clojure-lsp	my_help.txt	/*my-clojure-lsp*
 my-clojure-repl	my_help.txt	/*my-clojure-repl*
@@ -9,6 +10,7 @@ my-gradle	my_help.txt	/*my-gradle*
 my-gradle-compiler-debugging	my_help.txt	/*my-gradle-compiler-debugging*
 my-gradle-debugging	my_help.txt	/*my-gradle-debugging*
 my-gradle-misc	my_help.txt	/*my-gradle-misc*
+my-gradle-rerun-task	my_help.txt	/*my-gradle-rerun-task*
 my-gradle-testing	my_help.txt	/*my-gradle-testing*
 my-java	my_help.txt	/*my-java*
 my-java-classpath	my_help.txt	/*my-java-classpath*
