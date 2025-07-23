@@ -201,6 +201,15 @@ require('alpacka').setup {
     },
 
     {
+        -- rest client that works with `.http` files
+        'mistweaverco/kulala.nvim',
+        config = function()
+            -- usage setup in the `./after/ftplugin/http.lua` file
+            require('kulala').setup()
+        end,
+    },
+
+    {
         -- separate "cut" from "delete"
         'TheBlob42/vim-cutlass',
         config = function()
