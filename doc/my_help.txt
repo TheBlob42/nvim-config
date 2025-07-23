@@ -16,6 +16,14 @@ Then you can copy all matching lines via |:g| (here using register `a`):
 	:g/<pattern>/y A
 <
 =============================================================================
+ALIGN COLUMNS                                                *my-align-columns*
+
+Align data in a column format based on a given separator using the `column`
+utility from within Neovim. Mark the lines you want to align then call:
+>
+	:!column -t -s "<separator>"
+<
+=============================================================================
 REMOVE DUPLICATES                                        *my-remove-duplicates*
 
 You can remove dupliate lines from a buffer using:

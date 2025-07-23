@@ -1,4 +1,5 @@
 all	my_help.txt	/*all*
+my-align-columns	my_help.txt	/*my-align-columns*
 my-clojure	my_help.txt	/*my-clojure*
 my-clojure-lsp	my_help.txt	/*my-clojure-lsp*
 my-clojure-repl	my_help.txt	/*my-clojure-repl*
