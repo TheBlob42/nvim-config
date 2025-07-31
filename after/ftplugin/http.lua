@@ -9,7 +9,7 @@ vim.keymap.set('n', '<localleader>C', require('kulala.ui').interrupt_requests, {
 
 require('which-key').add {{ '<localleader>c', group = 'cULR', buffer = true }}
 vim.keymap.set('n', '<localleader>cc', kulala.copy, { buffer = true, desc = 'Copy as cURL' })
-vim.keymap.set('n', '<localleader>cp', kulala.from_curl, { buffer = true, desc = 'Past from cURL' })
+vim.keymap.set('n', '<localleader>cp', kulala.from_curl, { buffer = true, desc = 'Paste from cURL' })
 
 -- use improved LSP symbol search to search for available requests in buffer
 vim.keymap.set('n', 'gO', require('user.plugins.lsp-symbols').lsp_symbols, { buffer = true, desc = 'Search requests' })
