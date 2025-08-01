@@ -240,6 +240,9 @@ require('alpacka').setup {
         config = function()
             local oil = require('oil')
             oil.setup {
+                buf_options = {
+                    bufhidden = 'wipe'
+                },
                 columns = {
                     'size',
                     'icon',
