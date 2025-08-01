@@ -9,7 +9,9 @@ vim.opt.splitright = true
 vim.opt.splitkeep = 'screen'
 
 vim.opt.number = false
-vim.opt.signcolumn = 'auto'
+vim.opt.numberwidth = 2
+
+vim.opt.signcolumn = 'auto:1-2'
 
 vim.opt.winborder = 'single'
 
@@ -81,9 +83,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     command = 'silent! lua vim.highlight.on_yank()',
     desc = 'highlight yanked text',
 })
-
-vim.opt.numberwidth = 2
-vim.opt.signcolumn = 'auto:1-2'
 
 -- mark diagnostics with the little "default squares"
 vim.diagnostic.config {
