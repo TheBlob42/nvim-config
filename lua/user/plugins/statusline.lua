@@ -4,8 +4,10 @@
     - diagnostic counter (by type)
     - filetype icon + string
     - modified status
+    - show current git branch
     - correctly reset highlights on colorscheme change
     - special cases for oil, git-blame and terminal buffers
+    - special highlighting when recording a macro (configurable)
 
     Requires the following dependencies:
 
@@ -13,6 +15,13 @@
 --]]
 
 local M = {}
+
+---@class StatusLineOptions
+---@fields macro_hl string The (base) highlight used for statusline when a macro is recorded. Set to `false` or '' to disable it.
+local default_options = {
+    macro_hl = 'Error'
+}
+local options = default_options
 
 -- diagnostic names + corresponding icon and highlight
 local diagnostics_attrs = {
@@ -47,14 +56,18 @@ local function get_custom_hl(highlight)
 
     -- check for default NVIM colorscheme
     local colorscheme = vim.g.colors_name or ('default_' .. vim.o.background)
-    local key = colorscheme .. '_' .. fg
+    -- check if macro highlight is set and if we are recording a macro currently
+    local macro = options.macro_hl and options.macro_hl ~= '' and vim.fn.reg_recording() ~= ''
+
+    local key = colorscheme .. (macro and '_macro' or '') .. '_' .. fg
+    local bg_highlight = macro and options.macro_hl or 'StatusLine'
 
     if not hl_cache[key] then
         -- replace invalid characters (see ':h group-name')
         local name = string.gsub('StatusLine_' .. key, '[^%w_.@]', '_')
         hl_cache[key] = name
         -- retrieve correct background color and create new custom highlight group
-        local bg = vim.api.nvim_get_hl(0, { name = 'StatusLine' }).bg
+        local bg = vim.api.nvim_get_hl(0, { name = bg_highlight }).bg
         vim.api.nvim_set_hl(0, name, { fg = fg, bg = bg })
     end
 
@@ -69,6 +82,32 @@ vim.api.nvim_create_autocmd('ColorSchemePre', {
         hl_cache = {}
     end,
     desc = 'clear the highlights cache for the statusline',
+})
+
+vim.api.nvim_create_autocmd('ColorScheme', {
+    group = vim.api.nvim_create_augroup('StatusLineRelinkStatusLineHL', {}),
+    pattern = '*',
+    callback = function()
+        if options.macro_hl and options.macro_hl ~= '' and vim.fn.reg_recording() ~= '' then
+            vim.cmd('highlight! link StatusLine '..options.macro_hl)
+        else
+            vim.cmd('highlight! link StatusLine NONE')
+        end
+        vim.cmd.redrawstatus()
+    end
+})
+
+vim.api.nvim_create_autocmd({ 'RecordingEnter', 'RecordingLeave' }, {
+    group = vim.api.nvim_create_augroup('StatusLineMacroRecording', {}),
+    pattern = '*',
+    callback = function(data)
+        if options.macro_hl and options.macro_hl ~= '' and data.event == 'RecordingEnter' then
+          vim.cmd('highlight! link StatusLine '..options.macro_hl)
+        else
+          vim.cmd('highlight! link StatusLine NONE')
+        end
+        vim.cmd.redrawstatus()
+    end
 })
 
 function M.statusline()
@@ -191,8 +230,10 @@ function M.statusline()
         .. '  '
 end
 
----There are no options to overwrite, this will simply set the `statusline` option accordingly
-function M.setup()
+---Setup the statusline and provide additional configuration
+---@param opts? StatusLineOptions
+function M.setup(opts)
+    options = vim.tbl_extend('keep', opts or {}, default_options)
     vim.opt.statusline = '%!v:lua.require("user.plugins.statusline").statusline()'
 end
 
