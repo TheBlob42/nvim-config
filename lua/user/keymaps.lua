@@ -183,7 +183,6 @@ local mappings = {
     { '<leader>f<C-s>', save_all_files_in_dir, 'save all files in cwd' },
 
     -- insert
-    { '<leader>iu', '<CMD>InsertUUIDv4<CR>', 'insert uuid' },
     { '<leader>ik', "[ ", 'insert lines above', { remap = true } },
     { '<leader>ij', "] ", 'insert lines below', { remap = true } },
 

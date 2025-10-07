@@ -17,6 +17,9 @@ require('modus-themes').setup {
         hls['LeapLabel'] = { link = 'Sneak' }
         hls['@markdown.quote']  = { link = 'Comment' }
         hls['@lsp.type.enumMember.markdown'] = { link = 'Keyword' } -- markdown tag
+        -- make tabstops better distinguishable
+        hls['SnippetTabstop'] = { link = 'MatchParen' }
+        hls['SnippetTabstopActive'] = { link = 'Visual' }
     end,
 }
 

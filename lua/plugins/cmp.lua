@@ -1,7 +1,5 @@
 ---@diagnostic disable: missing-fields
 local cmp = require('cmp')
--- additional requirements for cmp setup
-local luasnip = require('luasnip')
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- ~ "regular" autocompletion ~
@@ -17,7 +15,7 @@ cmp.setup {
     end,
     snippet = {
         expand = function(args)
-            luasnip.lsp_expand(args.body)
+            vim.snippet.expand(args.body)
         end,
     },
     mapping = cmp.mapping.preset.insert {
@@ -31,7 +29,6 @@ cmp.setup {
     },
     sources = cmp.config.sources({
         { name = 'nvim_lsp'},
-        { name = 'luasnip'},
         { name = 'path'},
     }, {
         { name = 'buffer', keyword_length = 5 },

@@ -171,13 +171,6 @@ require('alpacka').setup {
     'mfussenegger/nvim-dap', -- debug configuration (DAP)
     'rcarriga/nvim-dap-ui',  -- an "out-of-the-box" UI for dap
 
-    -- SNIPPETS
-
-    {
-        'L3MON4D3/LuaSnip',
-        config = plugin_config('luasnip'),
-    },
-
     -- AUTO COMPLETION
     {
         'hrsh7th/nvim-cmp',
@@ -187,7 +180,6 @@ require('alpacka').setup {
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
     'hrsh7th/cmp-cmdline',
-    'saadparwaiz1/cmp_luasnip',
 
     {
         -- insert parentheses, brackets & quotes in pairs

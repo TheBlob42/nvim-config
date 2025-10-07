@@ -1,11 +1,9 @@
 {
-  "LuaSnip": { "commit": "c9b9a22904c97d0eb69ccb9bab76037838326817" },
   "alpacka.nvim": { "commit": "9623f0ab1be4a68249b3c46ce17e40a4769b4fb6" },
   "cmp-buffer": { "commit": "3022dbc9166796b644a841a02de8dd1cc1d311fa" },
   "cmp-cmdline": { "commit": "d250c63aa13ead745e3a40f61fdd3470efde3923" },
   "cmp-nvim-lsp": { "commit": "99290b3ec1322070bcfb9e846450a46f6efa50f0" },
   "cmp-path": { "commit": "91ff86cd9c29299a64f968ebb45846c485725f23" },
-  "cmp_luasnip": { "commit": "98d9cb5c2c38532bd9bdb481067b20fea8f32e90" },
   "fidget.nvim": { "commit": "a0abbf18084b77d28bc70e24752e4f4fd54aea17" },
   "fsharp-vim": { "commit": "64aec6089558ec290287a9c935b53feeedd0c974" },
   "gitlinker.nvim": { "commit": "cc59f732f3d043b626c8702cb725c82e54d35c25" },

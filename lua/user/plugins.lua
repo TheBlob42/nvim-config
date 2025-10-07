@@ -20,3 +20,12 @@ require('user.plugins.statusline').setup()
 
 -- folds
 require('user.plugins.folds').setup()
+
+-- snippets
+require('user.plugins.snippets')
+require('user.plugins.snippets.generic')
+require('user.plugins.snippets.markdown')
+require('user.plugins.snippets.javascript')
+require('user.plugins.snippets.lua')
+require('user.plugins.snippets.sh')
+require('user.plugins.snippets.java')
