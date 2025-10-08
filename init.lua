@@ -3,7 +3,7 @@ require('user.config')   -- general configuration stuff
 
 -- local user configuration (if present)
 if not pcall(require, 'user.local') then
-    vim.api.nvim_echo({ 'No system local configuration found! Check "lua/user/local.lua.sample" for more information...' }, true, { err = true })
+    vim.api.nvim_echo({{ 'No system local configuration found! Check "lua/user/local.lua.sample" for more information...' }}, true, { err = true })
 end
 
 -- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
