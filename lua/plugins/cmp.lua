@@ -21,7 +21,14 @@ cmp.setup {
     mapping = cmp.mapping.preset.insert {
         ['<C-u>'] = cmp.mapping.scroll_docs(-4),
         ['<C-d>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete({}),
+        -- similar to `compl-generic` by default
+        ['<C-n>'] = cmp.mapping(function()
+            if cmp.visible() then
+                cmp.select_next_item()
+            else
+                cmp.complete()
+            end
+        end),
         ['<C-e>'] = cmp.mapping.close(),
         ['<CR>'] = cmp.mapping.confirm {
             select = false,
