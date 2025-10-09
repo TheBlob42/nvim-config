@@ -269,7 +269,9 @@ require('alpacka').setup {
 -- load all custom user commands from "lua/user/commands"
 for name, _ in vim.fs.dir(vim.fn.fnamemodify(vim.env.MYVIMRC, ':h') .. '/lua/user/commands') do
     local cmd = string.match(name, '(.*)%.lua')
-    require('user.commands.'..cmd)
+    if cmd then
+        require('user.commands.'..cmd)
+    end
 end
 
 require('user.plugins') -- load custom user plugins
