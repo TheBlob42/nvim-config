@@ -6,7 +6,7 @@ vim.opt_local.comments:append('f:--')
 vim.api.nvim_buf_create_user_command(0, 'LuaReload', function(_)
     local file = vim.fn.expand('%')
     if not file then
-        vim.api.nvim_echo({ 'Only works inside a file!', 'WarningMsg' }, false, {})
+        vim.api.nvim_echo({{ 'Only works inside a file!', 'WarningMsg' }}, false, {})
         return
     end
 

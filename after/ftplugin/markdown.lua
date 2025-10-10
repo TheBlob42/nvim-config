@@ -128,4 +128,6 @@ vim.keymap.set('n', 'p', md_paste(false), { buffer = true, expr = true, desc = '
 vim.keymap.set('n', 'P', md_paste(true),  { buffer = true, expr = true, desc = 'Paste text or copied image' })
 
 -- needs `sed` and `column` (including the `-t` option) to be installed
-vim.keymap.set('x', '<localleader>f', [[!sed "s/ *| */§| /g" | column -t -s "§" | sed "s/  |/ |/g" | sed "s/| $/|/g"<CR>]], { buffer = true, desc = 'Format table' })
+vim.keymap.set('x', '<localleader>f',
+    [[!sed "s/ *| */§| /g" | column -t -s "§" | sed "s/  |/ |/g" | sed "s/| $/|/g"<CR>]],
+    { buffer = true, desc = 'Format table' })

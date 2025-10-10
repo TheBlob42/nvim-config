@@ -1,8 +1,7 @@
 local autopairs = require('nvim-autopairs')
 
 autopairs.setup {
-    -- don't add a pair if theres already a closing bracket in the same line
-    enable_check_bracket_line = true
+    enable_check_bracket_line = true -- don't add a pair if theres already a closing bracket in the same line
 }
 
 -- setup for `nvim-cmp`
