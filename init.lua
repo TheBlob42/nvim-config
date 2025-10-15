@@ -64,12 +64,6 @@ require('alpacka').setup {
     },
 
     {
-        -- fancy notifications
-        'rcarriga/nvim-notify',
-        config = plugin_config('notify'),
-    },
-
-    {
         -- display possible key bindings in a popup
         'folke/which-key.nvim',
         config = plugin_config('which-key'),

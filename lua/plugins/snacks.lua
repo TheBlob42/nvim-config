@@ -217,6 +217,7 @@ require('snacks').setup {
     bigfile = { enabled = true },
     indent = { enabled = true },
     image = { enabled = image_support },
+    notifier = { enable = true },
     picker = {
         main = {
             -- all windows can be the main window
@@ -490,6 +491,7 @@ end, { desc = 'force delete buffer' })
 -- ~~~~~~~~~~~~~
 
 vim.api.nvim_create_user_command('Highlights', Snacks.picker.highlights, { desc = 'Open highlights picker' })
+vim.api.nvim_create_user_command('Notifications', Snacks.notifier.show_history, { desc = 'Open notifications history' })
 
 if vim.fn.executable('nvr') then
     vim.env.GIT_EDITOR = 'nvr -cc split --remote-wait +"CloseFloats" +"set bufhidden=wipe"'
