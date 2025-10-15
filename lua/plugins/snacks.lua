@@ -225,6 +225,12 @@ require('snacks').setup {
             file = false,
         },
         sources = {
+            files = {
+                hidden = true
+            },
+            grep = {
+                hidden = true
+            },
             --[[
                 The "lines" picker should NOT use the main window for preview as this interferes with split windows
                 (especially horizontally) and might end up in a situation where we can't see the preview at all, since
