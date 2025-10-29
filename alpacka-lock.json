@@ -33,7 +33,6 @@
   "suda.vim": { "commit": "9adda7d195222d4e2854efb2a88005a120296c47" },
   "vim-cutlass": { "commit": "58176bc318ca3499a7f39a47638f675c13ecaa9b" },
   "vim-repeat": { "commit": "65846025c15494983dafe5e3b46c8f88ab2e9635" },
-  "vim-sleuth": { "commit": "be69bff86754b1aa5adcbb527d7fcd1635a84080" },
   "vim-surround": { "commit": "3d188ed2113431cf8dac77be61b842acb64433d9" },
   "visual-whitespace.nvim": { "commit": "11b654e7e053e52e375297f472c8824a74b1b965" },
   "which-key.nvim": { "commit": "0e76a87ac51772569aec678dc74baa8e2a86100c" }

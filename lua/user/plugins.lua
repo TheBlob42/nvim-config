@@ -21,6 +21,9 @@ require('user.plugins.statusline').setup()
 -- folds
 require('user.plugins.folds').setup()
 
+-- indentation
+require('user.plugins.indent').setup()
+
 -- snippets
 require('user.plugins.snippets')
 require('user.plugins.snippets.generic')

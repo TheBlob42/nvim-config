@@ -42,7 +42,6 @@ require('alpacka').setup {
 
     'tpope/vim-surround', -- easy "surroundings"
     'tpope/vim-repeat',   -- repeat plug mappings with '.'
-    'tpope/vim-sleuth',   -- auto configure `shiftwidth`
 
     'kyazdani42/nvim-web-devicons', -- provide icons and colors
     'nvim-lua/plenary.nvim', -- dependency for gitlinker
