@@ -29,7 +29,7 @@
   "oil.nvim": { "commit": "add50252b5e9147c0a09d36480d418c7e2737472" },
   "parinfer-rust": { "commit": "d269dca33970823e4a1f65958e92417ce88f09d9" },
   "plenary.nvim": { "commit": "3707cdb1e43f5cea73afb6037e6494e7ce847a66" },
-  "snacks.nvim": { "commit": "7769d7e2dff8d725384532f58d83761942487243" },
+  "snacks.nvim": { "commit": "3166af7ec3871424b6da71da6bae278117972244" },
   "suda.vim": { "commit": "9adda7d195222d4e2854efb2a88005a120296c47" },
   "vim-cutlass": { "commit": "58176bc318ca3499a7f39a47638f675c13ecaa9b" },
   "vim-repeat": { "commit": "65846025c15494983dafe5e3b46c8f88ab2e9635" },
