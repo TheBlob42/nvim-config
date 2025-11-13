@@ -28,6 +28,20 @@ require('mason-lspconfig').setup_handlers {
     function(server_name)
         lspconfig[server_name].setup(default_config)
     end,
+    ['lua_ls'] = function()
+        -- https://luals.github.io/wiki/settings/
+        local config = vim.tbl_deep_extend('force', default_config, {
+            settings = {
+                Lua = {
+                    completion = {
+                        showWord = false,
+                        workspaceWord = false,
+                    }
+                }
+            }
+        })
+        lspconfig['lua_ls'].setup(config)
+    end,
     ['jdtls'] = function()
         -- do nothing (see 'ftplugin/java.lua')
     end,
