@@ -330,6 +330,44 @@ specific options:
 For the list of all available options see:
 https://github.com/eclipse/eclipse.jdt.ls/wiki/Language-Server-Settings-&-Capabilities#java-compiler-options
 
+-----------------------------------------------------------------------------
+GRADLE DEPENDENCY VERIFICATION              *my-jdtls-gradle-deps-verification*
+
+Java Gradle projects might be using the dependency locking and dependency
+verification mechanisms which can cause problems with JDTLS under certain
+circumstances. If you have the feeling something is not working correctly
+(e.g. autocompletion) first check the JDTLS logs by using the `JdtShowLogs`
+command and scan the `.log` file. You might find an error like this:
+>
+    Can't read root project location for project located at [...]
+<
+This can have many root causes but failing dependency verification is one of
+them. To be sure also check for an `DependencyVerificationException` which
+confirms the issue:
+>
+    Caused by: org.gradle.api.internal.artifacts.verification.exceptions.DependencyVerificationException
+<
+The solution is to slightly adopt your `gradle/verification-metadata.xml`
+file and add a section for trusted artifacts for doc and source jars:
+>xml
+    <verification-metadata>
+      <configuration>
+          <verify-metadata>true</verify-metadata>
+          <verify-signatures>false</verify-signatures>
+          <trusted-artifacts>
+            <trust file=".*-javadoc[.]jar" regex="true"/>
+            <trust file=".*-sources[.]jar" regex="true"/>
+          </trusted-artifacts>
+        </configuration>
+    </verification-metadata>
+<
+By default Gradle will verify ALL dependencies, which might conflict with IDEs
+that automatically download sources and javadoc. Therefore we have to
+explicitely exclude them from the verfication process.
+
+See the official Gradle documentation for additional information:
+https://docs.gradle.org/current/userguide/dependency_verification.html#sec:skipping-javadocs
+
 =============================================================================
 TOMCAT DEBUG                                                  *my-tomcat-debug*
 
