@@ -164,16 +164,6 @@ require('alpacka').setup {
     'mfussenegger/nvim-dap', -- debug configuration (DAP)
     'rcarriga/nvim-dap-ui',  -- an "out-of-the-box" UI for dap
 
-    -- AUTO COMPLETION
-    {
-        'hrsh7th/nvim-cmp',
-        config = plugin_config('cmp'),
-    },
-    'hrsh7th/cmp-nvim-lsp',
-    'hrsh7th/cmp-buffer',
-    'hrsh7th/cmp-path',
-    'hrsh7th/cmp-cmdline',
-
     {
         -- insert parentheses, brackets & quotes in pairs
         'windwp/nvim-autopairs',
@@ -267,6 +257,7 @@ for name, _ in vim.fs.dir(vim.fn.fnamemodify(vim.env.MYVIMRC, ':h') .. '/lua/use
     end
 end
 
-require('user.plugins') -- load custom user plugins
-require('user.keymaps') -- general key mappings
-require('lsp')          -- LSP setup
+require('user.plugins')    -- load custom user plugins
+require('user.keymaps')    -- general key mappings
+require('user.completion') -- (auto) completion setup
+require('lsp')             -- LSP setup

@@ -2,12 +2,7 @@ local M = {}
 
 local highlight_group = vim.api.nvim_create_augroup('LspDocumentHighlight', {})
 
--- nvim-cmp supports additional capabilities
--- see: https://github.com/hrsh7th/cmp-nvim-lsp/issues/44#issuecomment-1591508900
-M.capabilities = vim.tbl_deep_extend(
-    'force',
-    require('lspconfig').util.default_config,
-    { capabilities = require('cmp_nvim_lsp').default_capabilities() })
+M.capabilities = vim.lsp.protocol.make_client_capabilities()
 
 ---Function to set LSP specific keybindings based on the given server capabilities
 ---Some basic keybindings are set by default (`lsp-defaults`) and are not repeated here
@@ -19,6 +14,10 @@ function M.on_attach(client, bufnr)
     end
     local map = function(mode, lhs, rhs, desc)
         vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
+    end
+
+    if supports('textDocument/completion') then
+        vim.lsp.completion.enable(true, client.id, bufnr, {})
     end
 
     -- override default mappings with "upgraded" functions

@@ -1,9 +1,5 @@
 {
   "alpacka.nvim": { "commit": "9623f0ab1be4a68249b3c46ce17e40a4769b4fb6" },
-  "cmp-buffer": { "commit": "3022dbc9166796b644a841a02de8dd1cc1d311fa" },
-  "cmp-cmdline": { "commit": "d250c63aa13ead745e3a40f61fdd3470efde3923" },
-  "cmp-nvim-lsp": { "commit": "99290b3ec1322070bcfb9e846450a46f6efa50f0" },
-  "cmp-path": { "commit": "91ff86cd9c29299a64f968ebb45846c485725f23" },
   "fidget.nvim": { "commit": "a0abbf18084b77d28bc70e24752e4f4fd54aea17" },
   "fsharp-vim": { "commit": "64aec6089558ec290287a9c935b53feeedd0c974" },
   "gitlinker.nvim": { "commit": "cc59f732f3d043b626c8702cb725c82e54d35c25" },
@@ -19,7 +15,6 @@
   "mason.nvim": { "commit": "8024d64e1330b86044fed4c8494ef3dcd483a67c" },
   "modus-themes.nvim": { "commit": "b6c46f8066b2d96cb75d5bc7202a9a4c097b5e9f" },
   "nvim-autopairs": { "commit": "3d02855468f94bf435db41b661b58ec4f48a06b7" },
-  "nvim-cmp": { "commit": "12509903a5723a876abd65953109f926f4634c30" },
   "nvim-dap": { "commit": "ead0de6eac91a555b714bfd7d28959eeecfb96f9" },
   "nvim-dap-ui": { "commit": "85b16ac2309d85c88577cd8ee1733ce52be8227e" },
   "nvim-jdtls": { "commit": "3efcd0700a293efea9dada58f79c32a64850eb24" },

@@ -43,8 +43,6 @@ vim.opt.listchars = {
     space = '·',
 }
 
-vim.opt.completeopt = { 'menuone', 'noselect' }
-
 vim.opt.timeoutlen = 500 -- for `which-key`
 vim.opt.updatetime = 400 -- speed up 'cursorhold' events
 
