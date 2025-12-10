@@ -9,5 +9,12 @@ for _, ft in ipairs({ 'javascript', 'typescript', 'typescriptreact' }) do
             \t$0
             }
         ]],
+        ['try'] = format [[
+            try {
+            \t$1
+            } catch (${2:e}) {
+            \t$0
+            }
+        ]],
     })
 end

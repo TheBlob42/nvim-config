@@ -61,6 +61,18 @@ snippets.set_snippets('java', {
       \t$0
       }
     ]],
+    ['try'] = format [[
+      try {
+      \t$1
+      } catch (${2:Exception} ${3:e}) {
+      \t$0
+      }
+    ]],
+    ['tryr'] = format [[
+      try (${1:FileReader} ${2:r} = ${3:new FileReader()}) {
+      \t$0
+      }
+    ]],
     ['m'] = format [[
       ${1|public ,private ,protected |}${2:static }${3:void} ${4:name}($5) {
       \t$0
