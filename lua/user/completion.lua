@@ -1,4 +1,4 @@
-vim.o.complete = 'o,.,w'
+vim.o.complete = '.,w'
 vim.o.completeopt = 'menuone,popup,fuzzy,noselect'
 vim.o.wildmode = 'noselect:full'
 vim.o.wildoptions = 'pum,tagfile,fuzzy'
@@ -21,6 +21,9 @@ vim.api.nvim_create_autocmd('CompleteDone', {
     end,
 })
 
+vim.keymap.set('i', '<C-o>', '<C-x><C-o>', { desc = 'Shortcut for omnicompletion' })
+vim.keymap.set('i', '<C-f>', '<C-x><C-f>', { desc = 'Shortcut for file/path completion' })
+
 -- when the completion menu is visible and some entry there is selected <CR> should work as <C-Y>
 -- should also integration with the nvim-autopairs plugin on <CR>
 vim.keymap.set('i', '<CR>', function()
@@ -32,5 +35,5 @@ vim.keymap.set('i', '<CR>', function()
 end, {
     expr = true,
     replace_keycodes = false, -- to make autopairs completion confirm work properly
-    desc = ''
+    desc = '<CR> should work like <C-Y> when completion menu is visible'
 })
