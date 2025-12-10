@@ -103,7 +103,7 @@ vim.keymap.set({ 'i', 's' }, '<Tab>', function()
 
     local row, col = unpack(vim.api.nvim_win_get_cursor(0))
     local line = vim.api.nvim_buf_get_lines(0, row - 1, row, false)[1]
-    local word = line:sub(1, col):match('[%w%d_,.->]+$')
+    local word = line:sub(1, col):match('[%w%d%-_,.>]+$')
 
     if not word then
         return '<TAB>'
