@@ -32,3 +32,6 @@ require('user.plugins.snippets.javascript')
 require('user.plugins.snippets.lua')
 require('user.plugins.snippets.sh')
 require('user.plugins.snippets.java')
+
+-- easymotion
+require('user.plugins.easymotion').setup()

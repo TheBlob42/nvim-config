@@ -47,12 +47,6 @@ require('alpacka').setup {
     'nvim-lua/plenary.nvim', -- dependency for gitlinker
 
     {
-        -- sneak like motion plugin
-        'ggandor/leap.nvim',
-        config = plugin_config('leap'),
-    },
-
-    {
         -- two char escape sequence
         'TheBlob42/houdini.nvim',
         config = function()

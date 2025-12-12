@@ -8,7 +8,6 @@
   "houdini.nvim": { "commit": "1b7ec0a713a2aa9965848d8b93f66dc93716fd1c" },
   "kulala.nvim": { "commit": "9d3206dda077d24ef3e6a2e3578bc0c914b4944c" },
   "lazydev.nvim": { "commit": "2367a6c0a01eb9edb0464731cc0fb61ed9ab9d2c" },
-  "leap.nvim": { "commit": "be8e6eee2dabc68ce810ddf2e800c14bfda09fee" },
   "linediff.vim": { "commit": "ddae71ef5f94775d101c1c70032ebe8799f32745" },
   "markdown-preview.nvim": { "commit": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee" },
   "mason-lspconfig.nvim": { "commit": "e942edf5c85b6a2ab74059ea566cac5b3e1514a4" },
