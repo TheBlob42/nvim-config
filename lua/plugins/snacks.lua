@@ -245,6 +245,7 @@ require('snacks').setup {
                     -- if we use `nil` the default config will overwrite this
                     ---@diagnostic disable-next-line: assign-type-mismatch
                     preview = '',
+                    hidden = {}, -- overwrite default value
                     layout = {
                         backdrop = false,
                         box = 'vertical',
@@ -355,42 +356,25 @@ require('snacks').setup {
                 }
             },
         },
-        layout = function()
-            if vim.o.columns >= 170 then
-                return {
-                    layout = {
-                        backdrop = false,
-                        box = 'vertical',
-                        row = -1,
-                        width = 0,
-                        height = 0.5,
-                        border = 'top',
-                        title = '{title} {live} {flags}',
-                        title_pos = 'left',
-                        { win = 'input', height = 1, border = 'bottom' },
-                        {
-                            box = 'horizontal',
-                            { win = 'list', border = 'none' },
-                            { win = 'preview', title = '{preview}', width = 0.5, border = 'left' }
-                        },
-                    }
-                }
-            end
-
-            return {
-                hidden = { 'preview' },
-                layout = {
-                    backdrop = false,
-                    box = 'vertical',
-                    row = -1,
-                    width = 0,
-                    height = 0.5,
-                    { win = 'input', title = '{title} {live} {flags}', title_pos = 'left', height = 1, border = 'top' },
-                    { win = 'list', border = 'top' },
-                    { win = 'preview', title = '{preview}', border = 'top' }
-                }
-            }
-        end,
+        layout = {
+            hidden = { 'preview' },
+            layout = {
+                backdrop = false,
+                box = 'vertical',
+                row = -1,
+                width = 0,
+                height = 0.5,
+                border = 'top',
+                title = '{title} {live} {flags}',
+                title_pos = 'left',
+                { win = 'input', height = 1, border = 'bottom' },
+                {
+                    box = 'horizontal',
+                    { win = 'list', border = 'none' },
+                    { win = 'preview', title = '{preview}', width = 0.7, border = 'left' }
+                },
+            },
+        },
         formatters = {
             file = {
                 -- also show deeply nested file path completely
