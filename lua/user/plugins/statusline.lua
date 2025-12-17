@@ -129,7 +129,7 @@ function M.statusline()
         end
 
         -- active window marker (color change based on the current mode)
-        active_indicator = '%#' .. mode_hl .. '#  '
+        active_indicator = '%#' .. mode_hl .. '#'
     end
 
     -- ~~~~~~~~~~~~~~~
@@ -225,7 +225,7 @@ function M.statusline()
         .. '%='
         .. get_visual_counts()
         .. filetype
-        .. '  %02l/%02L:%02c'
+        .. '  %02l:%02c'
         .. indicators
         .. '  '
 end
