@@ -12,7 +12,7 @@ local query = vim.treesitter.query.parse('markdown', '((list_item (task_list_mar
 ---@field folder string? Path to where the journal files should be stored (defaults to "<user_data_directory>/journal")
 
 local options = {
-    date_format = '%Y-%V',
+    date_format = '%G-%V',
     folder = vim.fs.joinpath(vim.fn.stdpath('data'), 'journal'),
 }
 
