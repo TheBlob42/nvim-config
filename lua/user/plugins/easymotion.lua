@@ -54,7 +54,7 @@ local function easymotion()
     local needle = char1 .. char2
 
     local case_sensitive = needle:lower() ~= needle
-    if case_sensitive then
+    if not case_sensitive then
         needle = needle:lower()
     end
 
