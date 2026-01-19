@@ -197,14 +197,6 @@ require('alpacka').setup {
     },
 
     {
-        -- preview markdown in your browser
-        'iamcco/markdown-preview.nvim',
-        build = function()
-            vim.fn['mkdp#util#install']()
-        end,
-    },
-
-    {
         'stevearc/oil.nvim',
         config = function()
             local oil = require('oil')
