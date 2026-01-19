@@ -6,9 +6,9 @@ if not pcall(require, 'user.local') then
     vim.api.nvim_echo({{ 'No system local configuration found! Check "lua/user/local.lua.sample" for more information...' }}, true, { err = true })
 end
 
--- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--- lazy.nvim config & utilities
--- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- ~~~~~~~~~~~~~~~~~~~~~~~
+--  alpacka configuration
+-- ~~~~~~~~~~~~~~~~~~~~~~~
 
 -- automatically bootstrap alpacka.nvim
 local alpacka_path = vim.fn.stdpath('data') .. '/site/pack/alpacka/opt/alpacka.nvim'
