@@ -68,7 +68,11 @@ local function easymotion()
     local char_index = 1
 
     for line_index, line in ipairs(lines) do
-        if vim.fn.foldclosed(line_index) == -1 then
+        local line_number = line_index + first_line - 1
+
+        -- check if line part of a closed fold
+        local foldclosed = vim.fn.foldclosed(line_number)
+        if foldclosed == -1 or foldclosed == line_number then
             if not case_sensitive then
                 line = line:lower()
             end
@@ -83,7 +87,7 @@ local function easymotion()
                 end
 
                 matches[matches_index][options.chars[char_index]] = {
-                    line = line_index + first_line - 1,
+                    line = line_number,
                     col = col - 1,
                 }
 
