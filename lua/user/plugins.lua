@@ -35,3 +35,8 @@ require('user.plugins.snippets.java')
 
 -- easymotion
 require('user.plugins.easymotion').setup()
+
+-- breadcrumbs
+require('user.plugins.breadcrumbs').setup {
+    filetypes = { 'json', 'yaml' },
+}
