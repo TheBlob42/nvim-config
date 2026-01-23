@@ -356,25 +356,27 @@ require('snacks').setup {
                 }
             },
         },
-        layout = {
-            hidden = { 'preview' },
-            layout = {
-                backdrop = false,
-                box = 'vertical',
-                row = -1,
-                width = 0,
-                height = 0.5,
-                border = 'top',
-                title = '{title} {live} {flags}',
-                title_pos = 'left',
-                { win = 'input', height = 1, border = 'bottom' },
-                {
-                    box = 'horizontal',
-                    { win = 'list', border = 'none' },
-                    { win = 'preview', title = '{preview}', width = 0.7, border = 'left' }
+        layout = function(_)
+            return {
+                hidden = { 'preview' },
+                layout = {
+                    backdrop = false,
+                    box = 'vertical',
+                    row = -1,
+                    width = 0,
+                    height = 0.5,
+                    border = 'top',
+                    title = '{title} {live} {flags}',
+                    title_pos = 'left',
+                    { win = 'input', height = 1, border = 'bottom' },
+                    {
+                        box = 'horizontal',
+                        { win = 'list', border = 'none' },
+                        { win = 'preview', title = '{preview}', width = 0.7, border = 'left' }
+                    },
                 },
-            },
-        },
+            }
+        end,
         formatters = {
             file = {
                 -- also show deeply nested file path completely
