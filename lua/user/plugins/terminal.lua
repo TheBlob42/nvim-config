@@ -13,11 +13,18 @@ local Terminal = {}
 -- this is gonna be used as metatable
 Terminal.__index = Terminal
 
----Retrieve a terminal by its `name` (if it exists)
+---Retrieve a terminal by its `name` and an optional `path`
 ---@param name string The name of the terminal
+---@param path string? The path this terminal was started in (it might have change)
 ---@return Terminal? terminal The found terminal instance
-function M.get(name)
-    local buf = vim.fn.bufnr('^term://*'..name..'$')
+function M.get(name, path)
+    if path then
+        path = vim.fn.fnamemodify(path, ':p:~')
+    else
+        path = '*'
+    end
+
+    local buf = vim.fn.bufnr('^term://'..path..'/*;#'..name..'$')
     if buf > 0 then
         local term = {}
         setmetatable(term, Terminal)
@@ -35,13 +42,13 @@ end
 ---@field cmd string|table? The command to execute in the terminal after startup
 
 ---Start a new terminal with the given `name`
----If a terminal with this name already exists return it instead
+---If a terminal with this name (at the same `opts.cwd` if present) already exists return it instead
 ---@param name string The name of the terminal
 ---@param opts StartupOptions? Optional options about the terminal startup
 ---@return Terminal terminal The newly created terminal instance (or the found one)
 ---@return boolean new_terminal_was_created `true` if a new terminal was created, `false` if an existing one was found
 function M.start(name, opts)
-    local term = M.get(name)
+    local term = M.get(name, (opts or {}).cwd)
     if term then
         return term, false
     end
